@@ -1,0 +1,17 @@
+name: instaffo
+root: ~/Projects/Instaffo/Product/app
+
+on_project_stop: bin/rails runner "Sidekiq.redis(&:flushall)"; docker compose down
+
+startup_window: editor
+
+windows:
+  - claude: claude
+  - editor: vim .
+  - console:
+  - console:
+  - docker: docker compose up elasticsearch redis mysql_arm
+  - rails: bundle exec rails s
+  - webpack: bin/webpack-dev-server
+  - cable: bin/cable
+  - sidekiq: bin/rails runner "Sidekiq.redis(&:flushall)" && bin/sidekiq

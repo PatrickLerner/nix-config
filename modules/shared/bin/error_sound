@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+for (( ; ; )); do
+  afplay /System/Library/Sounds/Sosumi.aiff
+done
