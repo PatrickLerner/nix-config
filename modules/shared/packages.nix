@@ -60,8 +60,7 @@ with pkgs; [
 
   # Programming Languages & Runtimes
   nodejs_24
-  rustc
-  cargo
+  rustup
   rbenv
 
   # Database & Data Tools
