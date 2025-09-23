@@ -17,6 +17,7 @@ with pkgs; [
 
   # Terminal & Shell
   alacritty
+  astroterm
   ncurses
   zsh
   tmux
@@ -42,6 +43,7 @@ with pkgs; [
   fd
   fzf
   watch
+  scc
 
   # Version Control & Project Management
   gh
