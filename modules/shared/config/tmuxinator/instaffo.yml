@@ -1,6 +1,7 @@
 name: instaffo
 root: ~/Projects/Instaffo/Product/app
 
+on_project_start: open /Applications/Docker.app
 on_project_stop: bin/rails runner "Sidekiq.redis(&:flushall)"; docker compose down
 
 startup_window: editor
