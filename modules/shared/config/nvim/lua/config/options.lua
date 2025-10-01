@@ -70,7 +70,7 @@ opt.ruler = true
 opt.showcmd = true
 opt.complete:remove('i')
 opt.showmatch = true
-opt.wrap = false
+opt.wrap = true
 opt.linebreak = true
 opt.backupdir = vim.fn.expand('~/.tmp')
 opt.directory = vim.fn.expand('~/.tmp')

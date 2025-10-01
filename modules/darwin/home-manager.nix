@@ -51,7 +51,6 @@ in {
       "Hand Mirror" = 1502839586;
       "ICE Buddy" = 1595947689;
       "LanguageTool" = 1534275760;
-      "Weather for Status Bar" = 1448031908;
 
       # Media & Content Creation
       "Draw Things" = 6444050820;

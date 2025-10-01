@@ -48,6 +48,7 @@ in {
       nvim = "rbenv shell 3.2.0 && nvim";
 
       # Directory shortcuts
+      "@nix" = "cd ~/nix-config";
       "@workbench" = "cd ~/Workbench";
       "@downloads" = "cd ~/Downloads";
       "@instaffo" = "cd ~/Projects/Instaffo";
@@ -141,6 +142,9 @@ in {
       bindkey '^[[B' history-substring-search-down
       bindkey -M vicmd 'k' history-substring-search-up
       bindkey -M vicmd 'j' history-substring-search-down
+
+      # Shift+Tab for reverse menu completion
+      bindkey '^[[Z' reverse-menu-complete
 
       # Disable history substring search highlighting
       unset HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND
