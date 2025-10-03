@@ -88,8 +88,10 @@ in {
       enable = true;
       username = user;
       entries = [
-        { path = "/Applications/Microsoft Edge.app"; }
         { path = "/Applications/Microsoft Outlook.app"; }
+        { path = "/System/Applications/Mail.app"; }
+        { path = "/System/Applications/Calendar.app"; }
+        { path = "/Applications/Microsoft Edge.app"; }
         { path = "/Applications/Telegram.app"; }
         { path = "/Applications/WhatsApp.app/"; }
         { path = "/Applications/Discord.app/"; }
