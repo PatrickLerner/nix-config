@@ -88,10 +88,16 @@ in {
       enable = true;
       username = user;
       entries = [
-        { path = "/Applications/Microsoft Outlook.app"; }
         { path = "/System/Applications/Mail.app"; }
         { path = "/System/Applications/Calendar.app"; }
-        { path = "/Applications/Microsoft Edge.app"; }
+        {
+          path = "/Applications/Microsoft Edge.app";
+        }
+        # Safari Web App (must be created manually in Safari: File > Add to Dock)
+        {
+          path =
+            "${config.users.users.${user}.home}/Applications/Google Gemini.app";
+        }
         { path = "/Applications/Telegram.app"; }
         { path = "/Applications/WhatsApp.app/"; }
         { path = "/Applications/Discord.app/"; }
