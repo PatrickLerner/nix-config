@@ -15,10 +15,10 @@
 SPEAKERS="KinMax USB Audio-B2"
 HEADPHONES="ZR USB AUDIO"
 
-if [[ "$(SwitchAudioSource -c -t output)" == "$HEADPHONES" ]]; then
-  SwitchAudioSource -s "$SPEAKERS" -t output >/dev/null
+if [[ "$(/Users/patrick/.nix-profile/bin/SwitchAudioSource -c -t output)" == "$HEADPHONES" ]]; then
+  /Users/patrick/.nix-profile/bin/SwitchAudioSource -s "$SPEAKERS" -t output >/dev/null
   echo "Switched to speakers"
 else
-  SwitchAudioSource -s "$HEADPHONES" -t output >/dev/null
+  /Users/patrick/.nix-profile/bin/SwitchAudioSource -s "$HEADPHONES" -t output >/dev/null
   echo "Switched to headphones"
 fi

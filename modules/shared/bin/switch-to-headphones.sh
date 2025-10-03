@@ -12,5 +12,5 @@
 # @raycast.author Patrick
 
 HEADPHONES="ZR USB AUDIO"
-SwitchAudioSource -s "$HEADPHONES" -t output >/dev/null
+/Users/patrick/.nix-profile/bin/SwitchAudioSource -s "$HEADPHONES" -t output >/dev/null
 echo "Switched to headphones"

@@ -12,5 +12,5 @@
 # @raycast.author Patrick
 
 SPEAKERS="KinMax USB Audio-B2"
-SwitchAudioSource -s "$SPEAKERS" -t output >/dev/null
+/Users/patrick/.nix-profile/bin/SwitchAudioSource -s "$SPEAKERS" -t output >/dev/null
 echo "Switched to speakers"
