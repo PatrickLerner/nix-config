@@ -154,6 +154,7 @@ in {
       export PATH=~/.bin:$PATH:/usr/local/bin
       export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
       export PATH="/usr/local/sbin:$PATH"
+      export PATH="$HOME/.cargo/bin:$PATH"
 
       # Load version managers
       eval "$(rbenv init -)" 2>/dev/null || true
