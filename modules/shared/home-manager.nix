@@ -85,6 +85,9 @@ in {
     };
 
     initContent = ''
+      # Add SSH key to agent
+      /usr/bin/ssh-add --apple-use-keychain ~/.ssh/id_rsa 2>/dev/null
+
       # Source secrets if they exist
       [[ -f ~/.secrets-env ]] && source ~/.secrets-env
 
