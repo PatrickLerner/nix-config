@@ -322,6 +322,11 @@ in {
       # Allow tmux to pass through escape sequences for shift/ctrl modifiers
       set-window-option -g xterm-keys on
 
+      # Prevent garbage characters when scrolling
+      set -g mouse off
+      bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M' 'select-pane -t=; copy-mode -e; send-keys -M'"
+      bind -n WheelDownPane select-pane -t= \; send-keys -M
+
       # Ensure proper shell initialization with Nix zsh
       set-option -g default-command "/Users/patrick/.nix-profile/bin/zsh"
 
@@ -345,7 +350,7 @@ in {
 
       # Force reload of config file (from old config)
       unbind r
-      bind r source-file ~/.tmux.conf \; display "Reloaded!"
+      bind r source-file ~/.config/tmux/tmux.conf \; display "Reloaded!"
 
       # -----------------------------------------------------------------------------
       # Key bindings
