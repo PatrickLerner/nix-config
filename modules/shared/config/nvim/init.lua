@@ -26,7 +26,11 @@ require('lazy').setup({
     lazy = false,
     version = false, -- always use the latest git commit
   },
-  checker = { enabled = true }, -- automatically check for plugin updates
+  checker = {
+    enabled = true,
+    notify = true,
+    frequency = 604800, -- check every 7 days (7 * 24 * 60 * 60)
+  },
   performance = {
     rtp = {
       -- disable some rtp plugins
