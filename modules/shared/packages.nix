@@ -5,6 +5,7 @@ with pkgs; [
   bash-completion
   coreutils
   killall
+  moreutils
   openssh
   sqlite
   wget
