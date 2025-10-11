@@ -23,7 +23,6 @@ _:
   "1password-cli"
   "anki"
   "appcleaner"
-  "bartender"
   "daisydisk"
   "gray"
   "keka"
