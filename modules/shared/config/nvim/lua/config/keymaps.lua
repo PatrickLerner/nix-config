@@ -105,11 +105,19 @@ vim.keymap.set('n', '\\A', ':Telescope grep_string search=', { desc = 'Ripgrep s
 -- Telescope file finder
 vim.keymap.set('n', '\\t', '<cmd>Telescope find_files<CR>', { desc = 'Find files' })
 
--- Git review
-vim.keymap.set('n', '\\r', '<cmd>Greview<CR>', { desc = 'Git review changes' })
+-- Copy file path (absolute)
+vim.keymap.set('n', '\\c', function()
+  local path = vim.fn.expand('%:p')
+  vim.fn.setreg('+', path)
+  print('File path copied to clipboard: ' .. path)
+end, { desc = 'Copy absolute file path' })
 
--- Copy file path
-vim.keymap.set('n', '\\c', '<cmd>let @+ = expand("%:p")<CR>', { desc = 'Copy file path' })
+-- Copy file path (relative)
+vim.keymap.set('n', '\\r', function()
+  local path = vim.fn.expand('%')
+  vim.fn.setreg('+', path)
+  print('Relative path copied to clipboard: ' .. path)
+end, { desc = 'Copy relative file path' })
 
 -- Clear search highlights
 vim.keymap.set('n', '\\ ', '<cmd>nohlsearch<CR>', { desc = 'Clear search highlights' })
