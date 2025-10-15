@@ -12,6 +12,7 @@ _:
 
   # Communication & Social
   "discord"
+  "pear-desktop"
   "slack"
   "telegram"
   "whatsapp"
