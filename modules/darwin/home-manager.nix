@@ -53,7 +53,6 @@ in {
       "LanguageTool" = 1534275760;
 
       # Media & Content Creation
-      "Draw Things" = 6444050820;
       "Pixea" = 1507782672;
       "Pixelmator Pro" = 1289583905;
 
@@ -98,6 +97,7 @@ in {
           path =
             "${config.users.users.${user}.home}/Applications/Google Gemini.app";
         }
+        { path = "/Applications/Claude.app"; }
         { path = "/Applications/Telegram.app"; }
         { path = "/Applications/WhatsApp.app/"; }
         { path = "/Applications/Discord.app/"; }
@@ -106,7 +106,8 @@ in {
         { path = "/Applications/Anki.app/"; }
         { path = "/Applications/Todoist.app/"; }
         { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
-        { path = "${pkgs.spotify}/Applications/Spotify.app/"; }
+        { path = "/Applications/Nix Apps/YouTube Music.app"; }
+        { path = "/Applications/Pocket Casts.app"; }
         {
           path = "${config.users.users.${user}.home}";
           section = "others";

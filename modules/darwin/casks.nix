@@ -2,6 +2,7 @@ _:
 
 [
   # Development Tools
+  "claude"
   "docker-desktop"
   "zed"
 
@@ -12,7 +13,6 @@ _:
 
   # Communication & Social
   "discord"
-  "pear-desktop"
   "slack"
   "telegram"
   "whatsapp"
@@ -34,6 +34,7 @@ _:
   # Media & Content Creation
   "audacity"
   "obs"
+  "pocket-casts"
   "spotify"
   "vlc"
 

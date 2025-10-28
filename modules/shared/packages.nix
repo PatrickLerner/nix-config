@@ -74,6 +74,7 @@ with pkgs; [
 
   # Media & Content Tools
   iina
+  youtube-music
   yt-dlp
   ffmpeg
   imagemagick
