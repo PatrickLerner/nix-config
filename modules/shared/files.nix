@@ -93,6 +93,10 @@ in {
     text = builtins.readFile ../shared/bin/error_sound;
     executable = true;
   };
+  ".bin/stock-search.sh" = {
+    text = builtins.readFile ../shared/bin/stock-search.sh;
+    executable = true;
+  };
 
   # Zsh configuration files
   ".config/zsh/shrink-path.zsh" = {

@@ -22,6 +22,7 @@ in {
       "aws-console"
       "aws-iam-authenticator"
       "coreutils"
+      "libyaml"
       "openssl"
     ];
     onActivation.cleanup = "uninstall";
