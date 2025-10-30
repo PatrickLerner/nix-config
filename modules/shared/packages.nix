@@ -38,6 +38,7 @@ with pkgs; [
   nixfmt-classic
   deadnix
   statix
+  nix-prefetch-github
 
   # Search & Navigation
   ripgrep
@@ -64,6 +65,7 @@ with pkgs; [
   # Programming Languages & Runtimes
   nodejs_24
   yarn
+  mcp-gitlab
   openai-whisper
   rustup
   rbenv
