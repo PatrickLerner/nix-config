@@ -25,6 +25,10 @@
       url = "git+ssh://git@github.com/PatrickLerner/nix-secrets.git";
       flake = false;
     };
+    claude-code-nix = {
+      url = "github:sadjow/claude-code-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core
     , homebrew-cask, home-manager, nixpkgs, ... }@inputs:

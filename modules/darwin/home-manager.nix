@@ -19,13 +19,10 @@ in {
     enable = true;
     casks = pkgs.callPackage ./casks.nix { };
     brews = [
-      "openai-whisper"
-      "gitlab-gem"
-      "aws-auth"
       "aws-console"
       "aws-iam-authenticator"
-      "awscli"
       "coreutils"
+      "openssl"
     ];
     onActivation.cleanup = "uninstall";
 

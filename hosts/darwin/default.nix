@@ -1,4 +1,4 @@
-{ agenix, pkgs, ... }:
+{ agenix, claude-code-nix, pkgs, ... }:
 
 let user = "patrick";
 
@@ -25,7 +25,13 @@ in {
       map (n: import (path + ("/" + n))) (filter (n:
         match ".*\\.nix" n != null
         || pathExists (path + ("/" + n + "/default.nix")))
-        (attrNames (readDir path)));
+        (attrNames (readDir path)))
+      ++ [
+        # Use claude-code from claude-code-nix flake
+        (final: prev: {
+          claude-code = claude-code-nix.packages.${prev.system}.default;
+        })
+      ];
   };
 
   # Setup user, packages, programs

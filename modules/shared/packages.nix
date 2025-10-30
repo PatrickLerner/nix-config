@@ -63,6 +63,8 @@ with pkgs; [
 
   # Programming Languages & Runtimes
   nodejs_24
+  yarn
+  openai-whisper
   rustup
   rbenv
 
@@ -99,6 +101,6 @@ with pkgs; [
   hack-font
   jetbrains-mono
   noto-fonts
-  noto-fonts-emoji
+  noto-fonts-color-emoji
   meslo-lgs-nf
 ]

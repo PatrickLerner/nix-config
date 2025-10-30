@@ -35,8 +35,6 @@ _:
   "audacity"
   "obs"
   "pocket-casts"
-  "spotify"
-  "vlc"
 
   # Cloud & Storage
   "google-drive"
