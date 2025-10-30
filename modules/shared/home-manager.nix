@@ -61,9 +61,13 @@ in {
         cd "/Users/patrick/Library/CloudStorage/GoogleDrive-ptlerner@gmail.com/My Drive/Data Files/Bára"'';
 
       # Transcription aliases
-      transcribe_german = "whisper --language German --model small";
-      transcribe_persian = "whisper --language Persian --model small";
-      transcribe_english = "whisper --language English --model small";
+      transcribe = "whisper --fp16 False --output_format txt --output_dir /tmp";
+      transcribe_german = "transcribe --language German --model base";
+      transcribe_german_slow = "transcribe --language German --model small";
+      transcribe_persian = "transcribe --language Persian --model base";
+      transcribe_persian_slow = "transcribe --language Persian --model small";
+      transcribe_english = "transcribe --language English --model base";
+      transcribe_english_slow = "transcribe --language English --model small";
 
       # Tmuxinator aliases
       instaffo-start = "tmuxinator start instaffo";
