@@ -100,9 +100,8 @@ in {
         { path = "/Applications/WhatsApp.app/"; }
         { path = "/Applications/Discord.app/"; }
         { path = "/Applications/Slack.app/"; }
-        { path = "/Applications/Day One.app/"; }
+        { path = "/Applications/Obsidian.app/"; }
         { path = "/Applications/Anki.app/"; }
-        { path = "/Applications/Todoist.app/"; }
         { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
         { path = "/Applications/Nix Apps/YouTube Music.app"; }
         { path = "/Applications/Pocket Casts.app"; }

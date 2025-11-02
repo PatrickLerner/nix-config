@@ -27,6 +27,7 @@ _:
   "daisydisk"
   "gray"
   "keka"
+  "obsidian"
   "quicklook-json"
   "todoist-app"
   "tomatobar"
