@@ -25,13 +25,13 @@ in {
       map (n: import (path + ("/" + n))) (filter (n:
         match ".*\\.nix" n != null
         || pathExists (path + ("/" + n + "/default.nix")))
-        (attrNames (readDir path)))
-      ++ [
-        # Use claude-code from claude-code-nix flake
-        (final: prev: {
-          claude-code = claude-code-nix.packages.${prev.system}.default;
-        })
-      ];
+        (attrNames (readDir path))) ++ [
+          # Use claude-code from claude-code-nix flake
+          (_final: prev: {
+            claude-code =
+              claude-code-nix.packages.${prev.stdenv.hostPlatform.system}.default;
+          })
+        ];
   };
 
   # Setup user, packages, programs
@@ -67,7 +67,7 @@ in {
 
   # Load configuration that is shared across systems
   environment.systemPackages = with pkgs;
-    [ agenix.packages."${pkgs.system}".default ]
+    [ agenix.packages."${pkgs.stdenv.hostPlatform.system}".default ]
     ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
 
   # Override TERM to prevent alacritty terminfo errors

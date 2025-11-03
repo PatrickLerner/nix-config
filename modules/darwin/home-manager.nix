@@ -18,13 +18,8 @@ in {
   homebrew = {
     enable = true;
     casks = pkgs.callPackage ./casks.nix { };
-    brews = [
-      "aws-console"
-      "aws-iam-authenticator"
-      "coreutils"
-      "libyaml"
-      "openssl"
-    ];
+    brews =
+      [ "aws-console" "aws-iam-authenticator" "coreutils" "libyaml" "openssl" ];
     onActivation.cleanup = "uninstall";
 
     # These app IDs are from using the mas CLI app
@@ -69,6 +64,22 @@ in {
         file = sharedFiles;
 
         stateVersion = "23.11";
+
+        # Activation script to configure Claude MCP servers
+        activation.setupClaudeMCP = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          # Setup Claude MCP servers for Figma and GitLab
+          echo "Setting up Claude MCP servers..."
+
+          # Add Figma MCP server
+          if ! ${pkgs.claude-code}/bin/claude mcp list --scope user 2>/dev/null | grep -q "Figma"; then
+            ${pkgs.claude-code}/bin/claude mcp add --scope user Figma figma-developer-mcp || echo "Note: Figma MCP server may already exist"
+          fi
+
+          # Add GitLab MCP server
+          if ! ${pkgs.claude-code}/bin/claude mcp list --scope user 2>/dev/null | grep -q "Gitlab"; then
+            ${pkgs.claude-code}/bin/claude mcp add --scope user Gitlab mcp-gitlab || echo "Note: GitLab MCP server may already exist"
+          fi
+        '';
       };
       programs = { }
         // import ../shared/home-manager.nix { inherit config pkgs lib; };

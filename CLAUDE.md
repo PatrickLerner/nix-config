@@ -72,8 +72,22 @@ macOS-specific configuration:
 
 - `casks.nix` - Homebrew cask applications organized by category (browsers, development, productivity, etc.)
 - `dock/` - macOS dock configuration
-- `home-manager.nix` - Darwin-specific user configuration and dock management
+- `home-manager.nix` - Darwin-specific user configuration, dock management, and activation hooks
 - `secrets.nix` - agenix secret definitions for macOS
+
+### Home-Manager Activation Hooks
+
+Activation scripts in `modules/darwin/home-manager.nix` run automatically after each home-manager activation:
+
+```nix
+home.activation.scriptName = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  # Shell commands here run after home-manager files are written
+  # Use full Nix store paths: ${pkgs.package-name}/bin/command
+  echo "Running custom activation..."
+'';
+```
+
+Example: Claude MCP server setup hook automatically configures MCP servers on each activation.
 
 ### Host Configuration
 
@@ -149,6 +163,27 @@ Files in `overlays/` automatically run as part of each build for:
 - Version overrides or forks
 - Temporary workarounds
 
+### Creating Custom Package Overlays
+
+When adding npm/pnpm packages that aren't in nixpkgs:
+
+1. **Create overlay file**: `overlays/##-package-name.nix` (numbered for load order)
+2. **Git tracking required**: New overlay files MUST be `git add`ed before building - Nix uses git tree and won't see untracked files
+3. **For npm packages**: Use `buildNpmPackage` with `npmDepsHash = lib.fakeHash`, build to get real hash
+4. **For pnpm packages**: Use `stdenv.mkDerivation` with `pnpm_9.fetchDeps`:
+   ```nix
+   pnpmDeps = pnpm_9.fetchDeps {
+     inherit pname version src;
+     hash = lib.fakeHash;  # Build once to get real hash
+     fetcherVersion = 2;    # Must be 1 or 2
+   };
+   nativeBuildInputs = [ nodejs_24 pnpm_9.configHook ];
+   ```
+5. **Add to packages**: Reference the overlay package in `modules/shared/packages.nix`
+6. **Hash workflow**: Use `lib.fakeHash` initially, build will fail with correct hash to use
+
+Example: See `overlays/30-mcp-figma.nix` for pnpm package or `overlays/20-mcp-gitlab.nix` for npm package.
+
 ## System Management
 
 ### Building and Switching
@@ -178,6 +213,7 @@ Files in `overlays/` automatically run as part of each build for:
 3. **SSH Key Permissions**: Ensure SSH keys have correct permissions (600 for private keys)
 4. **Git Configuration**: Apply script pulls git user.name and user.email, configure git before running
 5. **Darwin Rebuild Sudo**: The `build-switch` command requires sudo for system-level changes
+6. **System Deprecation Warning**: Use `stdenv.hostPlatform.system` instead of deprecated `system` attribute (e.g., `${pkgs.stdenv.hostPlatform.system}` not `${pkgs.system}`)
 
 ### File Template Variables
 

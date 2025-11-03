@@ -30,7 +30,6 @@ _:
   "obsidian"
   "quicklook-json"
   "todoist-app"
-  "tomatobar"
 
   # Media & Content Creation
   "audacity"

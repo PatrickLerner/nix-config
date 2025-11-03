@@ -229,10 +229,7 @@ in {
     ignores = [ "*.swp" ];
     lfs = { enable = true; };
     settings = {
-      user = {
-        name = name;
-        email = email;
-      };
+      user = { inherit name email; };
       init.defaultBranch = "main";
       core = {
         editor = "vim";

@@ -66,6 +66,7 @@ with pkgs; [
   nodejs_24
   yarn
   mcp-gitlab
+  mcp-figma
   openai-whisper
   rustup
   rbenv
