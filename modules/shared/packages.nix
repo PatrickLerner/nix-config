@@ -84,6 +84,7 @@ with pkgs; [
   ffmpeg
   imagemagick
   optipng
+  poppler-utils
 
   # Security & Encryption
   age
