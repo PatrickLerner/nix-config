@@ -212,7 +212,7 @@ Example: See `overlays/30-mcp-figma.nix` for pnpm package or `overlays/20-mcp-gi
 2. **File Conflicts**: During installation, backup existing `/etc/` configuration files that conflict
 3. **SSH Key Permissions**: Ensure SSH keys have correct permissions (600 for private keys)
 4. **Git Configuration**: Apply script pulls git user.name and user.email, configure git before running
-5. **Darwin Rebuild Sudo**: The `build-switch` command requires sudo for system-level changes
+5. **Darwin Rebuild Sudo**: The `build-switch` command requires sudo for system-level changes. DO NOT run this command as Claude - it requires password input. User must run it manually.
 6. **System Deprecation Warning**: Use `stdenv.hostPlatform.system` instead of deprecated `system` attribute (e.g., `${pkgs.stdenv.hostPlatform.system}` not `${pkgs.system}`)
 
 ### File Template Variables

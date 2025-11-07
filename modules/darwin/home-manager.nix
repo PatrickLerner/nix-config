@@ -67,7 +67,7 @@ in {
 
         # Activation script to configure Claude MCP servers
         activation.setupClaudeMCP = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          # Setup Claude MCP servers for Figma and GitLab
+          # Setup Claude MCP servers for Figma, GitLab, Asana, and Sentry
           echo "Setting up Claude MCP servers..."
 
           # Add Figma MCP server
@@ -78,6 +78,16 @@ in {
           # Add GitLab MCP server
           if ! ${pkgs.claude-code}/bin/claude mcp list --scope user 2>/dev/null | grep -q "Gitlab"; then
             ${pkgs.claude-code}/bin/claude mcp add --scope user Gitlab mcp-gitlab || echo "Note: GitLab MCP server may already exist"
+          fi
+
+          # Add Asana MCP server
+          if ! ${pkgs.claude-code}/bin/claude mcp list --scope user 2>/dev/null | grep -q "Asana"; then
+            ${pkgs.claude-code}/bin/claude mcp add --scope user Asana --transport http https://mcp.asana.com/sse || echo "Note: Asana MCP server may already exist"
+          fi
+
+          # Add Sentry MCP server
+          if ! ${pkgs.claude-code}/bin/claude mcp list --scope user 2>/dev/null | grep -q "Sentry"; then
+            ${pkgs.claude-code}/bin/claude mcp add --scope user Sentry --transport http https://mcp.sentry.dev/mcp || echo "Note: Sentry MCP server may already exist"
           fi
         '';
       };

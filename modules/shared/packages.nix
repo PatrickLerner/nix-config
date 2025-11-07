@@ -12,6 +12,7 @@ with pkgs; [
   zip
   unrar
   unzip
+  xz
   zstd
   pkg-config
   gnumake

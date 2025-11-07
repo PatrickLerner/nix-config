@@ -22,6 +22,7 @@ _:
   "raycast"
   "1password"
   "1password-cli"
+  "android-file-transfer"
   "anki"
   "appcleaner"
   "daisydisk"
