@@ -88,7 +88,7 @@ in {
       GREP_COLORS = "mt=01;34";
       DISABLE_AUTO_TITLE = "true";
       HOMEBREW_NO_ANALYTICS = "1";
-      LIBRARY_PATH = "${pkgs.zstd}/lib:${pkgs.openssl}/lib";
+      LIBRARY_PATH = "${pkgs.zstd.out}/lib:${pkgs.openssl.out}/lib";
     };
 
     initContent = ''
