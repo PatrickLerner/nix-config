@@ -78,6 +78,10 @@ in {
       # Git aliases
       gp = "git push";
       gf = "git fetch";
+
+      # Claude Manager aliases
+      cm = "npx @instaffo/claude-manager";
+      cm_dev = "npx /Users/patrick/Projects/Instaffo/claude-manager";
     };
 
     sessionVariables = {

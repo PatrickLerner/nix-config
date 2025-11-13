@@ -65,6 +65,7 @@ in {
   # Karabiner configuration
   ".config/karabiner/karabiner.json" = {
     text = builtins.readFile ../shared/config/karabiner/karabiner.json;
+    force = true;
   };
 
   # Alacritty configuration
