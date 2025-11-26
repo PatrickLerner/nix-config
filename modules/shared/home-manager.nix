@@ -45,7 +45,7 @@ in {
       real_nano = "/usr/bin/nano";
       nano = "nvim";
       vim = "nvim";
-      nvim = "rbenv shell 3.2.0 && nvim";
+      nvim = "rbenv shell 3.4.7 && nvim";
 
       # Directory shortcuts
       "@nix" = "cd ~/nix-config";
