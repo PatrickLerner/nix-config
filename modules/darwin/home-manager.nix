@@ -68,27 +68,43 @@ in {
         # Activation script to configure Claude MCP servers
         activation.setupClaudeMCP = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           # Setup Claude MCP servers for Figma, GitLab, Asana, and Sentry
+          # Uses timeouts to prevent hanging during activation
           echo "Setting up Claude MCP servers..."
 
+          CLAUDE="${pkgs.claude-code}/bin/claude"
+          TIMEOUT="${pkgs.coreutils}/bin/timeout"
+
+          # Helper function to check if MCP server exists (with timeout)
+          mcp_exists() {
+            $TIMEOUT 5s $CLAUDE mcp list --scope user 2>/dev/null | grep -q "$1"
+          }
+
+          # Helper function to add MCP server (with timeout)
+          mcp_add() {
+            $TIMEOUT 10s $CLAUDE mcp add --scope user "$@" 2>/dev/null || echo "Note: $1 MCP server setup skipped or already exists"
+          }
+
           # Add Figma MCP server
-          if ! ${pkgs.claude-code}/bin/claude mcp list --scope user 2>/dev/null | grep -q "Figma"; then
-            ${pkgs.claude-code}/bin/claude mcp add --scope user Figma figma-developer-mcp || echo "Note: Figma MCP server may already exist"
+          if ! mcp_exists "Figma"; then
+            mcp_add Figma figma-developer-mcp
           fi
 
           # Add GitLab MCP server
-          if ! ${pkgs.claude-code}/bin/claude mcp list --scope user 2>/dev/null | grep -q "Gitlab"; then
-            ${pkgs.claude-code}/bin/claude mcp add --scope user Gitlab mcp-gitlab || echo "Note: GitLab MCP server may already exist"
+          if ! mcp_exists "Gitlab"; then
+            mcp_add Gitlab mcp-gitlab
           fi
 
           # Add Asana MCP server
-          if ! ${pkgs.claude-code}/bin/claude mcp list --scope user 2>/dev/null | grep -q "Asana"; then
-            ${pkgs.claude-code}/bin/claude mcp add --scope user Asana --transport http https://mcp.asana.com/sse || echo "Note: Asana MCP server may already exist"
+          if ! mcp_exists "Asana"; then
+            mcp_add Asana --transport http https://mcp.asana.com/sse
           fi
 
           # Add Sentry MCP server
-          if ! ${pkgs.claude-code}/bin/claude mcp list --scope user 2>/dev/null | grep -q "Sentry"; then
-            ${pkgs.claude-code}/bin/claude mcp add --scope user Sentry --transport http https://mcp.sentry.dev/mcp || echo "Note: Sentry MCP server may already exist"
+          if ! mcp_exists "Sentry"; then
+            mcp_add Sentry --transport http https://mcp.sentry.dev/mcp
           fi
+
+          echo "Claude MCP server setup complete."
         '';
       };
       programs = { }

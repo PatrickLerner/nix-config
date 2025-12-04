@@ -106,6 +106,7 @@ in {
 
   # Claude Code agent configuration
   ".claude/agents/anki-persian-vocab-builder.md" = {
-    text = builtins.readFile ../shared/config/claude/agents/anki-persian-vocab-builder.md;
+    text = builtins.readFile
+      ../shared/config/claude/agents/anki-persian-vocab-builder.md;
   };
 } // nvimFiles // karabinerFiles
