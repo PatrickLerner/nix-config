@@ -2,17 +2,17 @@ _: super:
 with super; {
   mcp-gitlab = buildNpmPackage rec {
     pname = "mcp-gitlab";
-    version = "2.0.8";
+    version = "2.0.13";
 
     src = fetchFromGitHub {
       owner = "zereight";
       repo = "gitlab-mcp";
-      rev = "4d66c9316686757eaaddde6be227affc5c3d36cf"; # v2.0.8
-      hash = "sha256-EqAVxX4/bCMgtVwvPtHAz3z8D9L+sU3WgORhUlduy2Q=";
+      rev = "3f33859d7a6db680cb41c7e490eaaa3c7aa4dab2"; # v2.0.13
+      hash = "sha256-l/R5na0fecE7+qeDUW4XK7McNUyONMCKEo8KY2zZ2QU=";
     };
 
     # npm dependencies hash calculated from lockfile
-    npmDepsHash = "sha256-OgJKbPub5fDEMlVgXv6rOGPeNtYxkuXZamZcpcIMl3I=";
+    npmDepsHash = "sha256-eSKWr+dWrMf19Xb+5eKI4ZkBLTH09qysj+4rxpjWrSE=";
 
     # The package uses TypeScript and has a build script
     npmBuildScript = "build";
