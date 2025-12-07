@@ -65,6 +65,12 @@ in {
 
   # Turn off NIX_PATH warnings now that we're using flakes
 
+  networking = {
+    hostName = "znovu";
+    computerName = "znovu";
+    localHostName = "znovu";
+  };
+
   # Load configuration that is shared across systems
   environment.systemPackages = with pkgs;
     [ agenix.packages."${pkgs.stdenv.hostPlatform.system}".default ]

@@ -109,4 +109,8 @@ in {
     text = builtins.readFile
       ../shared/config/claude/agents/anki-persian-vocab-builder.md;
   };
+  ".claude/agents/persian-lesson-processor.md" = {
+    text = builtins.readFile
+      ../shared/config/claude/agents/persian-lesson-processor.md;
+  };
 } // nvimFiles // karabinerFiles
