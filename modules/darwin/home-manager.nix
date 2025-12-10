@@ -133,9 +133,7 @@ in {
             "${config.users.users.${user}.home}/Applications/Google Gemini.app";
         }
         { path = "/Applications/Claude.app"; }
-        { path = "/Applications/Telegram.app"; }
         { path = "/Applications/WhatsApp.app/"; }
-        { path = "/Applications/Discord.app/"; }
         { path = "/Applications/Slack.app/"; }
         { path = "/Applications/Obsidian.app/"; }
         { path = "/Applications/Anki.app/"; }
