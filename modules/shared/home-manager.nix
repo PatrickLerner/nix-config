@@ -59,8 +59,7 @@ in {
         cd "/Users/patrick/Library/CloudStorage/GoogleDrive-ptlerner@gmail.com/My Drive/Data Files/Sophie"'';
       "@bara" = ''
         cd "/Users/patrick/Library/CloudStorage/GoogleDrive-ptlerner@gmail.com/My Drive/Data Files/Bára"'';
-      "@notes" = ''
-        cd "/Users/patrick/Library/CloudStorage/GoogleDrive-ptlerner@gmail.com/My Drive/Notes"'';
+      "@notes" = "cd ~/Notes";
 
       # Transcription aliases
       transcribe = "whisper --fp16 False --output_format txt --output_dir /tmp";

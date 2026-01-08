@@ -29,7 +29,7 @@ Extract additions (lines starting with `>`) as new lesson content.
 
 ## Step 3: Format and Save
 
-Save to: `/Users/patrick/Library/CloudStorage/GoogleDrive-ptlerner@gmail.com/My Drive/Notes/4X Areas/Persian Language/Mina/YYYY-MM-DD Lesson.md`
+Save to: `~/Notes/4X Areas/Persian Language/Mina/YYYY-MM-DD Lesson.md`
 
 # Formatting Rules
 
