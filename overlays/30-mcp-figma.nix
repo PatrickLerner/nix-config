@@ -11,9 +11,9 @@ with super; {
       hash = "sha256-63stXZAaRbMEiPBebtAF4mphiHp5pryWpXuNUKydLFk=";
     };
 
-    nativeBuildInputs = [ nodejs_24 pnpm_9.configHook ];
+    nativeBuildInputs = [ nodejs_24 pnpm_9 pnpmConfigHook ];
 
-    pnpmDeps = pnpm_9.fetchDeps {
+    pnpmDeps = fetchPnpmDeps {
       inherit pname version src;
       hash = "sha256-l0ht71b9YaS0Eja39u8BWny01z12/ulgS3MCvuYqyKc=";
       fetcherVersion = 2;

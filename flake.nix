@@ -18,7 +18,7 @@
       flake = false;
     };
     homebrew-cask = {
-      url = "github:homebrew/homebrew-cask";
+      url = "github:homebrew/homebrew-cask/c098c019e5e472c57c362d02b0e03854e21a654b";
       flake = false;
     };
     secrets = {

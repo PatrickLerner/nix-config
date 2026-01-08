@@ -36,7 +36,7 @@ with pkgs; [
   claude-code
 
   # Nix Development Tools
-  nixfmt-classic
+  nixfmt
   deadnix
   statix
   nix-prefetch-github
@@ -80,7 +80,7 @@ with pkgs; [
 
   # Media & Content Tools
   iina
-  youtube-music
+  pear-desktop
   yt-dlp
   ffmpeg
   imagemagick

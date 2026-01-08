@@ -135,10 +135,11 @@ in {
         { path = "/Applications/Claude.app"; }
         { path = "/Applications/WhatsApp.app/"; }
         { path = "/Applications/Slack.app/"; }
+        { path = "/Applications/Discord.app/"; }
         { path = "/Applications/Obsidian.app/"; }
         { path = "/Applications/Anki.app/"; }
         { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
-        { path = "/Applications/Nix Apps/YouTube Music.app"; }
+        { path = "/Applications/Nix Apps/Pear Desktop.app"; }
         { path = "/Applications/Pocket Casts.app"; }
         {
           path = "${config.users.users.${user}.home}";
