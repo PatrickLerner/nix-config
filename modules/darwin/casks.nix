@@ -42,6 +42,7 @@ _:
 
   # Security & Privacy
   "protonvpn"
+  "tor-browser"
   "yubico-authenticator"
 
   # Database & Development

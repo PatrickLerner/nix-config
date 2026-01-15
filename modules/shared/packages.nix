@@ -66,6 +66,8 @@ with pkgs; [
   # Programming Languages & Runtimes
   nodejs_24
   yarn
+  python311
+  uv
   mcp-gitlab
   mcp-figma
   openai-whisper

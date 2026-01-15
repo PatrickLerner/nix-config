@@ -8,7 +8,7 @@
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-homebrew = { url = "github:zhaofengli-wip/nix-homebrew"; };
+    nix-homebrew = { url = "github:zhaofengli-wip/nix-homebrew?ref=refs/pull/124/head"; };
     homebrew-bundle = {
       url = "github:homebrew/homebrew-bundle";
       flake = false;
@@ -18,7 +18,7 @@
       flake = false;
     };
     homebrew-cask = {
-      url = "github:homebrew/homebrew-cask/c098c019e5e472c57c362d02b0e03854e21a654b";
+      url = "github:homebrew/homebrew-cask";
       flake = false;
     };
     secrets = {
