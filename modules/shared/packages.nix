@@ -33,7 +33,6 @@ with pkgs; [
 
   # Editor & Development Environment
   neovim
-  claude-code
 
   # Nix Development Tools
   nixfmt
@@ -66,6 +65,8 @@ with pkgs; [
   # Programming Languages & Runtimes
   nodejs_24
   yarn
+  typescript
+  typescript-language-server
   python311
   uv
   mcp-gitlab
