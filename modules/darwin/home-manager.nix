@@ -134,6 +134,7 @@ in {
         }
         { path = "/Applications/Claude.app"; }
         { path = "/Applications/WhatsApp.app/"; }
+        { path = "/Applications/Telegram.app/"; }
         { path = "/Applications/Slack.app/"; }
         { path = "/Applications/Discord.app/"; }
         { path = "/Applications/Obsidian.app/"; }
