@@ -70,7 +70,6 @@ with pkgs; [
   python311
   uv
   mcp-gitlab
-  mcp-figma
   openai-whisper
   rustup
   rbenv

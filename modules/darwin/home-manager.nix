@@ -67,7 +67,7 @@ in {
 
         # Activation script to configure Claude MCP servers
         activation.setupClaudeMCP = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          # Setup Claude MCP servers for Figma, GitLab, Asana, and Sentry
+          # Setup Claude MCP servers for GitLab, Asana, and Sentry
           # Uses timeouts to prevent hanging during activation
           echo "Setting up Claude MCP servers..."
 
@@ -83,11 +83,6 @@ in {
           mcp_add() {
             $TIMEOUT 10s $CLAUDE mcp add --scope user "$@" 2>/dev/null || echo "Note: $1 MCP server setup skipped or already exists"
           }
-
-          # Add Figma MCP server
-          if ! mcp_exists "Figma"; then
-            mcp_add Figma figma-developer-mcp
-          fi
 
           # Add GitLab MCP server
           if ! mcp_exists "Gitlab"; then
