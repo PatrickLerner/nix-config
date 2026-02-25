@@ -5,7 +5,8 @@
 with lib;
 let
   cfg = config.local.dock;
-  inherit (pkgs) stdenv dockutil;
+  inherit (pkgs) stdenv;
+  dockutil = "/opt/homebrew/bin/dockutil";
 in {
   options = {
     local.dock = {
@@ -61,16 +62,16 @@ in {
       ${entryURI entry.path}
     '') cfg.entries;
     createEntries = concatMapStrings (entry: ''
-      ${dockutil}/bin/dockutil --no-restart --add '${entry.path}' --section ${entry.section} ${entry.options}
+      ${dockutil} --no-restart --add '${entry.path}' --section ${entry.section} ${entry.options}
     '') cfg.entries;
   in {
     system.activationScripts.postActivation.text = ''
         echo >&2 "Setting up the Dock for ${cfg.username}..."
         su ${cfg.username} -s /bin/sh <<'USERBLOCK'
-      haveURIs="$(${dockutil}/bin/dockutil --list | ${pkgs.coreutils}/bin/cut -f2)"
+      haveURIs="$(${dockutil} --list | ${pkgs.coreutils}/bin/cut -f2)"
       if ! diff -wu <(echo -n "$haveURIs") <(echo -n '${wantURIs}') >&2 ; then
         echo >&2 "Resetting Dock."
-        ${dockutil}/bin/dockutil --no-restart --remove all
+        ${dockutil} --no-restart --remove all
         ${createEntries}
         killall Dock
       else

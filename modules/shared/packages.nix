@@ -100,7 +100,6 @@ with pkgs; [
   mas
   karabiner-elements
   switchaudio-osx
-  dockutil
 
   # Fonts
   dejavu_fonts
