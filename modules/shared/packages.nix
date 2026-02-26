@@ -16,6 +16,7 @@ with pkgs; [
   zstd
   pkg-config
   gnumake
+  libgit2
 
   # Terminal & Shell
   alacritty
