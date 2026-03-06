@@ -73,7 +73,7 @@ in {
 
         # Activation script to configure Claude MCP servers
         activation.setupClaudeMCP = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          # Setup Claude MCP servers for GitLab, Asana, and Sentry
+          # Setup Claude MCP servers for GitLab
           # Uses timeouts to prevent hanging during activation
           echo "Setting up Claude MCP servers..."
 
@@ -93,16 +93,6 @@ in {
           # Add GitLab MCP server
           if ! mcp_exists "Gitlab"; then
             mcp_add Gitlab mcp-gitlab
-          fi
-
-          # Add Asana MCP server
-          if ! mcp_exists "Asana"; then
-            mcp_add Asana --transport http https://mcp.asana.com/sse
-          fi
-
-          # Add Sentry MCP server
-          if ! mcp_exists "Sentry"; then
-            mcp_add Sentry --transport http https://mcp.sentry.dev/mcp
           fi
 
           echo "Claude MCP server setup complete."
@@ -140,7 +130,7 @@ in {
         { path = "/Applications/Discord.app/"; }
         { path = "/Applications/Obsidian.app/"; }
         { path = "/Applications/Anki.app/"; }
-        { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
+        { path = "/Applications/Nix Apps/Alacritty.app"; }
         { path = "/Applications/Nix Apps/YouTube Music.app"; }
         { path = "/Applications/Pocket Casts.app"; }
         {
