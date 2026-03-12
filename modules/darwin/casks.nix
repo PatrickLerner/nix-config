@@ -31,7 +31,6 @@ _:
   "keka"
   "obsidian"
   "quicklook-json"
-  "todoist-app"
 
   # Media & Content Creation
   "audacity"
