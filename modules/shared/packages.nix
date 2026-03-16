@@ -68,10 +68,9 @@ with pkgs; [
   yarn
   typescript
   typescript-language-server
-  python311
+  (python312.withPackages (ps: with ps; [ pip python-gitlab pyyaml ]))
   uv
   mcp-gitlab
-  openai-whisper
   rustup
   rbenv
 
