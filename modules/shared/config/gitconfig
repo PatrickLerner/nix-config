@@ -3,7 +3,18 @@
 	name = Patrick Lerner
 [core]
 	excludesfile = /Users/patrick/.gitignore_global
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	line-numbers = true
+	syntax-theme = Dracula
 	pager = less --mouse
+[merge]
+	conflictstyle = zdiff3
+[diff]
+	colorMoved = default
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f

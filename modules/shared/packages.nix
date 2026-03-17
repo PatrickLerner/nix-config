@@ -49,6 +49,7 @@ with pkgs; [
   scc
 
   # Version Control & Project Management
+  delta
   gh
   lazygit
   direnv
