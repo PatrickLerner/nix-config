@@ -5,6 +5,7 @@ _:
   "claude"
   "claude-code"
   "docker-desktop"
+  "warp"
   "zed"
 
   # Browsers
