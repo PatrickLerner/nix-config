@@ -23,6 +23,7 @@ in {
       "aws-iam-authenticator"
       "coreutils"
       "dockutil"
+      "gitlab-ci-local"
       "libyaml"
       "openssl"
     ];
