@@ -54,6 +54,7 @@ with pkgs; [
   lazygit
   direnv
   git-lfs
+  mise
 
   # Cloud & Infrastructure
   kubectl
