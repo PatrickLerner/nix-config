@@ -67,6 +67,7 @@ with pkgs; [
 
   # Programming Languages & Runtimes
   nodejs_24
+  pnpm
   yarn
   typescript
   typescript-language-server
