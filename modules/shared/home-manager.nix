@@ -232,6 +232,7 @@ in {
   git = {
     enable = true;
     ignores = [ "*.swp" ];
+    signing.format = null;
     lfs = { enable = true; };
     settings = {
       user = { inherit name email; };
