@@ -21,6 +21,7 @@ in {
     brews = [
       "aws-console"
       "aws-iam-authenticator"
+      "awscli"
       "coreutils"
       "dockutil"
       "gitlab-ci-local"
