@@ -21,6 +21,7 @@ _:
   "zoom"
 
   # Productivity & Utilities
+  "notunes"
   "raycast"
   "1password"
   "1password-cli"
