@@ -7,7 +7,14 @@ NC='\033[0m'
 
 echo -e "${YELLOW}Cleaning up old system generations...${NC}"
 
-# Clean up old generations (older than 7 days)
+# Clean up old user generations (older than 7 days)
+nix-collect-garbage --delete-older-than 7d
+
+# Clean up old system generations (older than 7 days)
 sudo nix-collect-garbage --delete-older-than 7d
+
+# Deduplicate identical files in the nix store
+echo -e "${YELLOW}Optimising nix store...${NC}"
+nix-store --optimise
 
 echo -e "${GREEN}Cleanup complete!${NC}"
