@@ -71,6 +71,7 @@
         "create-keys" = mkApp "create-keys" system;
         "check-keys" = mkApp "check-keys" system;
         "rollback" = mkApp "rollback" system;
+        "update" = mkApp "update" system;
       };
     in {
       devShells = forAllSystems devShell;

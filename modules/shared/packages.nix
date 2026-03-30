@@ -90,6 +90,7 @@ with pkgs; [
   ffmpeg
   imagemagick
   optipng
+  ghostscript
   poppler-utils
 
   # Security & Encryption
