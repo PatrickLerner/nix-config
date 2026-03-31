@@ -48,7 +48,6 @@ in {
       # Productivity & Utilities
       "Amphetamine" = 937984704;
       "ColorSlurp" = 1287239339;
-      "Hand Mirror" = 1502839586;
       "ICE Buddy" = 1595947689;
       "LanguageTool" = 1534275760;
 
