@@ -73,6 +73,8 @@ in {
       # Tmuxinator aliases
       instaffo-start = "tmuxinator start instaffo";
       instaffo-stop = "tmuxinator stop instaffo";
+      claude-dashboard-start = "tmuxinator start claude-dashboard";
+      claude-dashboard-stop = "tmuxinator stop claude-dashboard";
 
       # Git aliases
       gp = "git push";

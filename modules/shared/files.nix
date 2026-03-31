@@ -51,6 +51,10 @@ in {
     text = builtins.readFile ../shared/config/tmuxinator/instaffo.yml;
   };
 
+  ".config/tmuxinator/claude-dashboard.yml" = {
+    text = builtins.readFile ../shared/config/tmuxinator/claude-dashboard.yml;
+  };
+
   # Global gitignore
   ".gitignore_global" = {
     text = builtins.readFile ../shared/config/gitignore_global;
