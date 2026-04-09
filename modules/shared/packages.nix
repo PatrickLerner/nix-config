@@ -33,6 +33,7 @@ with pkgs; [
   tldr
 
   # Editor & Development Environment
+  claude-code
   neovim
 
   # Nix Development Tools
@@ -73,7 +74,6 @@ with pkgs; [
   typescript-language-server
   (python312.withPackages (ps: with ps; [ pip python-gitlab pyyaml ]))
   uv
-  mcp-gitlab
   rustup
   rbenv
 

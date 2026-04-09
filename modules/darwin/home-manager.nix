@@ -73,26 +73,29 @@ in {
 
         # Activation script to configure Claude MCP servers
         activation.setupClaudeMCP = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          # Setup Claude MCP servers for GitLab
-          # Uses timeouts to prevent hanging during activation
           echo "Setting up Claude MCP servers..."
 
-          CLAUDE="${pkgs.claude-code}/bin/claude"
+          CLAUDE="/opt/homebrew/bin/claude"
           TIMEOUT="${pkgs.coreutils}/bin/timeout"
 
-          # Helper function to check if MCP server exists (with timeout)
           mcp_exists() {
             $TIMEOUT 5s $CLAUDE mcp list --scope user 2>/dev/null | grep -q "$1"
           }
 
-          # Helper function to add MCP server (with timeout)
           mcp_add() {
             $TIMEOUT 10s $CLAUDE mcp add --scope user "$@" 2>/dev/null || echo "Note: $1 MCP server setup skipped or already exists"
           }
 
-          # Add GitLab MCP server
           if ! mcp_exists "Gitlab"; then
-            mcp_add Gitlab mcp-gitlab
+            mcp_add Gitlab -- ${pkgs.pnpm_9}/bin/pnpm dlx @zereight/mcp-gitlab -e GITLAB_TOOLS=all,execute_graphql
+          fi
+
+          if ! mcp_exists "Jam"; then
+            mcp_add --transport http Jam https://mcp.jam.dev/mcp
+          fi
+
+          if ! mcp_exists "claude-orchestrator"; then
+            mcp_add claude-orchestrator -- ${pkgs.pnpm_9}/bin/pnpm --package=@instaffo/claude-dashboard dlx claude-mcp
           fi
 
           echo "Claude MCP server setup complete."

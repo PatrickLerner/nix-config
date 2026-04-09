@@ -108,6 +108,11 @@ in {
     text = builtins.readFile ../shared/config/shrink-path.zsh;
   };
 
+  # Claude Code configuration
+  ".claude/CLAUDE.md" = {
+    text = builtins.readFile ../shared/config/claude/CLAUDE.md;
+  };
+
   # Claude Code agent configuration
   ".claude/agents/anki-persian-vocab-builder.md" = {
     text = builtins.readFile

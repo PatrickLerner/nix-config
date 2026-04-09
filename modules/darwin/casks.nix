@@ -3,7 +3,6 @@ _:
 [
   # Development Tools
   "claude"
-  "claude-code"
   "docker-desktop"
   "warp"
   "zed"
