@@ -75,7 +75,7 @@ in {
         activation.setupClaudeMCP = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           echo "Setting up Claude MCP servers..."
 
-          CLAUDE="/opt/homebrew/bin/claude"
+          CLAUDE="${pkgs.claude-code}/bin/claude"
           TIMEOUT="${pkgs.coreutils}/bin/timeout"
 
           mcp_exists() {
