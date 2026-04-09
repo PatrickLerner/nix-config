@@ -78,25 +78,13 @@ in {
           CLAUDE="${pkgs.claude-code}/bin/claude"
           TIMEOUT="${pkgs.coreutils}/bin/timeout"
 
-          mcp_exists() {
-            $TIMEOUT 5s $CLAUDE mcp list --scope user 2>/dev/null | grep -q "$1"
-          }
-
           mcp_add() {
-            $TIMEOUT 10s $CLAUDE mcp add --scope user "$@" 2>/dev/null || echo "Note: $1 MCP server setup skipped or already exists"
+            $TIMEOUT 10s $CLAUDE mcp add --scope user "$@" 2>/dev/null || echo "Warning: failed to add MCP server"
           }
 
-          if ! mcp_exists "Gitlab"; then
-            mcp_add Gitlab -- ${pkgs.pnpm_9}/bin/pnpm dlx @zereight/mcp-gitlab -e GITLAB_TOOLS=all,execute_graphql
-          fi
-
-          if ! mcp_exists "Jam"; then
-            mcp_add --transport http Jam https://mcp.jam.dev/mcp
-          fi
-
-          if ! mcp_exists "claude-orchestrator"; then
-            mcp_add claude-orchestrator -- ${pkgs.pnpm_9}/bin/pnpm --package=@instaffo/claude-dashboard dlx claude-mcp
-          fi
+          mcp_add Gitlab -- ${pkgs.pnpm_9}/bin/pnpm dlx @zereight/mcp-gitlab -e GITLAB_TOOLS=all,execute_graphql
+          mcp_add --transport http Jam https://mcp.jam.dev/mcp
+          mcp_add claude-orchestrator -- ${pkgs.pnpm_9}/bin/pnpm --package=@instaffo/claude-dashboard dlx claude-mcp
 
           echo "Claude MCP server setup complete."
         '';
