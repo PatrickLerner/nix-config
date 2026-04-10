@@ -27,6 +27,7 @@ in {
       "gitlab-ci-local"
       "libyaml"
       "openssl"
+      "rtk"
     ];
     onActivation.cleanup = "uninstall";
 
@@ -85,6 +86,7 @@ in {
           mcp_add Gitlab -- ${pkgs.pnpm_9}/bin/pnpm dlx @zereight/mcp-gitlab -e GITLAB_TOOLS=all,execute_graphql
           mcp_add --transport http Jam https://mcp.jam.dev/mcp
           mcp_add claude-orchestrator -- ${pkgs.pnpm_9}/bin/pnpm --package=@instaffo/claude-dashboard dlx claude-mcp
+          mcp_add google-docs -- ${pkgs.pnpm_9}/bin/pnpm dlx @a-bonus/google-docs-mcp
 
           echo "Claude MCP server setup complete."
         '';
