@@ -11,7 +11,7 @@ windows:
   - editor: vim .
   - console:
   # - console:
-  - docker: docker compose up elasticsearch redis mysql_arm
+  - docker: docker compose up elasticsearch redis mysql
   # - rails: bundle exec rails s
   # - webpack: bin/webpack-dev-server
   # - cable: bin/cable

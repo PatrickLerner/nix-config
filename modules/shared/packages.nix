@@ -34,6 +34,7 @@ with pkgs; [
 
   # Editor & Development Environment
   claude-code
+  codex
   neovim
 
   # Nix Development Tools
