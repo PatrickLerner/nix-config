@@ -26,8 +26,10 @@ in {
       "dockutil"
       "gitlab-ci-local"
       "libyaml"
+      "ocrmypdf"
       "openssl"
       "rtk"
+      "tesseract-lang"
     ];
     onActivation.cleanup = "uninstall";
 
