@@ -63,6 +63,16 @@ in {
         owner = "${user}";
         group = "staff";
       };
+
+      # Google Calendar credentials for Claude MCP
+      "google-calendar-credentials" = {
+        symlink = true;
+        path = "/Users/${user}/.claude/.google-calendar-credentials.json";
+        file = "${secrets}/google-calendar-credentials.age";
+        mode = "600";
+        owner = "${user}";
+        group = "staff";
+      };
     };
   };
 

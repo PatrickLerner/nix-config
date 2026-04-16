@@ -87,6 +87,7 @@ in {
           mcp_add --transport http Jam https://mcp.jam.dev/mcp
           mcp_add claude-orchestrator -- ${pkgs.pnpm_9}/bin/pnpm --package=@instaffo/claude-dashboard dlx claude-mcp
           mcp_add google-docs -- ${pkgs.pnpm_9}/bin/pnpm dlx @a-bonus/google-docs-mcp
+          mcp_add google-calendar -- ${pkgs.pnpm_9}/bin/pnpm dlx @cocal/google-calendar-mcp
 
           echo "Claude MCP server setup complete."
         '';
