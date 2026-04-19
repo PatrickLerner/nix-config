@@ -24,6 +24,7 @@ in {
       "awscli"
       "coreutils"
       "dockutil"
+      "gemini-cli"
       "gitlab-ci-local"
       "libyaml"
       "ocrmypdf"

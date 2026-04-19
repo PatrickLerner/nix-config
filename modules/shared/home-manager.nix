@@ -83,7 +83,7 @@ in {
       # Claude Manager aliases
       cm = "pnpm dlx @instaffo/claude-manager";
       cm_dev = "pnpm dlx /Users/patrick/Projects/Instaffo/claude-manager";
-      claude-dashboard = "pnpm dlx @instaffo/claude-dashboard";
+      claude-dashboard = "pnpm dlx --allow-build=node-pty @instaffo/claude-dashboard";
     };
 
     sessionVariables = {
