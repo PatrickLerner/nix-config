@@ -87,7 +87,6 @@ with pkgs; [
   # Media & Content Tools
   iina
   pear-desktop
-  yt-dlp
   ffmpeg
   imagemagick
   optipng

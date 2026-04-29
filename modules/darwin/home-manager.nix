@@ -28,9 +28,11 @@ in {
       "gitlab-ci-local"
       "libyaml"
       "ocrmypdf"
+      "openai-whisper"
       "openssl"
       "rtk"
       "tesseract-lang"
+      "yt-dlp"
     ];
     onActivation.cleanup = "uninstall";
 

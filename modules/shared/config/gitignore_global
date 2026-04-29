@@ -4,3 +4,4 @@
 .vscode
 tags
 .byebug_history
+.claude/scheduled_tasks.lock
