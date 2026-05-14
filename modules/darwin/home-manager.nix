@@ -5,7 +5,7 @@ let
   # Define the content of your file as a derivation
   sharedFiles = import ../shared/files.nix { inherit config pkgs; };
 in {
-  imports = [ ./dock ];
+  imports = [ ./dock ./mcp-proxy.nix ./claude-dashboard.nix ];
 
   # It me
   users.users.${user} = {
@@ -53,9 +53,16 @@ in {
 
       # Productivity & Utilities
       "Amphetamine" = 937984704;
+      "AusweisApp" = 948660805;
       "ColorSlurp" = 1287239339;
       "ICE Buddy" = 1595947689;
       "LanguageTool" = 1534275760;
+      "Pocket Yoga" = 409206073;
+
+      # Apple Productivity Suite
+      "Keynote" = 409183694;
+      "Numbers" = 409203825;
+      "Pages" = 409201541;
 
       # Media & Content Creation
       "Pixea" = 1507782672;
@@ -77,24 +84,54 @@ in {
 
         stateVersion = "23.11";
 
-        # Activation script to configure Claude MCP servers
+        # Activation script to configure Claude MCP servers.
+        # Idempotent: only mutates ~/.claude.json when an entry differs
+        # from the declared transport/URL. Writes JSON directly via jq
+        # rather than going through `claude mcp add/remove`, which proved
+        # flaky during activation (silent failures on remove leaving stale
+        # stdio entries that then collided with the new add).
         activation.setupClaudeMCP = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          echo "Setting up Claude MCP servers..."
+          JQ="${pkgs.jq}/bin/jq"
+          CLAUDE_JSON="/Users/${user}/.claude.json"
 
-          CLAUDE="${pkgs.claude-code}/bin/claude"
-          TIMEOUT="${pkgs.coreutils}/bin/timeout"
+          if [ ! -f "$CLAUDE_JSON" ]; then
+            echo "{}" > "$CLAUDE_JSON"
+          fi
 
-          mcp_add() {
-            $TIMEOUT 10s $CLAUDE mcp add --scope user "$@" 2>/dev/null || echo "Warning: failed to add MCP server"
+          _backed_up=0
+          backup_once() {
+            if [ "$_backed_up" -eq 0 ]; then
+              cp "$CLAUDE_JSON" "$CLAUDE_JSON.bak.$(date +%s)" || true
+              _backed_up=1
+            fi
           }
 
-          mcp_add Gitlab -- ${pkgs.pnpm_9}/bin/pnpm dlx @zereight/mcp-gitlab -e GITLAB_TOOLS=all,execute_graphql
-          mcp_add --transport http Jam https://mcp.jam.dev/mcp
-          mcp_add claude-orchestrator -- ${pkgs.pnpm_9}/bin/pnpm --package=@instaffo/claude-dashboard dlx claude-mcp
-          mcp_add google-docs -- ${pkgs.pnpm_9}/bin/pnpm dlx @a-bonus/google-docs-mcp
-          mcp_add google-calendar -- ${pkgs.pnpm_9}/bin/pnpm dlx @cocal/google-calendar-mcp
+          # Set .mcpServers[name] to {type, url} preserving any existing
+          # headers (e.g. Jam's Authorization). Drops stdio-only fields
+          # (command/args/env) on transport switch.
+          update_server() {
+            local name="$1" type="$2" url="$3"
+            local cur_type cur_url
+            cur_type=$($JQ -r --arg n "$name" '.mcpServers[$n].type // ""' "$CLAUDE_JSON")
+            cur_url=$($JQ -r --arg n "$name" '.mcpServers[$n].url // ""' "$CLAUDE_JSON")
+            if [ "$cur_type" = "$type" ] && [ "$cur_url" = "$url" ]; then
+              return 0
+            fi
+            echo "MCP $name: updating ($cur_type $cur_url -> $type $url)"
+            backup_once
+            $JQ --arg n "$name" --arg t "$type" --arg u "$url" \
+              '.mcpServers[$n] = ({type: $t, url: $u} + (if .mcpServers[$n].headers then {headers: .mcpServers[$n].headers} else {} end))' \
+              "$CLAUDE_JSON" > "$CLAUDE_JSON.tmp" && mv "$CLAUDE_JSON.tmp" "$CLAUDE_JSON"
+          }
 
-          echo "Claude MCP server setup complete."
+          # stdio MCPs fronted by the local mcp-proxy launchd agent
+          update_server Gitlab              sse  http://127.0.0.1:8765/servers/Gitlab/sse
+          update_server claude-orchestrator sse  http://127.0.0.1:8765/servers/claude-orchestrator/sse
+          update_server google-docs         sse  http://127.0.0.1:8765/servers/google-docs/sse
+          update_server google-calendar     sse  http://127.0.0.1:8765/servers/google-calendar/sse
+
+          # Already hosted remotely, no proxy needed
+          update_server Jam                 http https://mcp.jam.dev/mcp
         '';
       };
       programs = { }

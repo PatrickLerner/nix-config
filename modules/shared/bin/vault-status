@@ -1,0 +1,31 @@
+#!/bin/bash
+
+VAULT_PATH="/Users/patrick/Notes"
+
+cd "$VAULT_PATH" || exit 1
+
+# Check if there are uncommitted changes
+uncommitted_count=$(git status --porcelain 2>/dev/null | wc -l | tr -d ' ')
+uncommitted_count=${uncommitted_count:-0}
+
+# Check if there are unpushed commits
+unpushed_count=$(git log --branches --not --remotes 2>/dev/null | grep -c "^commit")
+unpushed_count=${unpushed_count:-0}
+
+# Exit if everything is clean
+if [ "$uncommitted_count" -eq 0 ] && [ "$unpushed_count" -eq 0 ]; then
+    exit 0
+fi
+
+# Get last commit date
+last_commit_date=$(git log -1 --format=%cd --date=format:'%Y-%m-%d' 2>/dev/null || echo "never")
+
+# Determine total unsynced items and color
+total_unsynced=$((uncommitted_count + unpushed_count))
+
+# Yellow if only unpushed, default if uncommitted
+if [ "$uncommitted_count" -gt 0 ]; then
+    echo "Vault: $total_unsynced files unsynced (last sync $last_commit_date)"
+else
+    echo -e "\033[33mVault: $total_unsynced files unsynced (last sync $last_commit_date)\033[0m"
+fi

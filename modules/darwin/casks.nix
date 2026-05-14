@@ -31,7 +31,6 @@ _:
   "gray"
   "keka"
   "obsidian"
-  "quicklook-json"
 
   # Media & Content Creation
   "audacity"

@@ -170,14 +170,14 @@ When adding npm/pnpm packages that aren't in nixpkgs:
 1. **Create overlay file**: `overlays/##-package-name.nix` (numbered for load order)
 2. **Git tracking required**: New overlay files MUST be `git add`ed before building - Nix uses git tree and won't see untracked files
 3. **For npm packages**: Use `buildNpmPackage` with `npmDepsHash = lib.fakeHash`, build to get real hash
-4. **For pnpm packages**: Use `stdenv.mkDerivation` with `pnpm_9.fetchDeps`:
+4. **For pnpm packages**: Use `stdenv.mkDerivation` with `pnpm.fetchDeps`:
    ```nix
-   pnpmDeps = pnpm_9.fetchDeps {
+   pnpmDeps = pnpm.fetchDeps {
      inherit pname version src;
      hash = lib.fakeHash;  # Build once to get real hash
      fetcherVersion = 2;    # Must be 1 or 2
    };
-   nativeBuildInputs = [ nodejs_24 pnpm_9.configHook ];
+   nativeBuildInputs = [ nodejs_24 pnpm.configHook ];
    ```
 5. **Add to packages**: Reference the overlay package in `modules/shared/packages.nix`
 6. **Hash workflow**: Use `lib.fakeHash` initially, build will fail with correct hash to use

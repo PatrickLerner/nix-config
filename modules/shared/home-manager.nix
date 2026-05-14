@@ -45,7 +45,6 @@ in {
       real_nano = "/usr/bin/nano";
       nano = "nvim";
       vim = "nvim";
-      nvim = "rbenv shell 4.0.1 && nvim";
 
       # Directory shortcuts
       "@nix" = "cd ~/nix-config";
@@ -73,8 +72,6 @@ in {
       # Tmuxinator aliases
       instaffo-start = "tmuxinator start instaffo";
       instaffo-stop = "tmuxinator stop instaffo";
-      claude-dashboard-start = "tmuxinator start claude-dashboard";
-      claude-dashboard-stop = "tmuxinator stop claude-dashboard";
 
       # Git aliases
       gp = "git push";
@@ -83,7 +80,11 @@ in {
       # Claude Manager aliases
       cm = "pnpm dlx @instaffo/claude-manager";
       cm_dev = "pnpm dlx /Users/patrick/Projects/Instaffo/claude-manager";
-      claude-dashboard = "pnpm dlx --allow-build=node-pty @instaffo/claude-dashboard";
+
+      # Claude Dashboard launchd controls (service: com.patrick.claude-dashboard)
+      claude-dashboard-start = "launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.patrick.claude-dashboard.plist";
+      claude-dashboard-stop = "launchctl bootout gui/$(id -u)/com.patrick.claude-dashboard";
+      claude-dashboard-restart = "launchctl kickstart -k gui/$(id -u)/com.patrick.claude-dashboard";
     };
 
     sessionVariables = {
@@ -171,9 +172,10 @@ in {
       export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
       export PATH="/usr/local/sbin:$PATH"
       export PATH="$HOME/.cargo/bin:$PATH"
+      export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
 
       # Load version managers
-      eval "$(rbenv init -)" 2>/dev/null || true
+      eval "$(mise activate zsh)" 2>/dev/null || true
 
       # Set GPG_TTY for GPG signing
       export GPG_TTY=$(tty)

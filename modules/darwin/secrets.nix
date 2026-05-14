@@ -64,6 +64,16 @@ in {
         group = "staff";
       };
 
+      # Armenian phone number for scripts
+      "phone-number-am" = {
+        symlink = true;
+        path = "/Users/${user}/.phone_number_am";
+        file = "${secrets}/phone-number-am.age";
+        mode = "600";
+        owner = "${user}";
+        group = "staff";
+      };
+
       # Google Calendar credentials for Claude MCP
       "google-calendar-credentials" = {
         symlink = true;

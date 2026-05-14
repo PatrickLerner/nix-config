@@ -35,6 +35,7 @@ with pkgs; [
   # Editor & Development Environment
   claude-code
   codex
+  mcp-proxy
   neovim
 
   # Nix Development Tools
@@ -53,6 +54,7 @@ with pkgs; [
   # Version Control & Project Management
   delta
   gh
+  glab
   lazygit
   direnv
   git-lfs
@@ -76,7 +78,6 @@ with pkgs; [
   (python312.withPackages (ps: with ps; [ pip python-gitlab pyyaml ]))
   uv
   rustup
-  rbenv
 
   # Database & Data Tools
   mysql84

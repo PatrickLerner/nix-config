@@ -51,11 +51,7 @@ in {
     text = builtins.readFile ../shared/config/tmuxinator/instaffo.yml;
   };
 
-  ".config/tmuxinator/claude-dashboard.yml" = {
-    text = builtins.readFile ../shared/config/tmuxinator/claude-dashboard.yml;
-  };
-
-  # Global gitignore
+# Global gitignore
   ".gitignore_global" = {
     text = builtins.readFile ../shared/config/gitignore_global;
   };
@@ -77,9 +73,21 @@ in {
     text = builtins.readFile ../shared/config/alacritty.toml;
   };
 
+  # mise — prefer precompiled Ruby binaries over from-source compile
+  ".config/mise/config.toml" = {
+    text = ''
+      [settings.ruby]
+      compile = false
+    '';
+  };
+
   # Bin scripts
   ".bin/copy-my-phone-number.sh" = {
     text = builtins.readFile ../shared/bin/copy-my-phone-number.sh;
+    executable = true;
+  };
+  ".bin/copy-my-armenian-phone-number.sh" = {
+    text = builtins.readFile ../shared/bin/copy-my-armenian-phone-number.sh;
     executable = true;
   };
   ".bin/switch-to-headphones.sh" = {
@@ -100,6 +108,10 @@ in {
   };
   ".bin/stock-search.sh" = {
     text = builtins.readFile ../shared/bin/stock-search.sh;
+    executable = true;
+  };
+  ".bin/vault-status" = {
+    text = builtins.readFile ../shared/bin/vault-status;
     executable = true;
   };
 
