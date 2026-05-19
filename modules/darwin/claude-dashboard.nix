@@ -25,6 +25,7 @@ in {
       StandardErrorPath = "/Users/${user}/Library/Logs/claude-dashboard.log";
       EnvironmentVariables = {
         PATH = lib.concatStringsSep ":" [
+          "/Users/${user}/.nix-profile/bin"
           "${pkgs.pnpm}/bin"
           "${pkgs.nodejs_24}/bin"
           "${pkgs.coreutils}/bin"

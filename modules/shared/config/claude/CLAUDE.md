@@ -1,5 +1,6 @@
 - **GitLab username**: PatrickLerner (id: 1588486)
 - If I ask you to create a MR assign it to me
+- If I ask you to create a GitHub PR assign it to me (`--assignee PatrickLerner`)
 - **Commits**: Do not start a commit unless explicitly told to.
 - **Force push/amend**: Never do this unless explicitly told to
 - **Commit messages**: Never add "Co-Authored-By" lines. Never mention Claude, Anthropic, or AI
@@ -9,6 +10,7 @@
 - `yt-dlp`: Use `yt-dlp --cookies-from-browser edge` for YouTube downloads
 - DO NOT use python if avoidable. Prefer ruby or node
 - Never guess about installed tools, MCP servers, or config. Read the actual files first. Check all possible config locations.
+- I use nix-darwin + home-manager. System and user config (launchd agents, shell aliases, packages, MCP setup, dotfiles including this CLAUDE.md) is generated from `/Users/patrick/nix-config`. If a config file looks managed by nix (read-only, under `/nix/store`, or symlinked from there), edit the source in `~/nix-config` and rebuild, not the generated file.
 
 ## IMPORTANT
 
