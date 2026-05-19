@@ -255,7 +255,7 @@ in {
     enable = true;
     enableDefaultConfig = false;
     includes = [ "/Users/${user}/.ssh/config_external" ];
-    matchBlocks = {
+    settings = {
       "*" = {
         # Set the default values we want to keep
         sendEnv = [ "LANG" "LC_*" ];
