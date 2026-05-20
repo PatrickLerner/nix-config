@@ -37,12 +37,16 @@ with pkgs; [
   codex
   mcp-proxy
   neovim
+  tree-sitter
 
   # Nix Development Tools
   nixfmt
   deadnix
   statix
   nix-prefetch-github
+
+  # Prose & Documentation Linters
+  vale
 
   # Search & Navigation
   ripgrep
