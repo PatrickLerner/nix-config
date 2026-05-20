@@ -29,6 +29,7 @@ in {
           "${pkgs.pnpm}/bin"
           "${pkgs.nodejs_24}/bin"
           "${pkgs.coreutils}/bin"
+          "/Users/${user}/.local/share/mise/shims"
           "/usr/bin"
           "/bin"
         ];
