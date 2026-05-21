@@ -21,6 +21,20 @@ let
   '';
   pnpm = "${pnpmWrapper}";
 
+  # npx instead of `pnpm dlx` for packages whose published JS imports
+  # undeclared transitive deps (e.g. @a-bonus/google-docs-mcp pulls in
+  # @modelcontextprotocol/sdk without listing it) — pnpm's strict
+  # isolated linker can't resolve them; npm's flatter layout can.
+  npxWrapper = pkgs.writeShellScript "mcp-npx-wrapper" ''
+    if [ -f "$HOME/.secrets-env" ]; then
+      set -a
+      . "$HOME/.secrets-env"
+      set +a
+    fi
+    exec ${pkgs.nodejs_24}/bin/npx --yes "$@"
+  '';
+  npx = "${npxWrapper}";
+
   serversJson = builtins.toJSON {
     mcpServers = {
       claude-orchestrator = {
@@ -42,8 +56,8 @@ let
         transportType = "stdio";
       };
       google-docs = {
-        command = pnpm;
-        args = [ "dlx" "@a-bonus/google-docs-mcp" ];
+        command = npx;
+        args = [ "@a-bonus/google-docs-mcp" ];
         transportType = "stdio";
       };
       google-calendar = {

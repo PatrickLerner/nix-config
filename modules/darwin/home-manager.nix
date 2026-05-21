@@ -163,7 +163,6 @@ in {
         { path = "/Applications/WhatsApp.app/"; }
         { path = "/Applications/Telegram.app/"; }
         { path = "/Applications/Slack.app/"; }
-        { path = "/Applications/Discord.app/"; }
         { path = "/Applications/Obsidian.app/"; }
         { path = "/Applications/Anki.app/"; }
         { path = "/Applications/Nix Apps/Alacritty.app"; }

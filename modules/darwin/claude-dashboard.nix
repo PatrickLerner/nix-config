@@ -30,6 +30,7 @@ in {
           "${pkgs.nodejs_24}/bin"
           "${pkgs.coreutils}/bin"
           "/Users/${user}/.local/share/mise/shims"
+          "/opt/homebrew/bin"
           "/usr/bin"
           "/bin"
         ];
