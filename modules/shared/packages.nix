@@ -35,6 +35,7 @@ with pkgs; [
   # Editor & Development Environment
   claude-code
   codex
+  opencode
   mcp-proxy
   neovim
   tree-sitter
