@@ -4,8 +4,13 @@ let
   user = "patrick";
   # Define the content of your file as a derivation
   sharedFiles = import ../shared/files.nix { inherit config pkgs; };
-in {
-  imports = [ ./dock ./mcp-proxy.nix ./claude-dashboard.nix ];
+in
+{
+  imports = [
+    ./dock
+    ./mcp-proxy.nix
+    ./claude-dashboard.nix
+  ];
 
   # It me
   users.users.${user} = {
@@ -76,71 +81,77 @@ in {
   # Enable home-manager
   home-manager = {
     useGlobalPkgs = true;
-    users.${user} = { pkgs, config, lib, ... }: {
-      home = {
-        enableNixpkgsReleaseCheck = false;
-        packages = pkgs.callPackage ../shared/packages.nix { };
-        file = sharedFiles;
+    users.${user} =
+      {
+        pkgs,
+        config,
+        lib,
+        ...
+      }:
+      {
+        home = {
+          enableNixpkgsReleaseCheck = false;
+          packages = pkgs.callPackage ../shared/packages.nix { };
+          file = sharedFiles;
 
-        stateVersion = "23.11";
+          stateVersion = "23.11";
 
-        # Activation script to configure Claude MCP servers.
-        # Idempotent: only mutates ~/.claude.json when an entry differs
-        # from the declared transport/URL. Writes JSON directly via jq
-        # rather than going through `claude mcp add/remove`, which proved
-        # flaky during activation (silent failures on remove leaving stale
-        # stdio entries that then collided with the new add).
-        activation.setupClaudeMCP = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          JQ="${pkgs.jq}/bin/jq"
-          CLAUDE_JSON="/Users/${user}/.claude.json"
+          # Activation script to configure Claude MCP servers.
+          # Idempotent: only mutates ~/.claude.json when an entry differs
+          # from the declared transport/URL. Writes JSON directly via jq
+          # rather than going through `claude mcp add/remove`, which proved
+          # flaky during activation (silent failures on remove leaving stale
+          # stdio entries that then collided with the new add).
+          activation.setupClaudeMCP = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            JQ="${pkgs.jq}/bin/jq"
+            CLAUDE_JSON="/Users/${user}/.claude.json"
 
-          if [ ! -f "$CLAUDE_JSON" ]; then
-            echo "{}" > "$CLAUDE_JSON"
-          fi
-
-          _backed_up=0
-          backup_once() {
-            if [ "$_backed_up" -eq 0 ]; then
-              cp "$CLAUDE_JSON" "$CLAUDE_JSON.bak.$(date +%s)" || true
-              _backed_up=1
+            if [ ! -f "$CLAUDE_JSON" ]; then
+              echo "{}" > "$CLAUDE_JSON"
             fi
-          }
 
-          # Set .mcpServers[name] to {type, url} preserving any existing
-          # headers (e.g. Jam's Authorization). Drops stdio-only fields
-          # (command/args/env) on transport switch.
-          update_server() {
-            local name="$1" type="$2" url="$3"
-            local cur_type cur_url
-            cur_type=$($JQ -r --arg n "$name" '.mcpServers[$n].type // ""' "$CLAUDE_JSON")
-            cur_url=$($JQ -r --arg n "$name" '.mcpServers[$n].url // ""' "$CLAUDE_JSON")
-            if [ "$cur_type" = "$type" ] && [ "$cur_url" = "$url" ]; then
-              return 0
-            fi
-            echo "MCP $name: updating ($cur_type $cur_url -> $type $url)"
-            backup_once
-            $JQ --arg n "$name" --arg t "$type" --arg u "$url" \
-              '.mcpServers[$n] = ({type: $t, url: $u} + (if .mcpServers[$n].headers then {headers: .mcpServers[$n].headers} else {} end))' \
-              "$CLAUDE_JSON" > "$CLAUDE_JSON.tmp" && mv "$CLAUDE_JSON.tmp" "$CLAUDE_JSON"
-          }
+            _backed_up=0
+            backup_once() {
+              if [ "$_backed_up" -eq 0 ]; then
+                cp "$CLAUDE_JSON" "$CLAUDE_JSON.bak.$(date +%s)" || true
+                _backed_up=1
+              fi
+            }
 
-          # stdio MCPs fronted by the local mcp-proxy launchd agent
-          update_server Gitlab              sse  http://127.0.0.1:8765/servers/Gitlab/sse
-          update_server claude-orchestrator sse  http://127.0.0.1:8765/servers/claude-orchestrator/sse
-          update_server google-docs         sse  http://127.0.0.1:8765/servers/google-docs/sse
-          update_server google-calendar     sse  http://127.0.0.1:8765/servers/google-calendar/sse
+            # Set .mcpServers[name] to {type, url} preserving any existing
+            # headers (e.g. Jam's Authorization). Drops stdio-only fields
+            # (command/args/env) on transport switch.
+            update_server() {
+              local name="$1" type="$2" url="$3"
+              local cur_type cur_url
+              cur_type=$($JQ -r --arg n "$name" '.mcpServers[$n].type // ""' "$CLAUDE_JSON")
+              cur_url=$($JQ -r --arg n "$name" '.mcpServers[$n].url // ""' "$CLAUDE_JSON")
+              if [ "$cur_type" = "$type" ] && [ "$cur_url" = "$url" ]; then
+                return 0
+              fi
+              echo "MCP $name: updating ($cur_type $cur_url -> $type $url)"
+              backup_once
+              $JQ --arg n "$name" --arg t "$type" --arg u "$url" \
+                '.mcpServers[$n] = ({type: $t, url: $u} + (if .mcpServers[$n].headers then {headers: .mcpServers[$n].headers} else {} end))' \
+                "$CLAUDE_JSON" > "$CLAUDE_JSON.tmp" && mv "$CLAUDE_JSON.tmp" "$CLAUDE_JSON"
+            }
 
-          # Already hosted remotely, no proxy needed
-          update_server Jam                 http https://mcp.jam.dev/mcp
-        '';
+            # stdio MCPs fronted by the local mcp-proxy launchd agent
+            update_server Gitlab              sse  http://127.0.0.1:8765/servers/Gitlab/sse
+            update_server claude-orchestrator sse  http://127.0.0.1:8765/servers/claude-orchestrator/sse
+            update_server google-docs         sse  http://127.0.0.1:8765/servers/google-docs/sse
+            update_server google-calendar     sse  http://127.0.0.1:8765/servers/google-calendar/sse
+
+            # Already hosted remotely, no proxy needed
+            update_server Jam                 http https://mcp.jam.dev/mcp
+          '';
+        };
+        programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
+
+        # Marked broken Oct 20, 2022 check later to remove this
+        # https://github.com/nix-community/home-manager/issues/3344
+        manual.manpages.enable = false;
       };
-      programs = { }
-        // import ../shared/home-manager.nix { inherit config pkgs lib; };
-
-      # Marked broken Oct 20, 2022 check later to remove this
-      # https://github.com/nix-community/home-manager/issues/3344
-      manual.manpages.enable = false;
-    };
   };
 
   # Fully declarative dock using the latest from Nix Store
@@ -156,8 +167,7 @@ in {
         }
         # Safari Web App (must be created manually in Safari: File > Add to Dock)
         {
-          path =
-            "${config.users.users.${user}.home}/Applications/Google Gemini.app";
+          path = "${config.users.users.${user}.home}/Applications/Google Gemini.app";
         }
         { path = "/Applications/Claude.app"; }
         { path = "/Applications/WhatsApp.app/"; }

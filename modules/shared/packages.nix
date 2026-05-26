@@ -1,6 +1,7 @@
 { pkgs }:
 
-with pkgs; [
+with pkgs;
+[
   # Core System Utilities
   bash-completion
   coreutils
@@ -80,7 +81,13 @@ with pkgs; [
   yarn
   typescript
   typescript-language-server
-  (python312.withPackages (ps: with ps; [ pip python-gitlab pyyaml ]))
+  (python312.withPackages (
+    ps: with ps; [
+      pip
+      python-gitlab
+      pyyaml
+    ]
+  ))
   uv
   rustup
 
@@ -91,6 +98,7 @@ with pkgs; [
   yq
 
   # Media & Content Tools
+  freeflow
   iina
   pear-desktop
   ffmpeg

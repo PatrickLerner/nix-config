@@ -4,7 +4,8 @@ let
   name = "Patrick Lerner";
   user = "patrick";
   email = "ptlerner@gmail.com";
-in {
+in
+{
   # Shared shell configuration
   zsh = {
     enable = true;
@@ -18,7 +19,14 @@ in {
       ignoreDups = true;
       ignoreSpace = true;
       path = "$HOME/.zsh_history";
-      ignorePatterns = [ "pwd" "ls" "cd" "rm *" "g" "git status" ];
+      ignorePatterns = [
+        "pwd"
+        "ls"
+        "cd"
+        "rm *"
+        "g"
+        "git status"
+      ];
     };
 
     plugins = [
@@ -30,8 +38,7 @@ in {
       {
         name = "zsh-history-substring-search";
         src = pkgs.zsh-history-substring-search;
-        file =
-          "share/zsh-history-substring-search/zsh-history-substring-search.zsh";
+        file = "share/zsh-history-substring-search/zsh-history-substring-search.zsh";
       }
     ];
 
@@ -52,12 +59,12 @@ in {
       "@downloads" = "cd ~/Downloads";
       "@instaffo" = "cd ~/Projects/Instaffo";
       "@app" = "cd ~/Projects/Instaffo/Product/app";
-      "@samira" = ''
-        cd "/Users/patrick/Library/CloudStorage/GoogleDrive-ptlerner@gmail.com/My Drive/Data Files/Samira"'';
-      "@sophie" = ''
-        cd "/Users/patrick/Library/CloudStorage/GoogleDrive-ptlerner@gmail.com/My Drive/Data Files/Sophie"'';
-      "@bara" = ''
-        cd "/Users/patrick/Library/CloudStorage/GoogleDrive-ptlerner@gmail.com/My Drive/Data Files/Bára"'';
+      "@samira" =
+        ''cd "/Users/patrick/Library/CloudStorage/GoogleDrive-ptlerner@gmail.com/My Drive/Data Files/Samira"'';
+      "@sophie" =
+        ''cd "/Users/patrick/Library/CloudStorage/GoogleDrive-ptlerner@gmail.com/My Drive/Data Files/Sophie"'';
+      "@bara" =
+        ''cd "/Users/patrick/Library/CloudStorage/GoogleDrive-ptlerner@gmail.com/My Drive/Data Files/Bára"'';
       "@notes" = "cd ~/Notes";
 
       # Transcription aliases
@@ -97,6 +104,22 @@ in {
       HOMEBREW_NO_ANALYTICS = "1";
       LIBRARY_PATH = "${pkgs.zstd.out}/lib:${pkgs.openssl.out}/lib";
     };
+
+    envExtra = ''
+      # PATH lives in zshenv so non-interactive shells (scripts, launchd-spawned
+      # services like claude-dashboard) inherit it too, not just interactive zsh.
+      export PATH="$HOME/.bin:$PATH:/usr/local/bin"
+      export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+      export PATH="/usr/local/sbin:$PATH"
+      export PATH="$HOME/.cargo/bin:$PATH"
+      export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
+
+      # Homebrew and mise — needed in non-interactive shells too. Previously
+      # these only loaded via .zprofile (brew, login-only) and .zshrc (mise,
+      # interactive-only), so launchd-spawned shells got neither.
+      [[ -x /opt/homebrew/bin/brew ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+      export PATH="$HOME/.local/share/mise/shims:$PATH"
+    '';
 
     initContent = ''
       # Add SSH key to agent
@@ -167,12 +190,7 @@ in {
       unset HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND
       unset HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND
 
-      # Path modifications
-      export PATH=~/.bin:$PATH:/usr/local/bin
-      export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-      export PATH="/usr/local/sbin:$PATH"
-      export PATH="$HOME/.cargo/bin:$PATH"
-      export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
+      # PATH modifications moved to envExtra (zshenv) so non-interactive shells see them.
 
       # Load version managers
       eval "$(mise activate zsh)" 2>/dev/null || true
@@ -237,7 +255,9 @@ in {
     enable = true;
     ignores = [ "*.swp" ];
     signing.format = null;
-    lfs = { enable = true; };
+    lfs = {
+      enable = true;
+    };
     settings = {
       user = { inherit name email; };
       init.defaultBranch = "main";
@@ -258,7 +278,10 @@ in {
     settings = {
       "*" = {
         # Set the default values we want to keep
-        sendEnv = [ "LANG" "LC_*" ];
+        sendEnv = [
+          "LANG"
+          "LC_*"
+        ];
         hashKnownHosts = true;
       };
       "github.com" = {

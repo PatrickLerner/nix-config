@@ -1,8 +1,15 @@
-{ agenix, claude-code-nix, pkgs, ... }:
+{
+  agenix,
+  claude-code-nix,
+  pkgs,
+  ...
+}:
 
-let user = "patrick";
+let
+  user = "patrick";
 
-in {
+in
+{
 
   imports = [
     ../../modules/darwin/secrets.nix
@@ -20,18 +27,21 @@ in {
 
     overlays =
       # Apply each overlay found in the /overlays directory
-      let path = ../../overlays;
-      in with builtins;
-      map (n: import (path + ("/" + n))) (filter (n:
-        match ".*\\.nix" n != null
-        || pathExists (path + ("/" + n + "/default.nix")))
-        (attrNames (readDir path))) ++ [
-          # Use claude-code from claude-code-nix flake
-          (_final: prev: {
-            claude-code =
-              claude-code-nix.packages.${prev.stdenv.hostPlatform.system}.default;
-          })
-        ];
+      let
+        path = ../../overlays;
+      in
+      with builtins;
+      map (n: import (path + ("/" + n))) (
+        filter (n: match ".*\\.nix" n != null || pathExists (path + ("/" + n + "/default.nix"))) (
+          attrNames (readDir path)
+        )
+      )
+      ++ [
+        # Use claude-code from claude-code-nix flake
+        (_final: prev: {
+          claude-code = claude-code-nix.packages.${prev.stdenv.hostPlatform.system}.default;
+        })
+      ];
   };
 
   # Setup user, packages, programs
@@ -39,7 +49,10 @@ in {
     package = pkgs.nix;
 
     settings = {
-      trusted-users = [ "@admin" "${user}" ];
+      trusted-users = [
+        "@admin"
+        "${user}"
+      ];
       substituters = [
         "https://nix-community.cachix.org"
         "https://cache.nixos.org"
@@ -76,12 +89,15 @@ in {
   };
 
   # Load configuration that is shared across systems
-  environment.systemPackages = with pkgs;
+  environment.systemPackages =
+    with pkgs;
     [ agenix.packages."${pkgs.stdenv.hostPlatform.system}".default ]
     ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
 
   # Override TERM to prevent alacritty terminfo errors
-  environment.variables = { TERM = "screen-256color"; };
+  environment.variables = {
+    TERM = "screen-256color";
+  };
 
   system = {
     checks.verifyNixPath = false;
@@ -113,7 +129,9 @@ in {
         tilesize = 38;
       };
 
-      finder = { _FXShowPosixPathInTitle = false; };
+      finder = {
+        _FXShowPosixPathInTitle = false;
+      };
 
       trackpad = {
         Clicking = true;

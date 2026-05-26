@@ -1,5 +1,4 @@
-_: super:
-with super; {
+_: super: with super; {
 
   mcp-proxy = python3Packages.buildPythonApplication rec {
     pname = "mcp-proxy";
@@ -17,7 +16,9 @@ with super; {
     dependencies = with python3Packages; [
       # httpx-auth's nixpkgs test suite is flaky against current pyjwt
       # (treats InsecureKeyLengthWarning as an error). Skip its tests.
-      (httpx-auth.overridePythonAttrs (_: { doCheck = false; }))
+      (httpx-auth.overridePythonAttrs (_: {
+        doCheck = false;
+      }))
       mcp
       uvicorn
     ];
@@ -25,8 +26,7 @@ with super; {
     pythonImportsCheck = [ "mcp_proxy" ];
 
     meta = with lib; {
-      description =
-        "Bridge between Streamable HTTP and stdio MCP transports";
+      description = "Bridge between Streamable HTTP and stdio MCP transports";
       homepage = "https://github.com/sparfenyuk/mcp-proxy";
       license = licenses.mit;
       mainProgram = "mcp-proxy";

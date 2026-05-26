@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   user = "patrick";
@@ -39,8 +44,11 @@ let
     mcpServers = {
       claude-orchestrator = {
         command = pnpm;
-        args =
-          [ "--package=@instaffo/claude-dashboard" "dlx" "claude-mcp" ];
+        args = [
+          "--package=@instaffo/claude-dashboard"
+          "dlx"
+          "claude-mcp"
+        ];
         transportType = "stdio";
       };
       Gitlab = {
@@ -62,12 +70,16 @@ let
       };
       google-calendar = {
         command = pnpm;
-        args = [ "dlx" "@cocal/google-calendar-mcp" ];
+        args = [
+          "dlx"
+          "@cocal/google-calendar-mcp"
+        ];
         transportType = "stdio";
       };
     };
   };
-in {
+in
+{
   launchd.user.agents.mcp-proxy = {
     serviceConfig = {
       Label = "com.patrick.mcp-proxy";
@@ -89,8 +101,13 @@ in {
           "${pkgs.pnpm}/bin"
           "${pkgs.nodejs_24}/bin"
           "${pkgs.coreutils}/bin"
+          "/opt/homebrew/bin"
+          "/usr/local/bin"
+          "/usr/local/sbin"
           "/usr/bin"
           "/bin"
+          "/usr/sbin"
+          "/sbin"
         ];
         HOME = "/Users/${user}";
       };

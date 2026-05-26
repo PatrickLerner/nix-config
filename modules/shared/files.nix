@@ -23,25 +23,35 @@ let
   ];
 
   # Karabiner complex modifications list
-  karabinerModifications =
-    [ "1645224986.json" "1648966720.json" "1524263232.json" "1648967236.json" ];
+  karabinerModifications = [
+    "1645224986.json"
+    "1648966720.json"
+    "1524263232.json"
+    "1648967236.json"
+  ];
 
   # Generate neovim config files
-  nvimFiles = builtins.listToAttrs (map (path: {
-    name = ".config/nvim/${path}";
-    value = { text = builtins.readFile ../shared/config/nvim/${path}; };
-  }) nvimConfigs);
+  nvimFiles = builtins.listToAttrs (
+    map (path: {
+      name = ".config/nvim/${path}";
+      value = {
+        text = builtins.readFile ../shared/config/nvim/${path};
+      };
+    }) nvimConfigs
+  );
 
   # Generate karabiner complex modifications
-  karabinerFiles = builtins.listToAttrs (map (file: {
-    name = ".config/karabiner/assets/complex_modifications/${file}";
-    value = {
-      text = builtins.readFile
-        ../shared/config/karabiner/assets/complex_modifications/${file};
-    };
-  }) karabinerModifications);
+  karabinerFiles = builtins.listToAttrs (
+    map (file: {
+      name = ".config/karabiner/assets/complex_modifications/${file}";
+      value = {
+        text = builtins.readFile ../shared/config/karabiner/assets/complex_modifications/${file};
+      };
+    }) karabinerModifications
+  );
 
-in {
+in
+{
   # ".ssh/id_github.pub" = {
   #   text = githubPublicKey;
   # };
@@ -51,16 +61,20 @@ in {
     text = builtins.readFile ../shared/config/tmuxinator/instaffo.yml;
   };
 
-# Global gitignore
+  # Global gitignore
   ".gitignore_global" = {
     text = builtins.readFile ../shared/config/gitignore_global;
   };
 
   # Empty hushlogin file to suppress login messages
-  ".hushlogin" = { text = builtins.readFile ../shared/config/hushlogin; };
+  ".hushlogin" = {
+    text = builtins.readFile ../shared/config/hushlogin;
+  };
 
   # Git configuration with corrected name and email
-  ".gitconfig" = { text = builtins.readFile ../shared/config/gitconfig; };
+  ".gitconfig" = {
+    text = builtins.readFile ../shared/config/gitconfig;
+  };
 
   # Karabiner configuration
   ".config/karabiner/karabiner.json" = {
@@ -127,11 +141,11 @@ in {
 
   # Claude Code agent configuration
   ".claude/agents/anki-persian-vocab-builder.md" = {
-    text = builtins.readFile
-      ../shared/config/claude/agents/anki-persian-vocab-builder.md;
+    text = builtins.readFile ../shared/config/claude/agents/anki-persian-vocab-builder.md;
   };
   ".claude/agents/persian-lesson-processor.md" = {
-    text = builtins.readFile
-      ../shared/config/claude/agents/persian-lesson-processor.md;
+    text = builtins.readFile ../shared/config/claude/agents/persian-lesson-processor.md;
   };
-} // nvimFiles // karabinerFiles
+}
+// nvimFiles
+// karabinerFiles
