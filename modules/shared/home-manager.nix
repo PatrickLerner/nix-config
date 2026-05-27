@@ -114,6 +114,9 @@ in
       export PATH="$HOME/.cargo/bin:$PATH"
       export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
 
+      # pnpm global bin (pnpm install -g)
+      export PATH="$HOME/Library/pnpm/bin:$PATH"
+
       # Homebrew and mise — needed in non-interactive shells too. Previously
       # these only loaded via .zprofile (brew, login-only) and .zshrc (mise,
       # interactive-only), so launchd-spawned shells got neither.

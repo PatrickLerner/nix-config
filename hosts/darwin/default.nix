@@ -82,6 +82,24 @@ in
 
   # Turn off NIX_PATH warnings now that we're using flakes
 
+  # Raise the open-file limit. The launchd default (256) gets inherited by
+  # non-login processes, which makes large flake-input fetches (homebrew-core)
+  # die with "Too many open files". This sets it system-wide at boot.
+  launchd.daemons.maxfiles = {
+    serviceConfig = {
+      Label = "limit.maxfiles";
+      ProgramArguments = [
+        "launchctl"
+        "limit"
+        "maxfiles"
+        "524288"
+        "1048576"
+      ];
+      RunAtLoad = true;
+      ServiceIPC = false;
+    };
+  };
+
   networking = {
     hostName = "znovu";
     computerName = "znovu";
