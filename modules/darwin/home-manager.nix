@@ -37,7 +37,6 @@ in
       "openssl"
       "rtk"
       "tesseract-lang"
-      "yt-dlp"
     ];
     onActivation.cleanup = "uninstall";
 

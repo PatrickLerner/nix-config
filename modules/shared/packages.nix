@@ -102,6 +102,7 @@ with pkgs;
   iina
   pear-desktop
   ffmpeg
+  yt-dlp
   imagemagick
   optipng
   ghostscript
