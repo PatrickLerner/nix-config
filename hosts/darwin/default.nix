@@ -81,9 +81,9 @@ in
   };
 
   networking = {
-    hostName = "znovu";
-    computerName = "znovu";
-    localHostName = "znovu";
+    hostName = "dobare";
+    computerName = "dobare";
+    localHostName = "dobare";
   };
 
   # Load configuration that is shared across systems
