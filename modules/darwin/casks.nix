@@ -4,7 +4,6 @@ _:
   # Development Tools
   "claude"
   "docker-desktop"
-  "warp"
   "zed"
 
   # Browsers
