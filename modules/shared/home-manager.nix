@@ -59,6 +59,8 @@ in
       "@downloads" = "cd ~/Downloads";
       "@instaffo" = "cd ~/Projects/Instaffo";
       "@app" = "cd ~/Projects/Instaffo/Product/app";
+      "@claude-orchestrator" = "cd ~/Projects/Instaffo/claude-orchestrator";
+      "@instaffo-skills" = "cd ~/Projects/Instaffo/instaffo-skills";
       "@samira" =
         ''cd "/Users/patrick/Library/CloudStorage/GoogleDrive-ptlerner@gmail.com/My Drive/Data Files/Samira"'';
       "@sophie" =
@@ -206,6 +208,12 @@ in
         . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
         . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
       fi
+
+      # nix-daemon.sh re-prepends ~/.nix-profile/bin, shoving it ahead of the
+      # mise shims set in zshenv. Re-assert shims first so mise-managed tools
+      # (node 22, etc.) beat nix-profile in this shell and every child it spawns
+      # (git/husky/pnpm pre-commit hooks run non-interactive and inherit this PATH).
+      export PATH="$HOME/.local/share/mise/shims:$PATH"
 
       # Add Homebrew completions to fpath and fix broken symlinks
       if [[ -d /opt/homebrew/share/zsh/site-functions ]]; then
