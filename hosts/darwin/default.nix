@@ -44,41 +44,21 @@ in
       ];
   };
 
-  # Setup user, packages, programs
-  nix = {
-    package = pkgs.nix;
+  # Nix itself is managed by Determinate Nix (its own daemon), not nix-darwin.
+  # Letting nix-darwin manage the installation too conflicts with Determinate,
+  # so we hand control of the Nix installation to Determinate.
+  nix.enable = false;
 
-    settings = {
-      trusted-users = [
-        "@admin"
-        "${user}"
-      ];
-      substituters = [
-        "https://nix-community.cachix.org"
-        "https://cache.nixos.org"
-        "https://claude-code.cachix.org"
-      ];
-      trusted-public-keys = [
-        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        "claude-code.cachix.org-1:YeXf2aNu7UTX8Vwrze0za1WEDS+4DuI2kVeWEE4fsRk="
-      ];
-    };
-
-    gc = {
-      automatic = true;
-      interval = {
-        Weekday = 0;
-        Hour = 2;
-        Minute = 0;
-      };
-      options = "--delete-older-than 30d";
-    };
-
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
+  # With nix.enable = false, nix-darwin no longer writes /etc/nix/nix.conf, so
+  # our caches/flakes/trusted-users would be lost. Determinate's managed
+  # nix.conf includes /etc/nix/nix.custom.conf, so put our settings there.
+  # (cache.nixos.org is a Determinate default; we only add the extra caches.)
+  environment.etc."nix/nix.custom.conf".text = ''
+    experimental-features = nix-command flakes
+    trusted-users = root @admin ${user}
+    extra-substituters = https://nix-community.cachix.org https://claude-code.cachix.org
+    extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= claude-code.cachix.org-1:YeXf2aNu7UTX8Vwrze0za1WEDS+4DuI2kVeWEE4fsRk=
+  '';
 
   # Turn off NIX_PATH warnings now that we're using flakes
 
