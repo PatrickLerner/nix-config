@@ -294,6 +294,12 @@ in
           "LC_*"
         ];
         hashKnownHosts = true;
+        # Load keys into the agent on first use and pull the passphrase
+        # from the macOS Keychain so it is only typed once, ever.
+        addKeysToAgent = "yes";
+        extraOptions = {
+          UseKeychain = "yes";
+        };
       };
       "github.com" = {
         identitiesOnly = true;
