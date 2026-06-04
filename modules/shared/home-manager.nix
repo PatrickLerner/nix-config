@@ -296,6 +296,9 @@ in
         hashKnownHosts = true;
         # Load keys into the agent on first use and pull the passphrase
         # from the macOS Keychain so it is only typed once, ever.
+        # UseKeychain is Apple-ssh only; nixpkgs openssh aborts on it, so
+        # tolerate it as unknown there. Renders before UseKeychain (ASCII sort).
+        IgnoreUnknown = "UseKeychain";
         addKeysToAgent = "yes";
         UseKeychain = "yes";
       };

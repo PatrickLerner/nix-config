@@ -117,7 +117,6 @@ with pkgs;
 
   # macOS System Tools
   mas
-  karabiner-elements
   switchaudio-osx
 
   # Fonts
@@ -125,6 +124,7 @@ with pkgs;
   font-awesome
   hack-font
   jetbrains-mono
+  nerd-fonts.fira-code
   noto-fonts
   noto-fonts-color-emoji
   meslo-lgs-nf

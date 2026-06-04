@@ -56,6 +56,11 @@ in
   #   text = githubPublicKey;
   # };
 
+  # Desktop wallpaper (set via activation hook in darwin/home-manager.nix)
+  ".config/wallpaper.jpg" = {
+    source = ../shared/config/wallpapers/wallhaven-1qkzd9.jpg;
+  };
+
   # Tmuxinator configuration
   ".config/tmuxinator/instaffo.yml" = {
     text = builtins.readFile ../shared/config/tmuxinator/instaffo.yml;
@@ -92,6 +97,30 @@ in
     text = ''
       [settings.ruby]
       compile = false
+    '';
+  };
+
+  # npm/pnpm registry config so @instaffo-scoped packages (claude-dashboard,
+  # claude-manager, claude-orchestrator) resolve from the private GitLab group
+  # registry instead of 404ing on public npm. Tokens stay as literal ''${VAR}
+  # refs — pnpm expands them at read time from the process env (sourced from
+  # ~/.secrets-env), so no secret is baked into the world-readable nix store.
+  # NPM_TOKEN and GITLAB_PERSONAL_ACCESS_TOKEN live in nix-secrets/env-vars.age.
+  ".npmrc" = {
+    text = ''
+      registry=https://registry.npmjs.org/
+      //registry.npmjs.org/:_authToken=''${NPM_TOKEN}
+
+      @instaffo:registry=https://gitlab.com/api/v4/groups/2066742/-/packages/npm/
+      //gitlab.com/:_authToken=''${GITLAB_PERSONAL_ACCESS_TOKEN}
+
+      # Supply-chain hardening (see https://gist.github.com/spikything/8ff8c0c638a139a87f8c04d295f8e8e3)
+      min-release-age=1
+      allow-git=none
+      ignore-scripts=true
+      save-exact=true
+      audit-level=moderate
+      fund=false
     '';
   };
 

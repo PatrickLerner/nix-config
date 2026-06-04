@@ -76,6 +76,18 @@ in
         group = "staff";
       };
 
+      # List of private Instaffo GitLab repos to check out (one path per line,
+      # relative to gitlab.com/Instaffo). Kept secret to avoid leaking the
+      # private group structure into this public config.
+      "instaffo-repos" = {
+        symlink = true;
+        path = "/Users/${user}/.config/instaffo-repos";
+        file = "${secrets}/instaffo-repos.age";
+        mode = "600";
+        owner = "${user}";
+        group = "staff";
+      };
+
       # Google Calendar credentials for Claude MCP
       "google-calendar-credentials" = {
         symlink = true;

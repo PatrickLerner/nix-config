@@ -98,6 +98,16 @@ in
   };
 
   system = {
+    activationScripts.preActivation.text = ''
+      # Install Rosetta 2 on Apple Silicon Macs
+      if [ "$(uname -m)" = "arm64" ]; then
+        if [ ! -f /Library/Apple/usr/libexec/oah/libRosettaRuntime ]; then
+          echo "Installing Rosetta 2..."
+          /usr/bin/softwareupdate --install-rosetta --agree-to-license
+        fi
+      fi
+    '';
+
     checks.verifyNixPath = false;
     primaryUser = user;
     stateVersion = 5;
@@ -111,11 +121,15 @@ in
         KeyRepeat = 2;
 
         # 120, 94, 68, 35, 25, 15
-        InitialKeyRepeat = 15;
+        InitialKeyRepeat = 30;
 
         "com.apple.mouse.tapBehavior" = 1;
+        "com.apple.trackpad.scaling" = 3.0;
         "com.apple.sound.beep.volume" = 0.0;
         "com.apple.sound.beep.feedback" = 0;
+
+        # Sidebar icon size: 1 = small, 2 = medium, 3 = large
+        NSTableViewDefaultSizeMode = 1;
       };
 
       dock = {
@@ -127,13 +141,34 @@ in
         tilesize = 38;
       };
 
+      menuExtraClock = {
+        IsAnalog = true;
+      };
+
+      controlcenter = {
+        BatteryShowPercentage = true;
+        Sound = true;
+      };
+
       finder = {
         _FXShowPosixPathInTitle = false;
+        ShowPathbar = true;
+        FXPreferredViewStyle = "Nlsv";
       };
 
       trackpad = {
         Clicking = true;
         TrackpadThreeFingerDrag = true;
+        # Click pressure: 0 = light, 1 = medium, 2 = firm
+        FirstClickThreshold = 0;
+        SecondClickThreshold = 0;
+      };
+
+      CustomUserPreferences = {
+        # Hide the Spotlight icon from the menu bar
+        "com.apple.Spotlight" = {
+          "NSStatusItem VisibleCC Item-0" = false;
+        };
       };
     };
   };
