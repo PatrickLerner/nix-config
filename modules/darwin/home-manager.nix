@@ -167,10 +167,16 @@ in
               if [ -d "$dest/.git" ]; then
                 return 0
               fi
+              # instaffo-skills is the only project hosted on GitHub
+              # (InstaffoGmbH org); everything else lives in the GitLab group.
+              local url="git@gitlab.com:Instaffo/$path.git"
+              if [ "$path" = "instaffo-skills" ]; then
+                url="git@github.com:InstaffoGmbH/instaffo-skills.git"
+              fi
               echo "cloneInstaffoRepos: cloning $path"
               ${pkgs.coreutils}/bin/mkdir -p "$(${pkgs.coreutils}/bin/dirname "$dest")"
               GIT_SSH_COMMAND="/usr/bin/ssh -o StrictHostKeyChecking=accept-new" \
-                ${pkgs.git}/bin/git clone "git@gitlab.com:Instaffo/$path.git" "$dest" || true
+                ${pkgs.git}/bin/git clone "$url" "$dest" || true
             }
 
             # Skip blank lines and # comments
