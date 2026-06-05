@@ -78,6 +78,7 @@ with pkgs;
   # Programming Languages & Runtimes
   nodejs_24
   pnpm
+  portless
   yarn
   typescript
   typescript-language-server

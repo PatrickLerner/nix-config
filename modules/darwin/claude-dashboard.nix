@@ -23,6 +23,33 @@ let
   '';
 in
 {
+  # The dashboard serves on a high port; the portless proxy fronts it at
+  # https://clawde.localhost on 443. `proxy start` daemonizes and needs sudo
+  # for the privileged port, so it can't be launched from the (no-TTY) user
+  # agent and doesn't survive reboot on its own. Run it as a root LaunchDaemon
+  # in --foreground (launchd owns the process; KeepAlive restarts it). HOME is
+  # pinned to the user so root reuses the existing ~/.portless CA — the one
+  # already trusted in the System keychain — instead of minting a fresh one.
+  launchd.daemons.portless-proxy = {
+    serviceConfig = {
+      Label = "com.patrick.portless-proxy";
+      ProgramArguments = [
+        "${pkgs.portless}/bin/portless"
+        "proxy"
+        "start"
+        "--foreground"
+      ];
+      RunAtLoad = true;
+      KeepAlive = true;
+      StandardOutPath = "/Users/${user}/Library/Logs/portless-proxy.log";
+      StandardErrorPath = "/Users/${user}/Library/Logs/portless-proxy.log";
+      EnvironmentVariables = {
+        HOME = "/Users/${user}";
+        PATH = "/run/current-system/sw/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+      };
+    };
+  };
+
   launchd.user.agents.claude-dashboard = {
     serviceConfig = {
       Label = "com.patrick.claude-dashboard";
