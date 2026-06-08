@@ -25,6 +25,7 @@ _:
   "1password-cli"
   "android-file-transfer"
   "anki"
+  "balenaetcher"
   "appcleaner"
   "daisydisk"
   "gray"
@@ -43,6 +44,7 @@ _:
 
   # Security & Privacy
   "protonvpn"
+  "tailscale-app"
   "tor-browser"
   "yubico-authenticator"
 
