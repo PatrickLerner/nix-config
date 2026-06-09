@@ -33,11 +33,17 @@ in
   launchd.daemons.portless-proxy = {
     serviceConfig = {
       Label = "com.patrick.portless-proxy";
+      # /nix is a separate APFS volume mounted by its own daemon at boot. A root
+      # LaunchDaemon pointing straight at a /nix/store path can fire before that
+      # mount completes; launchd then logs "Missing executable", parks the job
+      # inactive, and KeepAlive does NOT retry a missing-executable failure, so
+      # the proxy silently never comes up until a manual bootout/bootstrap.
+      # Gate the exec on the store path existing, using only boot-volume binaries
+      # (/bin/sh, /bin/wait4path) so launchd can always spawn argv[0].
       ProgramArguments = [
-        "${pkgs.portless}/bin/portless"
-        "proxy"
-        "start"
-        "--foreground"
+        "/bin/sh"
+        "-c"
+        "/bin/wait4path '${pkgs.portless}/bin/portless' && exec '${pkgs.portless}/bin/portless' proxy start --foreground"
       ];
       RunAtLoad = true;
       KeepAlive = true;
