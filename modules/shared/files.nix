@@ -175,6 +175,9 @@ in
   ".claude/agents/persian-lesson-processor.md" = {
     text = builtins.readFile ../shared/config/claude/agents/persian-lesson-processor.md;
   };
+  ".claude/agents/copywriter.md" = {
+    text = builtins.readFile ../shared/config/claude/agents/copywriter.md;
+  };
 }
 // nvimFiles
 // karabinerFiles

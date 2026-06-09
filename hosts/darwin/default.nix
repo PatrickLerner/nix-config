@@ -169,6 +169,11 @@ in
         "com.apple.Spotlight" = {
           "NSStatusItem VisibleCC Item-0" = false;
         };
+
+        # Disable clicking the wallpaper to reveal the desktop
+        "com.apple.WindowManager" = {
+          EnableStandardClickToShowDesktop = false;
+        };
       };
     };
   };
