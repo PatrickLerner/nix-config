@@ -265,7 +265,11 @@ in
   git = {
     enable = true;
     ignores = [ "*.swp" ];
-    signing.format = null;
+    signing = {
+      format = "ssh";
+      key = "/Users/${user}/.ssh/id_ed25519.pub";
+      signByDefault = true;
+    };
     lfs = {
       enable = true;
     };
@@ -276,7 +280,6 @@ in
         editor = "vim";
         autocrlf = "input";
       };
-      commit.gpgsign = false;
       pull.rebase = true;
       rebase.autoStash = true;
     };
@@ -301,10 +304,11 @@ in
         IgnoreUnknown = "UseKeychain";
         addKeysToAgent = "yes";
         UseKeychain = "yes";
+        # Default key for all git hosts (github, gitlab, ...) and signing
+        identityFile = [ "/Users/${user}/.ssh/id_ed25519" ];
       };
       "github.com" = {
         identitiesOnly = true;
-        identityFile = [ "/Users/${user}/.ssh/id_ed25519" ];
       };
     };
   };

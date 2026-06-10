@@ -97,6 +97,18 @@ in
         owner = "${user}";
         group = "staff";
       };
+
+      # Personal bio context read at runtime by the
+      # anki-sami-german-vocab-builder agent. Kept out of the public agent
+      # prompt so private details about Patrick and Sami stay encrypted.
+      "anki-personal-context" = {
+        symlink = true;
+        path = "/Users/${user}/.claude/.anki-personal-context.md";
+        file = "${secrets}/anki-personal-context.age";
+        mode = "600";
+        owner = "${user}";
+        group = "staff";
+      };
     };
   };
 

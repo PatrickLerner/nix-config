@@ -35,6 +35,10 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+    homebrew-driangle-tap = {
+      url = "github:driangle/homebrew-tap";
+      flake = false;
+    };
     secrets = {
       url = "git+ssh://git@github.com/PatrickLerner/nix-secrets.git";
       flake = false;
@@ -52,6 +56,7 @@
       homebrew-bundle,
       homebrew-core,
       homebrew-cask,
+      homebrew-driangle-tap,
       home-manager,
       nixpkgs,
       ...
@@ -125,6 +130,7 @@
                   "homebrew/homebrew-core" = homebrew-core;
                   "homebrew/homebrew-cask" = homebrew-cask;
                   "homebrew/homebrew-bundle" = homebrew-bundle;
+                  "driangle/homebrew-tap" = homebrew-driangle-tap;
                 };
                 mutableTaps = false;
                 autoMigrate = true;

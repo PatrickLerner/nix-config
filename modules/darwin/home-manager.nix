@@ -29,6 +29,7 @@ in
       "awscli"
       "coreutils"
       "dockutil"
+      "driangle/tap/taskmd"
       "gemini-cli"
       "gitlab-ci-local"
       "libyaml"

@@ -12,7 +12,7 @@ return {
       local ensure_installed = {
         'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline',
         'vim', 'vimdoc', 'javascript', 'typescript', 'tsx', 'json', 'yaml',
-        'rust', 'python', 'go', 'ruby', 'query', 'regex',
+        'rust', 'python', 'go', 'ruby', 'query', 'regex', 'ron',
       }
 
       ts.install(ensure_installed)
@@ -21,7 +21,7 @@ return {
         pattern = {
           'bash', 'sh', 'c', 'diff', 'html', 'lua', 'markdown',
           'vim', 'help', 'javascript', 'typescript', 'typescriptreact',
-          'json', 'yaml', 'rust', 'python', 'go', 'ruby', 'query',
+          'json', 'yaml', 'rust', 'python', 'go', 'ruby', 'query', 'ron',
         },
         callback = function(args)
           local ft = vim.bo[args.buf].filetype

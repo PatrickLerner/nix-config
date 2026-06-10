@@ -167,6 +167,9 @@ in
   ".claude/CLAUDE.md" = {
     text = builtins.readFile ../shared/config/claude/CLAUDE.md;
   };
+  ".claude/RTK.md" = {
+    text = builtins.readFile ../shared/config/claude/RTK.md;
+  };
 
   # Claude Code agent configuration
   ".claude/agents/anki-persian-vocab-builder.md" = {
@@ -177,6 +180,17 @@ in
   };
   ".claude/agents/copywriter.md" = {
     text = builtins.readFile ../shared/config/claude/agents/copywriter.md;
+  };
+  ".claude/agents/anki-sami-german-vocab-builder.md" = {
+    text = builtins.readFile ../shared/config/claude/agents/anki-sami-german-vocab-builder.md;
+  };
+
+  # Claude Code personal skills
+  ".claude/skills/test-gitlab-token/SKILL.md" = {
+    text = builtins.readFile ../shared/config/claude/skills/test-gitlab-token/SKILL.md;
+  };
+  ".claude/skills/claude-dashboard-daemon/SKILL.md" = {
+    text = builtins.readFile ../shared/config/claude/skills/claude-dashboard-daemon/SKILL.md;
   };
 }
 // nvimFiles
