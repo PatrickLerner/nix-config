@@ -88,12 +88,27 @@ in
         group = "staff";
       };
 
-      # Google Calendar credentials for Claude MCP
+      # Shared Google OAuth client credentials for the Claude MCP. Pointed at by
+      # GOOGLE_OAUTH_CREDENTIALS in ~/.secrets-env and used by both @a-bonus
+      # google-docs-mcp profiles (google-private and google-work). Name kept for
+      # the existing .age file; it is no longer calendar-specific.
       "google-calendar-credentials" = {
         symlink = true;
         path = "/Users/${user}/.claude/.google-calendar-credentials.json";
         file = "${secrets}/google-calendar-credentials.age";
         mode = "600";
+        owner = "${user}";
+        group = "staff";
+      };
+
+      # Self-contained script (keychain extraction inlined) that pushes the
+      # Claude OAuth token to the claude-orchestrator GitLab CI/CD variables.
+      # Run hourly by the com.patrick.claude-oauth-gitlab launchd agent.
+      "claude-oauth-gitlab" = {
+        symlink = false;
+        path = "/Users/${user}/.claude/set-oauth-token-gitlab.sh";
+        file = "${secrets}/claude-oauth-gitlab.age";
+        mode = "700";
         owner = "${user}";
         group = "staff";
       };

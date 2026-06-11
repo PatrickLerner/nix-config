@@ -10,6 +10,7 @@ in
     ./dock
     ./mcp-proxy.nix
     ./claude-dashboard.nix
+    ./claude-oauth-gitlab.nix
   ];
 
   # It me
@@ -136,11 +137,13 @@ in
                 "$CLAUDE_JSON" > "$CLAUDE_JSON.tmp" && mv "$CLAUDE_JSON.tmp" "$CLAUDE_JSON"
             }
 
-            # stdio MCPs fronted by the local mcp-proxy launchd agent
+            # stdio MCPs fronted by the local mcp-proxy launchd agent. Both Google
+            # accounts use @a-bonus/google-docs-mcp (Docs/Drive/Gmail/Calendar);
+            # the work instance just selects a different OAuth profile.
             update_server Gitlab              sse  http://127.0.0.1:8765/servers/Gitlab/sse
             update_server claude-orchestrator sse  http://127.0.0.1:8765/servers/claude-orchestrator/sse
-            update_server google-docs         sse  http://127.0.0.1:8765/servers/google-docs/sse
-            update_server google-calendar     sse  http://127.0.0.1:8765/servers/google-calendar/sse
+            update_server google-private      sse  http://127.0.0.1:8765/servers/google-private/sse
+            update_server google-work         sse  http://127.0.0.1:8765/servers/google-work/sse
 
             # Already hosted remotely, no proxy needed
             update_server Jam                 http https://mcp.jam.dev/mcp

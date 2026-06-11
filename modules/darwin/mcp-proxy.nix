@@ -40,6 +40,23 @@ let
   '';
   npx = "${npxWrapper}";
 
+  # Same as npxWrapper but selects the @a-bonus/google-docs-mcp "work" profile,
+  # which reads its refresh token from ~/.config/google-docs-mcp/work/token.json
+  # (the default profile uses ~/.config/google-docs-mcp/token.json). Both profiles
+  # share the OAuth client creds via GOOGLE_OAUTH_CREDENTIALS from ~/.secrets-env.
+  # Set inside the subprocess (not the proxy env) for the same reason the secrets
+  # are: mcp's stdio_client only forwards a safe default env to children.
+  npxWorkWrapper = pkgs.writeShellScript "mcp-npx-wrapper-work" ''
+    if [ -f "$HOME/.secrets-env" ]; then
+      set -a
+      . "$HOME/.secrets-env"
+      set +a
+    fi
+    export GOOGLE_MCP_PROFILE=work
+    exec ${pkgs.nodejs_24}/bin/npx --yes "$@"
+  '';
+  npxWork = "${npxWorkWrapper}";
+
   serversJson = builtins.toJSON {
     mcpServers = {
       claude-orchestrator = {
@@ -63,17 +80,17 @@ let
         ];
         transportType = "stdio";
       };
-      google-docs = {
+      # Personal Google account (default profile). @a-bonus/google-docs-mcp
+      # covers Docs, Drive, Gmail and Calendar, so no separate calendar MCP.
+      google-private = {
         command = npx;
         args = [ "@a-bonus/google-docs-mcp" ];
         transportType = "stdio";
       };
-      google-calendar = {
-        command = pnpm;
-        args = [
-          "dlx"
-          "@cocal/google-calendar-mcp"
-        ];
+      # Work Google account: same package, "work" profile (separate token file).
+      google-work = {
+        command = npxWork;
+        args = [ "@a-bonus/google-docs-mcp" ];
         transportType = "stdio";
       };
     };
