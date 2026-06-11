@@ -346,6 +346,19 @@ in
 
             /usr/bin/killall Finder >/dev/null 2>&1 || true
           '';
+
+          # Ensure ~/Notes is registered as a taskmd project in ~/.taskmd.yaml.
+          # The file is intentionally NOT nix-managed; taskmd patches it in
+          # place, preserving any other registered projects. Guard on the id so
+          # re-registration (which errors) is skipped.
+          activation.registerTaskmdNotes = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            TASKMD=/opt/homebrew/bin/taskmd
+            if [ -x "$TASKMD" ] && [ -d "/Users/${user}/Notes" ]; then
+              if ! "$TASKMD" projects --format json 2>/dev/null | grep -q '"id": *"Notes"'; then
+                "$TASKMD" projects register --id Notes --name Notes --path "/Users/${user}/Notes" || true
+              fi
+            fi
+          '';
         };
         programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
 

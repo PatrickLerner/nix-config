@@ -259,6 +259,11 @@ in
         copy-earlier-word
       )
 
+      # Show "now" tasks from the Notes taskmd project on interactive startup.
+      if command -v taskmd >/dev/null 2>&1; then
+        taskmd next --columns id,title --phase now --project Notes 2>/dev/null | tail -n '+5'
+      fi
+
     '';
   };
 
