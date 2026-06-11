@@ -88,6 +88,18 @@ in
         group = "staff";
       };
 
+      # List of private personal GitHub repos to check out (one owner/repo per
+      # line, relative to github.com). Kept secret so private repo names stay
+      # out of this public config. Each lands in ~/Projects/<repo-basename>.
+      "github-repos" = {
+        symlink = true;
+        path = "/Users/${user}/.config/github-repos";
+        file = "${secrets}/github-repos.age";
+        mode = "600";
+        owner = "${user}";
+        group = "staff";
+      };
+
       # Shared Google OAuth client credentials for the Claude MCP. Pointed at by
       # GOOGLE_OAUTH_CREDENTIALS in ~/.secrets-env and used by both @a-bonus
       # google-docs-mcp profiles (google-private and google-work). Name kept for

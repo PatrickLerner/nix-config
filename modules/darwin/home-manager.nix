@@ -192,6 +192,35 @@ in
             done < "$REPO_LIST"
           '';
 
+          # Ensure selected personal GitHub repos are checked out under
+          # ~/Projects. Clones only when the target dir is missing; never pulls
+          # or updates an existing checkout. The repo list is an agenix secret
+          # (one `owner/repo` per line, relative to github.com) so private repo
+          # names stay out of this public config. Each repo lands in
+          # ~/Projects/<repo-basename>.
+          activation.cloneGithubRepos = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            BASE="/Users/${user}/Projects"
+            REPO_LIST="/Users/${user}/.config/github-repos"
+            ${pkgs.coreutils}/bin/mkdir -p "$BASE"
+
+            if [ ! -r "$REPO_LIST" ]; then
+              echo "cloneGithubRepos: $REPO_LIST not readable yet, skipping"
+              exit 0
+            fi
+
+            # Skip blank lines and # comments
+            while IFS= read -r line || [ -n "$line" ]; do
+              line="''${line%%#*}"
+              line="$(echo "$line" | ${pkgs.coreutils}/bin/tr -d '[:space:]')"
+              [ -z "$line" ] && continue
+              dest="$BASE/''${line##*/}"
+              [ -d "$dest/.git" ] && continue
+              echo "cloneGithubRepos: cloning $line"
+              GIT_SSH_COMMAND="/usr/bin/ssh -o StrictHostKeyChecking=accept-new" \
+                ${pkgs.git}/bin/git clone "git@github.com:$line.git" "$dest" || true
+            done < "$REPO_LIST"
+          '';
+
           # Register checked-out Instaffo repos in ~/.claude-orchestrator.json so
           # the claude-orchestrator dashboard/MCP knows their local paths. ONLY
           # adds missing entries under .repos, keyed by each repo's GitLab project

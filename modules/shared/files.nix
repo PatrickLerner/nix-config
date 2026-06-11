@@ -192,6 +192,12 @@ in
   ".claude/skills/claude-dashboard-daemon/SKILL.md" = {
     text = builtins.readFile ../shared/config/claude/skills/claude-dashboard-daemon/SKILL.md;
   };
+  ".claude/skills/zeroclaw-cli/SKILL.md" = {
+    text = builtins.readFile ../shared/config/claude/skills/zeroclaw-cli/SKILL.md;
+  };
+  ".claude/skills/mcp-proxy-debugging/SKILL.md" = {
+    text = builtins.readFile ../shared/config/claude/skills/mcp-proxy-debugging/SKILL.md;
+  };
 }
 // nvimFiles
 // karabinerFiles

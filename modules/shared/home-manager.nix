@@ -282,6 +282,10 @@ in
       };
       pull.rebase = true;
       rebase.autoStash = true;
+      # Move submodule working trees to the superproject's recorded SHA on
+      # pull/checkout (stops vendored submodules drifting). Does not auto-init
+      # newly added submodules; first checkout still needs `git submodule update --init`.
+      submodule.recurse = true;
     };
   };
 
