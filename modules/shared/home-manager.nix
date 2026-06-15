@@ -4,6 +4,37 @@ let
   name = "Patrick Lerner";
   user = "patrick";
   email = "ptlerner@gmail.com";
+  sdModel = pkgs.fetchurl {
+    name = "sd15.safetensors";
+    url = "https://huggingface.co/Comfy-Org/stable-diffusion-v1-5-archive/resolve/main/v1-5-pruned-emaonly-fp16.safetensors";
+    hash = "sha256-6UdqE3KM112Cefbsi611OmahlXyjdaFGTcY7N9tuORY=";
+  };
+  # FLUX.1-schnell (Apache-2.0, ungated) for photorealistic generation via sd-cli.
+  # Run `build` once with fakeHash placeholders; nix prints the real hashes to paste back.
+  fluxModel = pkgs.fetchurl {
+    name = "flux1-schnell-Q8_0.gguf";
+    url = "https://huggingface.co/city96/FLUX.1-schnell-gguf/resolve/main/flux1-schnell-Q8_0.gguf";
+    hash = "sha256-9mlJQRk7EBSNvx8PSY1MzT6YdcEn/FOUYhO2hYDGbxA=";
+  };
+  # Names match the URL basenames so the `nix store prefetch-file` paths are reused
+  # (mismatched names would re-download at build time).
+  # black-forest-labs/FLUX.1-schnell is gated (401 anon); second-state mirrors the
+  # identical VAE ungated, so fetchurl can pull it without a token.
+  fluxVae = pkgs.fetchurl {
+    name = "ae.safetensors";
+    url = "https://huggingface.co/second-state/FLUX.1-schnell-GGUF/resolve/main/ae.safetensors";
+    hash = "sha256-r8jignLNFds5GbrNtpGM6cHtIulssSxNXtD7qCNSnjg=";
+  };
+  fluxClipL = pkgs.fetchurl {
+    name = "clip_l.safetensors";
+    url = "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors";
+    hash = "sha256-ZgxvWxq66dxJisLSHhNH0qvbDPbAwMhXbNeWSR2abN0=";
+  };
+  fluxT5 = pkgs.fetchurl {
+    name = "t5xxl_fp16.safetensors";
+    url = "https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/t5xxl_fp16.safetensors";
+    hash = "sha256-bkgLCfrgSactKoxfvMuNPpL+vrIzu+nf5yVpWKkWdjU=";
+  };
 in
 {
   # Shared shell configuration
@@ -105,6 +136,11 @@ in
       DISABLE_AUTO_TITLE = "true";
       HOMEBREW_NO_ANALYTICS = "1";
       LIBRARY_PATH = "${pkgs.zstd.out}/lib:${pkgs.openssl.out}/lib";
+      SD_MODEL = "${sdModel}";
+      FLUX_MODEL = "${fluxModel}";
+      FLUX_VAE = "${fluxVae}";
+      FLUX_CLIP_L = "${fluxClipL}";
+      FLUX_T5 = "${fluxT5}";
     };
 
     envExtra = ''
@@ -173,6 +209,43 @@ in
 
           echo "%F{magenta}($branch_color''${ref#refs/heads/}%F{magenta})%F{blue} "
         fi
+      }
+
+      # FLUX.1-schnell resident server. Loads the model once (~21GB in unified
+      # memory, ~45s) and stays up. Run in its own terminal; Ctrl-C to stop and
+      # free the memory. Generate against it with flux-request.
+      function flux-server() {
+        echo "flux-server: loading model (~21GB resident, ~45s). Ctrl-C to stop and free memory." >&2
+        sd-server \
+          --diffusion-model "$FLUX_MODEL" \
+          --vae "$FLUX_VAE" \
+          --clip_l "$FLUX_CLIP_L" \
+          --t5xxl "$FLUX_T5" \
+          --listen-port 1234 "$@"
+      }
+
+      # Generate one image via a running flux-server. Both flags required.
+      #   flux-request -p "candid portrait photo, natural skin texture, 50mm" -o out.png
+      function flux-request() {
+        local OPTIND OPTARG arg p="" o=""
+        while getopts "p:o:" arg; do
+          case $arg in
+            p) p="$OPTARG" ;;
+            o) o="$OPTARG" ;;
+            *) ;;
+          esac
+        done
+        if [[ -z "$p" || -z "$o" ]]; then
+          echo "usage: flux-request -p <prompt> -o <output.png>" >&2
+          return 1
+        fi
+        if ! curl -sf -o /dev/null http://127.0.0.1:1234/sdcpp/v1/capabilities 2>/dev/null; then
+          echo "flux-request: server not reachable on :1234 — start it first with flux-server" >&2
+          return 1
+        fi
+        curl -s http://127.0.0.1:1234/sdapi/v1/txt2img -H 'Content-Type: application/json' \
+          -d "$(jq -n --arg p "$p" '{prompt:$p, steps:4, cfg_scale:1.0, sampler_name:"euler", width:1024, height:1024, seed:-1}')" \
+          | jq -r '.images[0]' | base64 -d > "$o" && echo "flux-request: wrote $o"
       }
 
       # Source shrink-path plugin for fish-style paths

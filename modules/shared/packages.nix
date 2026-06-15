@@ -8,6 +8,7 @@ with pkgs;
   killall
   moreutils
   openssh
+  speedtest-cli
   sqlite
   wget
   zip
@@ -108,6 +109,10 @@ with pkgs;
   optipng
   ghostscript
   poppler-utils
+
+  # AI & Image Generation
+  stable-diffusion-cpp
+  python313Packages.huggingface-hub
 
   # Security & Encryption
   age
