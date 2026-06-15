@@ -300,7 +300,10 @@ in
 
           # Set the desktop wallpaper from the repo-managed image.
           activation.setWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-            WALLPAPER="/Users/${user}/.config/wallpaper.jpg"
+            # Resolve the symlink to the real /nix/store path. The hash changes
+            # whenever the image changes, so System Events sees a new path string
+            # and actually reloads. Setting the stable symlink path is a no-op.
+            WALLPAPER="$(/usr/bin/readlink -f /Users/${user}/.config/wallpaper.jpg)"
             if [ -f "$WALLPAPER" ]; then
               /usr/bin/osascript -e "tell application \"System Events\" to set picture of every desktop to \"$WALLPAPER\"" || true
             fi
