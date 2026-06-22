@@ -8,20 +8,8 @@
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # The brew engine, pinned to a stable release. nix-homebrew otherwise pins
-    # an older tag that drifts behind the floating taps below and breaks `brew
-    # bundle` (newer formulae call brew APIs the pinned engine lacks). 5.1.14 is
-    # new enough to satisfy current formulae, but a tagged release rather than
-    # master so it avoids unreleased CLI changes. Bump this when the taps need a
-    # newer engine; avoid `master` (its `brew bundle --cleanup` needs --force,
-    # which the nix-homebrew/nix-darwin tooling doesn't pass).
-    brew-src = {
-      url = "github:Homebrew/brew/5.1.14";
-      flake = false;
-    };
     nix-homebrew = {
       url = "github:zhaofengli/nix-homebrew";
-      inputs.brew-src.follows = "brew-src";
     };
     homebrew-bundle = {
       url = "github:homebrew/homebrew-bundle";

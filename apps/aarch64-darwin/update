@@ -2,6 +2,7 @@
 
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
+RED='\033[1;31m'
 NC='\033[0m'
 
 echo "${YELLOW}Updating flake inputs...${NC}"
@@ -12,6 +13,20 @@ nix run .#build-switch
 
 echo "${YELLOW}Upgrading Homebrew packages...${NC}"
 brew upgrade
+
+# nix-darwin's activation no longer runs cleanup (onActivation.cleanup = "none"),
+# because Homebrew 6.x dropped the `--force-cleanup` flag nix-darwin still emits.
+# Do it here with the 6.x syntax against the active generation's Brewfile, so
+# casks/brews removed from the Nix config still get uninstalled.
+# Scope to --formula --cask --mas: with no type flag, cleanup also untaps, and
+# the taps are managed declaratively by nix-homebrew (absent from the Brewfile).
+echo "${YELLOW}Cleaning up Homebrew packages not in the Brewfile...${NC}"
+BREWFILE=$(grep -oE "/nix/store/[^']*Brewfile" /run/current-system/activate | head -1)
+if [ -n "$BREWFILE" ]; then
+  brew bundle cleanup --file="$BREWFILE" --formula --cask --mas --force
+else
+  echo "${RED}Could not locate the managed Brewfile; skipping cleanup.${NC}"
+fi
 
 echo "${YELLOW}Cleaning up...${NC}"
 nix run .#clean

@@ -40,7 +40,12 @@ in
       "rtk"
       "tesseract-lang"
     ];
-    onActivation.cleanup = "uninstall";
+    # "none", not "uninstall": Homebrew 6.x removed the `--force-cleanup` flag
+    # that nix-darwin still emits for "uninstall"/"zap", so any non-"none" value
+    # makes `brew bundle` reject the activation. Revisit (back to "uninstall")
+    # once nix-darwin emits `--cleanup --force`. Stale casks/brews must be
+    # removed manually for now: `brew bundle --file=<Brewfile> cleanup --force`.
+    onActivation.cleanup = "none";
 
     # These app IDs are from using the mas CLI app
     # mas = mac app store
