@@ -141,6 +141,7 @@ in
             # accounts use @a-bonus/google-docs-mcp (Docs/Drive/Gmail/Calendar);
             # the work instance just selects a different OAuth profile.
             update_server Gitlab              sse  http://127.0.0.1:8765/servers/Gitlab/sse
+            update_server claude-manager      sse  http://127.0.0.1:8765/servers/claude-manager/sse
             update_server claude-orchestrator sse  http://127.0.0.1:8765/servers/claude-orchestrator/sse
             update_server google-private      sse  http://127.0.0.1:8765/servers/google-private/sse
             update_server google-work         sse  http://127.0.0.1:8765/servers/google-work/sse

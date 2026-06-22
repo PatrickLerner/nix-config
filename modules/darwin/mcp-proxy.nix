@@ -68,6 +68,15 @@ let
         ];
         transportType = "stdio";
       };
+      claude-manager = {
+        command = pnpm;
+        args = [
+          "dlx"
+          "@instaffo/claude-manager"
+          "mcp"
+        ];
+        transportType = "stdio";
+      };
       Gitlab = {
         command = pnpm;
         args = [
