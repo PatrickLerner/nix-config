@@ -89,7 +89,7 @@ in
       "@workbench" = "cd ~/Workbench";
       "@downloads" = "cd ~/Downloads";
       "@instaffo" = "cd ~/Projects/Instaffo";
-      "@app" = "cd ~/Projects/Instaffo/Product/app";
+      "@app" = "cd ~/Projects/Instaffo/app";
       "@claude-orchestrator" = "cd ~/Projects/Instaffo/claude-orchestrator";
       "@instaffo-skills" = "cd ~/Projects/Instaffo/instaffo-skills";
       "@samira" =

@@ -171,12 +171,13 @@ in
               $OPENCODE mcp add Jam                 --url https://mcp.jam.dev/mcp
             '';
 
-            # Ensure selected Instaffo GitLab repos are checked out under
-            # ~/Projects/Instaffo, mirroring the GitLab group structure. Clones
-            # only when the target dir is missing; never pulls or updates an
-            # existing checkout. The repo list is an agenix secret (one path per
-            # line, relative to gitlab.com/Instaffo) so the private group
-            # structure stays out of this public config.
+            # Ensure selected Instaffo GitLab repos are checked out flat under
+            # ~/Projects/Instaffo (each repo lands in ~/Projects/Instaffo/<repo
+            # basename>, NOT mirroring the GitLab group structure). Clones only
+            # when the target dir is missing; never pulls or updates an existing
+            # checkout. The repo list is an agenix secret (one path per line,
+            # relative to gitlab.com/Instaffo) so the private group structure
+            # stays out of this public config; only the basename is used locally.
             cloneInstaffoRepos = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
               BASE="/Users/${user}/Projects/Instaffo"
               REPO_LIST="/Users/${user}/.config/instaffo-repos"
@@ -189,7 +190,7 @@ in
 
               clone_repo() {
                 local path="$1"
-                local dest="$BASE/$path"
+                local dest="$BASE/''${path##*/}"
                 if [ -d "$dest/.git" ]; then
                   return 0
                 fi
