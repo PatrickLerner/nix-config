@@ -313,14 +313,6 @@ in
               done
             '';
 
-            # Disable the Spotlight Cmd+Space shortcut (symbolichotkey 64).
-            # Uses -dict-add so it merges into AppleSymbolicHotKeys rather than
-            # replacing the whole dict (which would reset every other hotkey).
-            disableSpotlightShortcut = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-              /usr/bin/defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys \
-                -dict-add 64 '{enabled=0;value={parameters=(32,49,1048576);type="standard";};}' || true
-            '';
-
             # Set the desktop wallpaper from the repo-managed image.
             setWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
               # Resolve the symlink to the real /nix/store path. The hash changes

@@ -12,7 +12,7 @@ echo "${YELLOW}Building and switching...${NC}"
 nix run .#build-switch
 
 echo "${YELLOW}Upgrading Homebrew packages...${NC}"
-brew upgrade
+NONINTERACTIVE=1 brew upgrade
 
 # nix-darwin's activation no longer runs cleanup (onActivation.cleanup = "none"),
 # because Homebrew 6.x dropped the `--force-cleanup` flag nix-darwin still emits.
