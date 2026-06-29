@@ -154,6 +154,24 @@ in
 
               # Already hosted remotely, no proxy needed
               update_server Jam                 http https://mcp.jam.dev/mcp
+
+              # Buffer: remote HTTP MCP for social/LinkedIn post management. Needs
+              # a static bearer token, kept in env-vars.age (agenix) -> ~/.secrets-env
+              # so it never lands in this public config. Inject the Authorization
+              # header at activation; update_server preserves it on later runs.
+              update_server Buffer              http https://mcp.buffer.com/mcp
+              if [ -r "/Users/${user}/.secrets-env" ]; then
+                BUFFER_API_KEY=$(. "/Users/${user}/.secrets-env" 2>/dev/null; printf '%s' "''${BUFFER_API_KEY:-}")
+                if [ -n "$BUFFER_API_KEY" ]; then
+                  want_auth="Bearer $BUFFER_API_KEY"
+                  cur_auth=$($JQ -r '.mcpServers.Buffer.headers.Authorization // ""' "$CLAUDE_JSON")
+                  if [ "$cur_auth" != "$want_auth" ]; then
+                    backup_once
+                    $JQ --arg a "$want_auth" '.mcpServers.Buffer.headers.Authorization = $a' \
+                      "$CLAUDE_JSON" > "$CLAUDE_JSON.tmp" && mv "$CLAUDE_JSON.tmp" "$CLAUDE_JSON"
+                  fi
+                fi
+              fi
             '';
 
             # Activation script to configure OpenCode MCP servers.
