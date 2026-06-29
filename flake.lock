@@ -178,11 +178,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1782742887,
-        "narHash": "sha256-PTOOViBDdiZj+5M8e6rZEKFzxCX3s1uo1ajoYGuhhOQ=",
+        "lastModified": 1782747263,
+        "narHash": "sha256-rfynNDB306qfbMiiowZUm5e4wEIt/8rBUCfssP9SFf8=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "29a3ccfed0046460d1dd609f6678a380805b8810",
+        "rev": "1ff234cb3cc46d82e2debea97a9da55fcee34a37",
         "type": "github"
       },
       "original": {
@@ -194,11 +194,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1782742939,
-        "narHash": "sha256-qPVTNIx9BgO33v4u0b1syC15yG0LwC5in1i9P5xpqzc=",
+        "lastModified": 1782748706,
+        "narHash": "sha256-SpxT7fYnYwZGo5CSeOJ/epj8O9LynJsA1xZx8o9qV9M=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "ba1d56436c2de427dd86b00354a49f07365bfff4",
+        "rev": "fcf52e6ed24c7edc2f31966c20fb4e73d3e0cff8",
         "type": "github"
       },
       "original": {
@@ -307,11 +307,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1782737788,
-        "narHash": "sha256-I18+2do5DJLAaEhUDTVVrGYUkUAhUcJ05NdMUU/HoJ8=",
+        "lastModified": 1782749237,
+        "narHash": "sha256-LilTiyErWiuLpJRwuGCD7ZeFvz8BQKSV4evGvSr6p6w=",
         "ref": "refs/heads/main",
-        "rev": "b0496a18c30689591b3cc9ba0b3b5eeb194a3611",
-        "revCount": 27,
+        "rev": "a769f88ef7964416624dc15ff73be4146044e122",
+        "revCount": 28,
         "type": "git",
         "url": "ssh://git@github.com/PatrickLerner/nix-secrets.git"
       },
