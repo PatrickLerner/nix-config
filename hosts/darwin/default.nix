@@ -1,6 +1,7 @@
 {
   agenix,
   claude-code-nix,
+  karamd,
   pkgs,
   ...
 }:
@@ -89,7 +90,11 @@ in
   # Load configuration that is shared across systems
   environment.systemPackages =
     with pkgs;
-    [ agenix.packages."${pkgs.stdenv.hostPlatform.system}".default ]
+    [
+      agenix.packages."${pkgs.stdenv.hostPlatform.system}".default
+      # Prebuilt release binary, no local compile.
+      karamd.packages."${pkgs.stdenv.hostPlatform.system}".karamd-bin
+    ]
     ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
 
   # Override TERM to prevent alacritty terminfo errors

@@ -35,6 +35,10 @@
       url = "github:sadjow/claude-code-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    karamd = {
+      url = "github:PatrickLerner/karamd";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     {
