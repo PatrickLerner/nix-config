@@ -46,11 +46,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782844284,
-        "narHash": "sha256-4UsRYeG9s2lsXz3Ggg0++dcd+6mF+U6mBW8gKfP0Xf0=",
+        "lastModified": 1782941856,
+        "narHash": "sha256-dFuLC6GQSR1g9Uy7lc9Qk/etujkCjrDE85B/np7khvg=",
         "owner": "sadjow",
         "repo": "claude-code-nix",
-        "rev": "a9611e3182acc6e06a35d00e51d8f3a20fa1ffc5",
+        "rev": "90a137caf9a6d82389c0b26a719e26c4e6707367",
         "type": "github"
       },
       "original": {
@@ -146,11 +146,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1782881387,
-        "narHash": "sha256-HvlS1KDGXDjd1bNzzPvH1mkDJATlDAfVYfTh//wJBEA=",
+        "lastModified": 1783005591,
+        "narHash": "sha256-NcLHV5uBAeggDUE2wPbKszjfyaSLsoqaYt7izOphkZw=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "d32537981c036473cf6990ae03176a5d84c43b29",
+        "rev": "f469c79b955609d6a8fdd9e689be76a93b1621d7",
         "type": "github"
       },
       "original": {
@@ -178,11 +178,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1782927515,
-        "narHash": "sha256-zHdEoabm2a7eUM+TgD4mvsaCoioMrpy13uFxqaZQpqQ=",
+        "lastModified": 1783013955,
+        "narHash": "sha256-MJBH834w7d3l9t+DLmQPKUyTlVJjkvqUhkzi/KUg1Xs=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "d1040f4bb7c9dff4155fcf81f968c5bc886bfbb2",
+        "rev": "4accfb96dd400a3f61bce7659a8a67d08c75a884",
         "type": "github"
       },
       "original": {
@@ -194,11 +194,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1782930719,
-        "narHash": "sha256-VzoeeAVU3/pn5oBxEcat3LDP32/wL4HAmlLQmClPBBY=",
+        "lastModified": 1783011051,
+        "narHash": "sha256-JYzrIutBAuBe+fmNk5rcDJGHj3jNnfX3kt6r+PuYyH0=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "5cb02d70ee1eba4a717775d1da7e6be7732be216",
+        "rev": "b3bcd090a9e6f94c4671dfdbb289ea7986d18d51",
         "type": "github"
       },
       "original": {
@@ -230,11 +230,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782928747,
-        "narHash": "sha256-gXPx5bOGuzA108JH0BTxOx0hm1ObGgLCSWfNbX9yKWA=",
+        "lastModified": 1782932032,
+        "narHash": "sha256-kWFSPAIHsKlSaCHLmYW3LlWNBIH/IX4YaxT+0JH4zDw=",
         "owner": "PatrickLerner",
         "repo": "karamd",
-        "rev": "47c566c0c5d1d536af10458c35634187ab74b21f",
+        "rev": "df8cadbb9e4fe1d08e8c7eb3599e53d91a55a6be",
         "type": "github"
       },
       "original": {
@@ -328,11 +328,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1782749237,
-        "narHash": "sha256-LilTiyErWiuLpJRwuGCD7ZeFvz8BQKSV4evGvSr6p6w=",
+        "lastModified": 1783059958,
+        "narHash": "sha256-cu2lvDtsmtluSyQuxidSXUDBgatVugbB0JpNT4bBwYo=",
         "ref": "refs/heads/main",
-        "rev": "a769f88ef7964416624dc15ff73be4146044e122",
-        "revCount": 28,
+        "rev": "927070b825fc94d6dacb3f94220d98e2323309b8",
+        "revCount": 30,
         "type": "git",
         "url": "ssh://git@github.com/PatrickLerner/nix-secrets.git"
       },

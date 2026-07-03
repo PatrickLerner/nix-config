@@ -77,6 +77,7 @@ with pkgs;
   k9s
 
   # Programming Languages & Runtimes
+  bun
   nodejs_24
   pnpm
   portless
