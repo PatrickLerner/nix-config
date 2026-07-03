@@ -11,6 +11,7 @@ in
     ./mcp-proxy.nix
     ./claude-dashboard.nix
     ./claude-oauth-gitlab.nix
+    ./karamd-web.nix
   ];
 
   # It me
