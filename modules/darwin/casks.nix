@@ -28,6 +28,7 @@ _:
   "balenaetcher"
   "appcleaner"
   "daisydisk"
+  "granola"
   "gray"
   "karabiner-elements"
   "keka"
