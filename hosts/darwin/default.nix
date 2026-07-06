@@ -87,6 +87,16 @@ in
     localHostName = "dobare";
   };
 
+  # nix-darwin's HTML manual builder still passes --toc-depth, which the newer
+  # nixpkgs nixos-render-docs removed (use --sidebar-depth). Skip the HTML manual
+  # + darwin-help until nix-darwin catches up; man pages still build fine.
+  documentation.doc.enable = false;
+
+  # The darwin-uninstaller bundles its own darwin-system (with docs enabled), so
+  # documentation.doc.enable above cannot reach it and it still hits the broken
+  # manual build. Disable it too; remove both once nix-darwin fixes the flag.
+  system.tools.darwin-uninstaller.enable = false;
+
   # Load configuration that is shared across systems
   environment.systemPackages =
     with pkgs;
