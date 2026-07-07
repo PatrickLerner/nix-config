@@ -230,11 +230,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783405832,
-        "narHash": "sha256-eCCu9syg++o/IejsKHmhTVVc1EAuR8Utz4/B+/ZY2mM=",
+        "lastModified": 1783411363,
+        "narHash": "sha256-vbn7kWvIzXaJo8OWMF1DztL6fBFRWVJUp8Hdkmg2xvs=",
         "owner": "PatrickLerner",
         "repo": "karamd",
-        "rev": "30586149752fce148a41488833b2f10f1feeeb67",
+        "rev": "626b0bf031cf66b92ae4f1da7878d38a878f5045",
         "type": "github"
       },
       "original": {
