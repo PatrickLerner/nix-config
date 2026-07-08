@@ -152,6 +152,7 @@ in
               update_server claude-orchestrator sse  http://127.0.0.1:8765/servers/claude-orchestrator/sse
               update_server google-private      sse  http://127.0.0.1:8765/servers/google-private/sse
               update_server google-work         sse  http://127.0.0.1:8765/servers/google-work/sse
+              update_server google-health        sse  http://127.0.0.1:8765/servers/google-health/sse
 
               # Already hosted remotely, no proxy needed
               update_server Jam                 http https://mcp.jam.dev/mcp
@@ -187,6 +188,7 @@ in
               $OPENCODE mcp add claude-orchestrator --url http://127.0.0.1:8765/servers/claude-orchestrator/sse
               $OPENCODE mcp add google-private      --url http://127.0.0.1:8765/servers/google-private/sse
               $OPENCODE mcp add google-work         --url http://127.0.0.1:8765/servers/google-work/sse
+              $OPENCODE mcp add google-health       --url http://127.0.0.1:8765/servers/google-health/sse
               $OPENCODE mcp add Jam                 --url https://mcp.jam.dev/mcp
             '';
 
