@@ -102,6 +102,15 @@ let
         args = [ "@a-bonus/google-docs-mcp" ];
         transportType = "stdio";
       };
+      # Google Health. OAuth client creds come from GOOGLE_HEALTH_CLIENT_ID /
+      # GOOGLE_HEALTH_CLIENT_SECRET in ~/.secrets-env (sourced by the npx wrapper);
+      # tokens live at ~/.google-health-mcp/tokens.json, created out-of-band by
+      # `npx -y google-health-mcp-unofficial setup/auth`.
+      google-health = {
+        command = npx;
+        args = [ "google-health-mcp-unofficial" ];
+        transportType = "stdio";
+      };
     };
   };
 in
