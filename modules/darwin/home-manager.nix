@@ -1,4 +1,11 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  googleworkspace-cli,
+  karamd,
+  instaffo-skills,
+  ...
+}:
 
 let
   user = "patrick";
@@ -98,7 +105,10 @@ in
       {
         home = {
           enableNixpkgsReleaseCheck = false;
-          packages = pkgs.callPackage ../shared/packages.nix { };
+          packages = (pkgs.callPackage ../shared/packages.nix { }) ++ [
+            # Google Workspace CLI (github:googleworkspace/cli), not in nixpkgs
+            googleworkspace-cli.packages.${pkgs.system}.gws
+          ];
           file = sharedFiles;
 
           stateVersion = "23.11";
@@ -150,8 +160,9 @@ in
               update_server Gitlab              sse  http://127.0.0.1:8765/servers/Gitlab/sse
               update_server claude-manager      sse  http://127.0.0.1:8765/servers/claude-manager/sse
               update_server claude-orchestrator sse  http://127.0.0.1:8765/servers/claude-orchestrator/sse
-              update_server google-private      sse  http://127.0.0.1:8765/servers/google-private/sse
-              update_server google-work         sse  http://127.0.0.1:8765/servers/google-work/sse
+              # google-private / google-work DISABLED: replaced by gws CLI (gws-work/gws-personal aliases).
+              # update_server google-private      sse  http://127.0.0.1:8765/servers/google-private/sse
+              # update_server google-work         sse  http://127.0.0.1:8765/servers/google-work/sse
               update_server google-health        sse  http://127.0.0.1:8765/servers/google-health/sse
 
               # Already hosted remotely, no proxy needed
@@ -186,10 +197,47 @@ in
               $OPENCODE mcp add Gitlab              --url http://127.0.0.1:8765/servers/Gitlab/sse
               $OPENCODE mcp add claude-manager      --url http://127.0.0.1:8765/servers/claude-manager/sse
               $OPENCODE mcp add claude-orchestrator --url http://127.0.0.1:8765/servers/claude-orchestrator/sse
-              $OPENCODE mcp add google-private      --url http://127.0.0.1:8765/servers/google-private/sse
-              $OPENCODE mcp add google-work         --url http://127.0.0.1:8765/servers/google-work/sse
+              # google-private / google-work DISABLED: replaced by gws CLI.
+              # $OPENCODE mcp add google-private      --url http://127.0.0.1:8765/servers/google-private/sse
+              # $OPENCODE mcp add google-work         --url http://127.0.0.1:8765/servers/google-work/sse
               $OPENCODE mcp add google-health       --url http://127.0.0.1:8765/servers/google-health/sse
               $OPENCODE mcp add Jam                 --url https://mcp.jam.dev/mcp
+            '';
+
+            # Expose selected skills to opencode. opencode discovers skills from
+            # directories (NOT the `skills.paths` config key, which never reaches
+            # the agent), and follows symlinks, so we symlink each skill folder
+            # into opencode's global skills dir from the pinned flake-input source
+            # trees (pulled from GitHub — `nix flake update` gets the latest). Same
+            # mechanism as the dastyar box's opencode seed. Rebuilt from scratch
+            # each activation so removed skills don't linger and stale hand-made
+            # copies are cleared. NOTE: opencode caches skill discovery per project
+            # server at startup — fully quit opencode (kill the process, not just
+            # the window) after a switch to pick up changes.
+            setupOpencodeSkills = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+              SKILLS_DIR="/Users/${user}/.config/opencode/skills"
+              ${pkgs.coreutils}/bin/rm -rf "$SKILLS_DIR"
+              ${pkgs.coreutils}/bin/mkdir -p "$SKILLS_DIR"
+
+              link_all() {
+                [ -d "$1" ] || return 0
+                for d in "$1"/*/; do
+                  [ -d "$d" ] || continue
+                  name=$(${pkgs.coreutils}/bin/basename "$d")
+                  ${pkgs.coreutils}/bin/ln -sfn "$d" "$SKILLS_DIR/$name"
+                done
+              }
+
+              # karamd/taskmd format skills (github:PatrickLerner/karamd)
+              link_all "${karamd}/skills"
+
+              # instaffo-skills (github:InstaffoGmbH/instaffo-skills): dev + shared
+              # + pm + qa only (not the full 123-skill marketplace).
+              for plugin in instaffo-dev instaffo-shared instaffo-pm instaffo-qa; do
+                link_all "${instaffo-skills}/plugins/$plugin/skills"
+              done
+
+              echo "opencode skills: linked $(${pkgs.coreutils}/bin/ls -1 "$SKILLS_DIR" | ${pkgs.coreutils}/bin/wc -l | ${pkgs.coreutils}/bin/tr -d ' ') skills into $SKILLS_DIR"
             '';
 
             # Ensure selected Instaffo GitLab repos are checked out flat under

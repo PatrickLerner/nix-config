@@ -89,19 +89,21 @@ let
         ];
         transportType = "stdio";
       };
-      # Personal Google account (default profile). @a-bonus/google-docs-mcp
-      # covers Docs, Drive, Gmail and Calendar, so no separate calendar MCP.
-      google-private = {
-        command = npx;
-        args = [ "@a-bonus/google-docs-mcp" ];
-        transportType = "stdio";
-      };
-      # Work Google account: same package, "work" profile (separate token file).
-      google-work = {
-        command = npxWork;
-        args = [ "@a-bonus/google-docs-mcp" ];
-        transportType = "stdio";
-      };
+      # Personal + Work Google accounts (@a-bonus/google-docs-mcp) DISABLED:
+      # replaced by the `gws` CLI (googleworkspace/cli) via the gws-work /
+      # gws-personal shell aliases (GOOGLE_WORKSPACE_CLI_CONFIG_DIR per account).
+      # Re-enable by uncommenting these and the update_server/opencode lines in
+      # home-manager.nix, then rebuild.
+      # google-private = {
+      #   command = npx;
+      #   args = [ "@a-bonus/google-docs-mcp" ];
+      #   transportType = "stdio";
+      # };
+      # google-work = {
+      #   command = npxWork;
+      #   args = [ "@a-bonus/google-docs-mcp" ];
+      #   transportType = "stdio";
+      # };
       # Google Health. OAuth client creds come from GOOGLE_HEALTH_CLIENT_ID /
       # GOOGLE_HEALTH_CLIENT_SECRET in ~/.secrets-env (sourced by the npx wrapper);
       # tokens live at ~/.google-health-mcp/tokens.json, created out-of-band by

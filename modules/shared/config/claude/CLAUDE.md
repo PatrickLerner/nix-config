@@ -8,6 +8,7 @@
 - Write like a human, not an AI
 - Never add vowel markers when creating Persian phrases
 - `yt-dlp`: Use `yt-dlp --cookies-from-browser edge` for YouTube downloads
+- **Google Workspace (Gmail/Drive/Docs/Sheets/Calendar)**: Use the `gws` CLI, ALWAYS via `gws-work` (patrick@instaffo.com) or `gws-personal` (ptlerner@gmail.com). Never invoke bare `gws` — it has no account isolation. The aliases set `GOOGLE_WORKSPACE_CLI_CONFIG_DIR` per account (concurrency-safe). The old google-work/google-private MCP servers are disabled.
 - DO NOT use python if avoidable. Prefer ruby or node
 - Never guess about installed tools, MCP servers, or config. Read the actual files first. Check all possible config locations.
 - I use nix-darwin + home-manager. System and user config (launchd agents, shell aliases, packages, MCP setup, dotfiles including this CLAUDE.md) is generated from `/Users/patrick/nix-config`. If a config file looks managed by nix (read-only, under `/nix/store`, or symlinked from there), edit the source in `~/nix-config` and rebuild, not the generated file.

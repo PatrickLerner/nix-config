@@ -39,6 +39,18 @@
       url = "github:PatrickLerner/karamd";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Instaffo skill marketplace (private GitHub repo, not a flake) — consumed as
+    # a plain source tree so home-manager can symlink selected skills into
+    # opencode's skills dir. Pulled from GitHub; `nix flake update instaffo-skills`
+    # picks up the latest.
+    instaffo-skills = {
+      url = "git+ssh://git@github.com/InstaffoGmbH/instaffo-skills.git";
+      flake = false;
+    };
+    googleworkspace-cli = {
+      url = "github:googleworkspace/cli";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     {

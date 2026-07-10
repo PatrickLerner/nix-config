@@ -109,6 +109,13 @@ in
       transcribe_english = "transcribe --language English --model base";
       transcribe_english_slow = "transcribe --language English --model small";
 
+      # Google Workspace CLI (gws) per-account wrappers. gws reads its whole
+      # config (client_secret.json, credentials.enc, token_cache.json) from
+      # one dir. Point each account at its own dir via GOOGLE_WORKSPACE_CLI_CONFIG_DIR
+      # -> fully isolated, no shared state, safe under concurrent invocations.
+      gws-work = "GOOGLE_WORKSPACE_CLI_CONFIG_DIR=$HOME/.config/gws-work gws";
+      gws-personal = "GOOGLE_WORKSPACE_CLI_CONFIG_DIR=$HOME/.config/gws-personal gws";
+
       # Tmuxinator aliases
       instaffo-start = "tmuxinator start instaffo";
       instaffo-stop = "tmuxinator stop instaffo";

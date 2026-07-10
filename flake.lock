@@ -46,11 +46,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783380155,
-        "narHash": "sha256-SwUwKaLrZ+c5y4GoZHKBf1nUsDHVsIUtn2CFloZrV2A=",
+        "lastModified": 1783642944,
+        "narHash": "sha256-YuaeZs+6565YrJU0xDJ+mZIVn5zmqF9Rth6pMcbnh2E=",
         "owner": "sadjow",
         "repo": "claude-code-nix",
-        "rev": "25d979d1a39d0acdbcb1b8d0b9d83ffdd10b5f43",
+        "rev": "d120e1bfc6c5e24995178ac8485e98938f2d68d4",
         "type": "github"
       },
       "original": {
@@ -120,6 +120,45 @@
         "type": "github"
       }
     },
+    "flake-utils_2": {
+      "inputs": {
+        "systems": "systems_3"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "googleworkspace-cli": {
+      "inputs": {
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1774983075,
+        "narHash": "sha256-YyNIHbyZrLlXYtWxZY8Um19MsnLharmS+nWGWO89fsA=",
+        "owner": "googleworkspace",
+        "repo": "cli",
+        "rev": "a3768d0e82ad83cca2da97724e46bea4ff0e6dbd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "googleworkspace",
+        "repo": "cli",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -146,11 +185,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1783436070,
-        "narHash": "sha256-F80z1JoiJgZyTT5D+3siLOVzqmCEphLR7t0Ym/I2CLI=",
+        "lastModified": 1783618078,
+        "narHash": "sha256-F43DGcBoIO8xOZFAfodg3jy0VghB9NGdb6xbTYAIx1A=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "f09af49406ffad37acb6538d3207189a1a1e0b7e",
+        "rev": "144f4e36d0186195037da9fce80a727108978070",
         "type": "github"
       },
       "original": {
@@ -178,11 +217,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1783437112,
-        "narHash": "sha256-kYj4V2QF5ibuPZSrZEcQf7eqQK/QK36ebOHYQHHn550=",
+        "lastModified": 1783650822,
+        "narHash": "sha256-Qks4AN8avczwu4rowOW7p0u0c2+XgM39i4iv9859hJA=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "5906f7ecee6be083bc353b5df6bcc1f42f455c37",
+        "rev": "f9ffbd68ea407876603ed1238c06d4692785240c",
         "type": "github"
       },
       "original": {
@@ -194,11 +233,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1783437794,
-        "narHash": "sha256-yLrK1F122KCyXJgewhIYvbms8ilAl9W+WoExdYU1M1Y=",
+        "lastModified": 1783652436,
+        "narHash": "sha256-V7mKJh0mNHRFxquB9l6SqKU3wUHEKYRnAIQ9FZtT1k8=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "a8d1d70aa6b66f9eaaf7fb7d22ac6643b8b2cb68",
+        "rev": "6573a1a3c44eec806f774c49a12e346d4a8fa04c",
         "type": "github"
       },
       "original": {
@@ -210,17 +249,33 @@
     "homebrew-driangle-tap": {
       "flake": false,
       "locked": {
-        "lastModified": 1777006930,
-        "narHash": "sha256-CB1cLrWJ8y+FnuEYlqzYW4HrpNd1L0NAg7ES7Bj90EY=",
+        "lastModified": 1783615834,
+        "narHash": "sha256-xM6aeMQ+A7UsJrrpnABquV8LBT+nz4xTnTtRiK7rtHE=",
         "owner": "driangle",
         "repo": "homebrew-tap",
-        "rev": "b54f0114290a0b5862e9f6d017559de96d6f9aaa",
+        "rev": "7ac45e62ad89cc65392fc6111200df9b84decce1",
         "type": "github"
       },
       "original": {
         "owner": "driangle",
         "repo": "homebrew-tap",
         "type": "github"
+      }
+    },
+    "instaffo-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1783609500,
+        "narHash": "sha256-yIqdyarYKbJAM52kh6ApVUkbOd4BoKLQisjI3N7r7Ns=",
+        "ref": "refs/heads/master",
+        "rev": "61fe877be6e298486f71a8bd964c5f9b98ef787c",
+        "revCount": 484,
+        "type": "git",
+        "url": "ssh://git@github.com/InstaffoGmbH/instaffo-skills.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/InstaffoGmbH/instaffo-skills.git"
       }
     },
     "karamd": {
@@ -230,11 +285,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783411363,
-        "narHash": "sha256-vbn7kWvIzXaJo8OWMF1DztL6fBFRWVJUp8Hdkmg2xvs=",
+        "lastModified": 1783628068,
+        "narHash": "sha256-09+fRmH7obq5Ut/pSoq2AjQGPmJNqJnJbTb0CRgCOB4=",
         "owner": "PatrickLerner",
         "repo": "karamd",
-        "rev": "626b0bf031cf66b92ae4f1da7878d38a878f5045",
+        "rev": "19a7d39e5c149607f71991e1bdd32c08bc1abf6e",
         "type": "github"
       },
       "original": {
@@ -314,11 +369,13 @@
         "agenix": "agenix",
         "claude-code-nix": "claude-code-nix",
         "darwin": "darwin_2",
+        "googleworkspace-cli": "googleworkspace-cli",
         "home-manager": "home-manager_2",
         "homebrew-bundle": "homebrew-bundle",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
         "homebrew-driangle-tap": "homebrew-driangle-tap",
+        "instaffo-skills": "instaffo-skills",
         "karamd": "karamd",
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": "nixpkgs_3",
@@ -357,6 +414,21 @@
       }
     },
     "systems_2": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_3": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
