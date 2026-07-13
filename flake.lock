@@ -217,11 +217,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1783650822,
-        "narHash": "sha256-Qks4AN8avczwu4rowOW7p0u0c2+XgM39i4iv9859hJA=",
+        "lastModified": 1783663453,
+        "narHash": "sha256-+0PO4C/RqAeuWH6mnMmRTAvSomEDJ1puBMHS7WMUmBs=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "f9ffbd68ea407876603ed1238c06d4692785240c",
+        "rev": "99250ea67f0c585f0f775166557f2558ad88640b",
         "type": "github"
       },
       "original": {
@@ -233,11 +233,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1783652436,
-        "narHash": "sha256-V7mKJh0mNHRFxquB9l6SqKU3wUHEKYRnAIQ9FZtT1k8=",
+        "lastModified": 1783671512,
+        "narHash": "sha256-S8u5x0Ogp2OTqm2KC7pNhfUJua3JShDoM4lmXTjpwg8=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "6573a1a3c44eec806f774c49a12e346d4a8fa04c",
+        "rev": "1a4e112d10e74abb70b9d3a8699b3ad3257c78a8",
         "type": "github"
       },
       "original": {
@@ -265,11 +265,11 @@
     "instaffo-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1783609500,
-        "narHash": "sha256-yIqdyarYKbJAM52kh6ApVUkbOd4BoKLQisjI3N7r7Ns=",
+        "lastModified": 1783672280,
+        "narHash": "sha256-m2nRnphW4CFxmPORO/fejadOVioCj8suKusPjORb568=",
         "ref": "refs/heads/master",
-        "rev": "61fe877be6e298486f71a8bd964c5f9b98ef787c",
-        "revCount": 484,
+        "rev": "1d3b3b55084798ac48ea3f2b465c1c539dc56358",
+        "revCount": 490,
         "type": "git",
         "url": "ssh://git@github.com/InstaffoGmbH/instaffo-skills.git"
       },
@@ -285,11 +285,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783628068,
-        "narHash": "sha256-09+fRmH7obq5Ut/pSoq2AjQGPmJNqJnJbTb0CRgCOB4=",
+        "lastModified": 1783672056,
+        "narHash": "sha256-GYo6dmJP8x0HcUQ26KHm6yvkBb2p3m+gBuusDkc8wLg=",
         "owner": "PatrickLerner",
         "repo": "karamd",
-        "rev": "19a7d39e5c149607f71991e1bdd32c08bc1abf6e",
+        "rev": "3456aac19e1f1bb2aee546a5f1aada2474ac2b60",
         "type": "github"
       },
       "original": {
@@ -385,11 +385,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1783489160,
-        "narHash": "sha256-NmqWVHj1l2bz701KvQl9ppovmvo6wMz+UqiMA+ppt1k=",
+        "lastModified": 1783926946,
+        "narHash": "sha256-qD+bXJecqem3ogvW2Gp7ncshePUnw1F7Q+shfmWtdZA=",
         "ref": "refs/heads/main",
-        "rev": "2ec401acc973dead8850089d048fde17c58da477",
-        "revCount": 33,
+        "rev": "fa26aeb62fbcbf63ff23c29300c18b5df8a1f77c",
+        "revCount": 34,
         "type": "git",
         "url": "ssh://git@github.com/PatrickLerner/nix-secrets.git"
       },

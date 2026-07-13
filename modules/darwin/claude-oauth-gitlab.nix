@@ -28,10 +28,10 @@ in
     serviceConfig = {
       Label = "com.patrick.claude-oauth-gitlab";
       ProgramArguments = [ "${wrapper}" ];
-      # Every hour while the Mac is awake. launchd never wakes the machine; a
+      # Twice an hour while the Mac is awake. launchd never wakes the machine; a
       # tick missed during sleep runs once on the next wake. No RunAtLoad, so it
       # does not fire on every rebuild/login (the timer resets on reload).
-      StartInterval = 3600;
+      StartInterval = 1800;
       RunAtLoad = false;
       StandardOutPath = "/Users/${user}/Library/Logs/claude-oauth-gitlab.log";
       StandardErrorPath = "/Users/${user}/Library/Logs/claude-oauth-gitlab.log";
