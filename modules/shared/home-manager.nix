@@ -92,6 +92,7 @@ in
       "@app" = "cd ~/Projects/Instaffo/app";
       "@claude-orchestrator" = "cd ~/Projects/Instaffo/claude-orchestrator";
       "@instaffo-skills" = "cd ~/Projects/Instaffo/instaffo-skills";
+      "@dastyar" = "cd ~/Projects/dastyar";
       "@samira" =
         ''cd "/Users/patrick/Library/CloudStorage/GoogleDrive-ptlerner@gmail.com/My Drive/Data Files/Samira"'';
       "@sophie" =
