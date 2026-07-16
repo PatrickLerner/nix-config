@@ -55,6 +55,16 @@ in
     # removed manually for now: `brew bundle --file=<Brewfile> cleanup --force`.
     onActivation.cleanup = "none";
 
+    # Self-updating casks (claude, raycast, whatsapp, zed, ...) declare
+    # `auto_updates true`. Newer Homebrew upgrades those on every `brew bundle`,
+    # which prompts [y/n] interactively AND is pointless churn since the apps
+    # update themselves. Skip them. extraEnv because activation runs under sudo
+    # and drops the user's shell env, so a plain HOMEBREW_* export won't reach it.
+    onActivation.extraEnv = {
+      HOMEBREW_NO_UPGRADE_AUTO_UPDATES_CASKS = "1";
+      HOMEBREW_NO_ENV_HINTS = "1";
+    };
+
     # These app IDs are from using the mas CLI app
     # mas = mac app store
     # https://github.com/mas-cli/mas
