@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+#
+# openwiki launcher.
+#
+# openwiki (https://www.npmjs.com/package/openwiki) pulls in better-sqlite3, a
+# native module whose install script (prebuild-install) is blocked by our global
+# supply-chain hardening (~/.npmrc: ignore-scripts=true, a master kill switch).
+# npm/npx cannot allowlist a single package; pnpm's allowlist is overridden by
+# that master switch. So we keep the global hardening intact and install openwiki
+# in an ISOLATED dir (~/.tools/openwiki) with a local ignore-scripts=false, then
+# build better-sqlite3's binary directly.
+#
+# This wrapper is self-healing:
+#   - first run (or `openwiki self-update`): installs / updates openwiki
+#   - every run: if better-sqlite3's binary doesn't load under the current Node
+#     ABI, it rebuilds it (fixes the Node 22 vs 24 NODE_MODULE_VERSION mismatch)
+#   - otherwise: execs the real openwiki binary, forwarding all args + your cwd
+#
+# Run it from inside the repo you want documented (`openwiki code`); openwiki
+# uses the current working directory as its target.
+set -euo pipefail
+
+DIR="$HOME/.tools/openwiki"
+BIN="$DIR/node_modules/.bin/openwiki"
+
+log() { printf 'openwiki: %s\n' "$*" >&2; }
+
+# Resolve the better-sqlite3 package dir (version-agnostic glob).
+bs_dir() {
+  local d
+  for d in "$DIR"/node_modules/.pnpm/better-sqlite3@*/node_modules/better-sqlite3; do
+    [ -d "$d" ] && { printf '%s' "$d"; return 0; }
+  done
+  return 1
+}
+
+# Build better-sqlite3 for the current Node ABI. prebuild-install downloads a
+# prebuilt binary matching this Node (no compiler needed); node-gyp is the
+# fallback. pnpm blocks the lifecycle script, so we invoke it directly.
+build_sqlite() {
+  local d; d="$(bs_dir)" || { log "better-sqlite3 not found; reinstalling"; install_openwiki; d="$(bs_dir)"; }
+  log "building better-sqlite3 for $(node -v)"
+  ( cd "$d" && ./node_modules/.bin/prebuild-install || node-gyp rebuild --release )
+}
+
+install_openwiki() {
+  log "installing into $DIR"
+  mkdir -p "$DIR"
+  # Local override: re-enable scripts for THIS dir only. Registry + auth tokens
+  # still inherit from the nix-managed ~/.npmrc. In pnpm 10+ this does NOT run
+  # every script - pnpm still blocks dependency builds by default; we build the
+  # one native dep explicitly in build_sqlite.
+  printf 'ignore-scripts=false\n' > "$DIR/.npmrc"
+  cat > "$DIR/package.json" <<'JSON'
+{
+  "name": "openwiki-tool",
+  "private": true,
+  "dependencies": { "openwiki": "^0.2.0" }
+}
+JSON
+  ( cd "$DIR" && pnpm install )
+  build_sqlite
+}
+
+# `openwiki self-update` -> reinstall/update, then exit.
+if [ "${1:-}" = "self-update" ]; then
+  ( cd "$DIR" 2>/dev/null && pnpm update openwiki ) || install_openwiki
+  build_sqlite
+  log "up to date"
+  exit 0
+fi
+
+# Bootstrap on first use.
+[ -x "$BIN" ] || install_openwiki
+
+# Heal an ABI mismatch (e.g. built under Node 24, now running under Node 22).
+d="$(bs_dir)" || d=""
+if [ -z "$d" ] || ! node -e "require('$d')(':memory:')" >/dev/null 2>&1; then
+  build_sqlite
+fi
+
+exec "$BIN" "$@"

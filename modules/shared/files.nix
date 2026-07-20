@@ -157,6 +157,10 @@ in
     text = builtins.readFile ../shared/bin/vault-status;
     executable = true;
   };
+  ".bin/openwiki" = {
+    text = builtins.readFile ../shared/bin/openwiki;
+    executable = true;
+  };
 
   # Zsh configuration files
   ".config/zsh/shrink-path.zsh" = {

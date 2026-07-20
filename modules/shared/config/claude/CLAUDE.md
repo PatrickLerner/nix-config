@@ -1,7 +1,6 @@
 - **GitLab username**: PatrickLerner (id: 1588486)
 - If I ask you to create a MR assign it to me
 - If I ask you to create a GitHub PR assign it to me (`--assignee PatrickLerner`)
-- **Commits**: Do not start a commit unless explicitly told to.
 - **Force push/amend**: Never do this unless explicitly told to
 - **Commit messages**: Never add "Co-Authored-By" lines. Never mention Claude, Anthropic, or AI
 - Never use em-dashes (–, —) to split sentences. It's AI slop
@@ -11,6 +10,7 @@
 - **Google Workspace (Gmail/Drive/Docs/Sheets/Calendar)**: Use the `gws` CLI, ALWAYS via `gws-work` (patrick@instaffo.com) or `gws-personal` (ptlerner@gmail.com). Never invoke bare `gws` — it has no account isolation. The aliases set `GOOGLE_WORKSPACE_CLI_CONFIG_DIR` per account (concurrency-safe). The old google-work/google-private MCP servers are disabled.
 - DO NOT use python if avoidable. Prefer ruby or node
 - Never guess about installed tools, MCP servers, or config. Read the actual files first. Check all possible config locations.
+- **Code comments**: short and sweet. Only add context that isn't obvious from the code. Never narrate backtracking/history, never explain the obvious, never write junior-level explanations. If the code says it, don't repeat it.
 - I use nix-darwin + home-manager. System and user config (launchd agents, shell aliases, packages, MCP setup, dotfiles including this CLAUDE.md) is generated from `/Users/patrick/nix-config`. If a config file looks managed by nix (read-only, under `/nix/store`, or symlinked from there), edit the source in `~/nix-config` and rebuild, not the generated file.
 
 ## IMPORTANT
