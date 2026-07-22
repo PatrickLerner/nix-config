@@ -158,7 +158,12 @@ in
       export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
       export PATH="/usr/local/sbin:$PATH"
       export PATH="$HOME/.cargo/bin:$PATH"
+      export PATH="$HOME/.local/bin:$PATH"  # uv tool install target (headroom, etc.)
       export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
+
+      # Route Claude Code / Anthropic SDK through the local headroom proxy
+      # (launchd: com.patrick.headroom-proxy, KeepAlive on default port 8787).
+      export ANTHROPIC_BASE_URL="http://127.0.0.1:8787"
 
       # pnpm global bin (pnpm install -g)
       export PATH="$HOME/Library/pnpm/bin:$PATH"

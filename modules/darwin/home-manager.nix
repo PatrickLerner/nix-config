@@ -19,6 +19,7 @@ in
     ./claude-dashboard.nix
     ./claude-oauth-gitlab.nix
     ./karamd-web.nix
+    ./headroom-proxy.nix
   ];
 
   # It me
@@ -454,6 +455,46 @@ in
                 if ! "$TASKMD" projects --format json 2>/dev/null | grep -q '"id": *"Notes"'; then
                   "$TASKMD" projects register --id Notes --name Notes --path "/Users/${user}/Notes" || true
                 fi
+              fi
+            '';
+
+            # headroom-ai (LLM context optimization layer) is a maturin+ML PyPI
+            # package with no nixpkgs entry and no upstream flake. Nixifying its
+            # torch/onnxruntime/maturin tree by hand isn't worth it, so install
+            # it as an isolated uv tool. Version-pinned; the guard skips the slow
+            # reinstall once the pinned version is present. Bump = one string.
+            installHeadroom = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+              UV=${pkgs.uv}/bin/uv
+              HEADROOM_VERSION=0.32.1
+              if ! "$UV" tool list 2>/dev/null | grep -q "headroom-ai v$HEADROOM_VERSION"; then
+                "$UV" tool install --python 3.13 "headroom-ai[all]==$HEADROOM_VERSION" || true
+              fi
+            '';
+
+            # Wire Claude Code (durable hooks + MCP retrieve tool) to the local
+            # headroom proxy on the default port. Idempotent, so re-running each
+            # activation just re-asserts the same routing. Runs after the tool is
+            # installed. The proxy itself is the com.patrick.headroom-proxy agent.
+            setupHeadroomRouting = lib.hm.dag.entryAfter [ "installHeadroom" ] ''
+              HR=/Users/${user}/.local/bin/headroom
+              if [ -x "$HR" ]; then
+                "$HR" init --port 8787 claude >/dev/null 2>&1 || true
+                "$HR" mcp install --proxy-url http://127.0.0.1:8787 --force >/dev/null 2>&1 || true
+              fi
+            '';
+
+            # graphify (code knowledge-graph + per-project MCP server). Same
+            # rationale as headroom: fat PyPI tool, no nixpkgs entry, so install
+            # it as an isolated uv tool. The [all] extra pulls in every LLM
+            # backend (openai/anthropic/google) — semantic extraction needs one;
+            # the gemini backend is what auto-selects from GEMINI_API_KEY. No
+            # daemon: graphify-mcp is per-repo (serves that repo's graph.json),
+            # registered per-project via `claude mcp add graphify -- graphify-mcp`.
+            installGraphify = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+              UV=${pkgs.uv}/bin/uv
+              GRAPHIFY_VERSION=0.9.22
+              if ! "$UV" tool list 2>/dev/null | grep -q "graphifyy v$GRAPHIFY_VERSION"; then
+                "$UV" tool install --python 3.13 "graphifyy[all]==$GRAPHIFY_VERSION" || true
               fi
             '';
           };

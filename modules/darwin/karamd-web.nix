@@ -14,7 +14,9 @@ let
   # stable https://karamd.localhost URL. karamd isn't a portless-managed dev
   # server, so it can't self-register — we add a static alias (idempotent, so
   # re-running on every launch is safe and survives a portless state reset).
-  port = "8787";
+  # Moved off 8787 so headroom's proxy can take the default port; portless
+  # re-aliases karamd.localhost to whatever this is, so the URL is unaffected.
+  port = "8788";
   vault = "/Users/${user}/Notes";
 
   wrapper = pkgs.writeScript "karamd-web-wrapper" ''
