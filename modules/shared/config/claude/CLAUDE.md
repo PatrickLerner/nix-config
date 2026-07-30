@@ -12,6 +12,13 @@
 - Never guess about installed tools, MCP servers, or config. Read the actual files first. Check all possible config locations.
 - **Code comments**: short and sweet. Only add context that isn't obvious from the code. Never narrate backtracking/history, never explain the obvious, never write junior-level explanations. If the code says it, don't repeat it.
 - I use nix-darwin + home-manager. System and user config (launchd agents, shell aliases, packages, MCP setup, dotfiles including this CLAUDE.md) is generated from `/Users/patrick/nix-config`. If a config file looks managed by nix (read-only, under `/nix/store`, or symlinked from there), edit the source in `~/nix-config` and rebuild, not the generated file.
+- **CI**: after creating or pushing an MR, watch its pipeline through to a terminal state without being asked. Read the whole CI log — never grep, head, or filter it, that hides the context around the failure and other failing jobs.
+- **After merging master into a feature branch to fix CI**: push immediately. Don't ask, don't offer.
+- **Rails console commands**: before writing any console snippet for me to run, load the project's `prod-debug` skill. Verify every column against the schema AND every method against the model source — assumed display-name helpers (`full_name`, `name`) are the usual failure, and each one costs me a paste-error-return round trip on a live console.
+- **Explain before you ask.** Before any decision question, describe the situation in plain concrete language first: what the choice actually is, why it exists, what each path costs. I don't hold the per-file context you just built. Then give me a recommended option I can approve.
+- **Pause means everything.** When I say pause or stop, that covers running subagents, not just your own loop. Stop them and wait. A subagent reporting that it paused is not a bug to fix — never resume one on your own judgement.
+- **Shell**: Bash/Monitor calls run in zsh, where `status`, `pipestatus`, `path`, `cdpath` and `argv` are read-only specials. `status=$(...)` aborts the whole script with a non-zero exit and looks exactly like the watched process failing. Use `pstate` etc. When a Monitor exits non-zero, check its own output for a shell error before believing the failure.
+- **MCP servers load lazily.** A server I use daily can look absent at the start of a turn. Search for its tools before claiming it doesn't exist. I prune the surface via `deniedMcpServers` in `~/.claude/settings.json` — entries there are deliberate even when the server shows `connected`, so don't flag them as mistakes.
 
 ## IMPORTANT
 

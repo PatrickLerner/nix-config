@@ -118,7 +118,7 @@ in
           enableNixpkgsReleaseCheck = false;
           packages = (pkgs.callPackage ../shared/packages.nix { }) ++ [
             # Google Workspace CLI (github:googleworkspace/cli), not in nixpkgs
-            googleworkspace-cli.packages.${pkgs.system}.gws
+            googleworkspace-cli.packages.${pkgs.stdenv.hostPlatform.system}.gws
           ];
           file = sharedFiles;
 

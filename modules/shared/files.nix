@@ -202,6 +202,44 @@ in
   ".claude/skills/mcp-proxy-debugging/SKILL.md" = {
     text = builtins.readFile ../shared/config/claude/skills/mcp-proxy-debugging/SKILL.md;
   };
+  ".claude/skills/family-calendar/SKILL.md" = {
+    text = builtins.readFile ../shared/config/claude/skills/family-calendar/SKILL.md;
+  };
+  ".claude/skills/google-workspace-cli/SKILL.md" = {
+    text = builtins.readFile ../shared/config/claude/skills/google-workspace-cli/SKILL.md;
+  };
+  ".claude/skills/google-workspace-cli/scripts/gws-export-doc.sh" = {
+    text = builtins.readFile ../shared/config/claude/skills/google-workspace-cli/scripts/gws-export-doc.sh;
+    executable = true;
+  };
+  ".claude/skills/google-workspace-cli/scripts/gws-list-docs-since.sh" = {
+    text = builtins.readFile ../shared/config/claude/skills/google-workspace-cli/scripts/gws-list-docs-since.sh;
+    executable = true;
+  };
+  ".claude/skills/time-keeper/SKILL.md" = {
+    text = builtins.readFile ../shared/config/claude/skills/time-keeper/SKILL.md;
+  };
+  ".claude/skills/time-keeper/scripts/allocate.rb" = {
+    text = builtins.readFile ../shared/config/claude/skills/time-keeper/scripts/allocate.rb;
+    executable = true;
+  };
+  ".claude/skills/time-review/SKILL.md" = {
+    text = builtins.readFile ../shared/config/claude/skills/time-review/SKILL.md;
+  };
+  ".claude/skills/time-review/scripts/parse-segments.rb" = {
+    text = builtins.readFile ../shared/config/claude/skills/time-review/scripts/parse-segments.rb;
+    executable = true;
+  };
+  ".claude/skills/time-review/scripts/gws-fetch-meeting-transcript.sh" = {
+    text = builtins.readFile ../shared/config/claude/skills/time-review/scripts/gws-fetch-meeting-transcript.sh;
+    executable = true;
+  };
+
+  # Claude Code hooks (referenced from ~/.claude/settings.json, which stays mutable)
+  ".claude/hooks/validate-gitlab-labels.sh" = {
+    text = builtins.readFile ../shared/config/claude/hooks/validate-gitlab-labels.sh;
+    executable = true;
+  };
 }
 // nvimFiles
 // karabinerFiles
