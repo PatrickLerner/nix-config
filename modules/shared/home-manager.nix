@@ -128,11 +128,6 @@ in
       # Claude Manager aliases
       cm = "pnpm dlx @instaffo/claude-manager";
       cm_dev = "pnpm dlx /Users/patrick/Projects/Instaffo/claude-manager";
-
-      # Claude Dashboard launchd controls (service: com.patrick.claude-dashboard)
-      claude-dashboard-start = "launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.patrick.claude-dashboard.plist";
-      claude-dashboard-stop = "launchctl bootout gui/$(id -u)/com.patrick.claude-dashboard";
-      claude-dashboard-restart = "launchctl kickstart -k gui/$(id -u)/com.patrick.claude-dashboard";
     };
 
     sessionVariables = {
@@ -153,7 +148,7 @@ in
 
     envExtra = ''
       # PATH lives in zshenv so non-interactive shells (scripts, launchd-spawned
-      # services like claude-dashboard) inherit it too, not just interactive zsh.
+      # services like karamd-web) inherit it too, not just interactive zsh.
       export PATH="$HOME/.bin:$PATH:/usr/local/bin"
       export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
       export PATH="/usr/local/sbin:$PATH"

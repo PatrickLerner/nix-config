@@ -5,7 +5,7 @@ description: Debug the mcp-proxy launchd service (com.patrick.mcp-proxy) defined
 
 # Debugging mcp-proxy
 
-mcp-proxy runs as a launchd user agent (`com.patrick.mcp-proxy`) defined in `modules/darwin/mcp-proxy.nix`. It serves several stdio MCP servers (claude-orchestrator, Gitlab, google-private, google-work) over a local SSE endpoint on port 8765. Each server is spawned through a wrapper script that sources `~/.secrets-env` so children inherit tokens.
+mcp-proxy runs as a launchd user agent (`com.patrick.mcp-proxy`) defined in `modules/darwin/mcp-proxy.nix`. It serves stdio MCP servers (currently Gitlab) over a local SSE endpoint on port 8765. Each server is spawned through a wrapper script that sources `~/.secrets-env` so children inherit tokens.
 
 **Always start by reading the log:** `~/Library/Logs/mcp-proxy.log`. The two failure classes below look different in the log and have different fixes. Do not guess.
 

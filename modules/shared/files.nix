@@ -193,9 +193,6 @@ in
   ".claude/skills/test-gitlab-token/SKILL.md" = {
     text = builtins.readFile ../shared/config/claude/skills/test-gitlab-token/SKILL.md;
   };
-  ".claude/skills/claude-dashboard-daemon/SKILL.md" = {
-    text = builtins.readFile ../shared/config/claude/skills/claude-dashboard-daemon/SKILL.md;
-  };
   ".claude/skills/zeroclaw-cli/SKILL.md" = {
     text = builtins.readFile ../shared/config/claude/skills/zeroclaw-cli/SKILL.md;
   };

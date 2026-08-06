@@ -30,6 +30,7 @@ _:
   "daisydisk"
   "granola"
   "gray"
+  "hot"
   "karabiner-elements"
   "keka"
   "mysides"
