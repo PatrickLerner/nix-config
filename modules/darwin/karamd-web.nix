@@ -35,7 +35,13 @@ in
   launchd.user.agents.karamd-web = {
     serviceConfig = {
       Label = "com.patrick.karamd-web";
-      ProgramArguments = [ "${wrapper}" ];
+      # See portless-proxy.nix: a /nix/store argv[0] can be unspawnable at boot
+      # before the Nix volume mounts, which parks the job with EX_CONFIG (78).
+      ProgramArguments = [
+        "/bin/sh"
+        "-c"
+        "/bin/wait4path '${wrapper}' && exec '${wrapper}'"
+      ];
       RunAtLoad = true;
       KeepAlive = true;
       StandardOutPath = "/Users/${user}/Library/Logs/karamd-web.log";

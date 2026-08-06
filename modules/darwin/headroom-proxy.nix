@@ -26,7 +26,16 @@ in
   launchd.user.agents.headroom-proxy = {
     serviceConfig = {
       Label = "com.patrick.headroom-proxy";
-      ProgramArguments = [ "${wrapper}" ];
+      # /nix is a separate APFS volume; at login this agent can be bootstrapped
+      # before that mount lands. launchd then fails to spawn argv[0], records
+      # EX_CONFIG (78) and parks the job in the penalty box — KeepAlive does not
+      # retry a missing-executable failure, so the proxy stays down until a
+      # manual start. Gate the exec on boot-volume binaries only.
+      ProgramArguments = [
+        "/bin/sh"
+        "-c"
+        "/bin/wait4path '${wrapper}' && exec '${wrapper}'"
+      ];
       RunAtLoad = true;
       KeepAlive = true;
       StandardOutPath = "/Users/${user}/Library/Logs/headroom-proxy.log";

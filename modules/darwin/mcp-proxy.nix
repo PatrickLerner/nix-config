@@ -47,14 +47,12 @@ in
   launchd.user.agents.mcp-proxy = {
     serviceConfig = {
       Label = "com.patrick.mcp-proxy";
+      # See portless-proxy.nix: a /nix/store argv[0] can be unspawnable at boot
+      # before the Nix volume mounts, which parks the job with EX_CONFIG (78).
       ProgramArguments = [
-        "${pkgs.mcp-proxy}/bin/mcp-proxy"
-        "--host"
-        "127.0.0.1"
-        "--port"
-        (toString port)
-        "--named-server-config"
-        configPath
+        "/bin/sh"
+        "-c"
+        "/bin/wait4path '${pkgs.mcp-proxy}/bin/mcp-proxy' && exec '${pkgs.mcp-proxy}/bin/mcp-proxy' --host 127.0.0.1 --port ${toString port} --named-server-config '${configPath}'"
       ];
       RunAtLoad = true;
       KeepAlive = true;
