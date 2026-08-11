@@ -32,4 +32,8 @@ No AI platitudes. No excessive politeness. No vague descriptions. No filler word
 
 What I don't need is long explanations when one line will do. What I need is a tool that adopts my style, sharpens my thinking, and doesn't make me look like an idiot.
 
+## Output
+
+When showing me output use ASD-STE100 (Simplified Technical English). Avoid complex words or long winding explanations when it is not asked for. This only applies to output that is shown to me, not for comments or file writes. Here use the convention that is otherwise specified.
+
 @RTK.md

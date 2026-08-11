@@ -73,9 +73,9 @@ in
     # $ nix shell nixpkgs#mas
     # $ mas search <app name>
     #
-    # If you have previously added these apps to your Mac App Store profile (but not installed them on this system),
-    # you may receive an error message "Redownload Unavailable with This Apple ID".
-    # This message is safe to ignore. (https://github.com/dustinlyons/nixos-config/issues/83)
+    # mas 7 detects what is already installed only via the Spotlight index. If
+    # that index is empty, `mas list` returns nothing and every activation tries
+    # to reinstall all of these.
 
     masApps = {
       # Development Tools
@@ -89,10 +89,10 @@ in
       "LanguageTool" = 1534275760;
       "Pocket Yoga" = 409206073;
 
-      # Apple Productivity Suite
-      "Keynote" = 409183694;
-      "Numbers" = 409203825;
-      "Pages" = 409201541;
+      # Apple Productivity Suite (Keynote / Numbers / Pages) is installed but
+      # not declared: the universal-purchase IDs belong to a different Apple ID
+      # than the one signed in here, so mas cannot download them, and the old
+      # Mac-only IDs are retired and no longer resolve at all.
 
       # Media & Content Creation
       "Pixea" = 1507782672;
@@ -451,7 +451,7 @@ in
             # reinstall once the pinned version is present. Bump = one string.
             installHeadroom = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
               UV=${pkgs.uv}/bin/uv
-              HEADROOM_VERSION=0.32.1
+              HEADROOM_VERSION=0.34.0
               if ! "$UV" tool list 2>/dev/null | grep -q "headroom-ai v$HEADROOM_VERSION"; then
                 "$UV" tool install --python 3.13 "headroom-ai[all]==$HEADROOM_VERSION" || true
               fi
@@ -478,9 +478,18 @@ in
             # registered per-project via `claude mcp add graphify -- graphify-mcp`.
             installGraphify = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
               UV=${pkgs.uv}/bin/uv
-              GRAPHIFY_VERSION=0.9.22
+              GRAPHIFY_VERSION=0.9.39
               if ! "$UV" tool list 2>/dev/null | grep -q "graphifyy v$GRAPHIFY_VERSION"; then
                 "$UV" tool install --python 3.13 "graphifyy[all]==$GRAPHIFY_VERSION" || true
+                # A bump leaves the bundled skill stale in both install targets
+                # (~/.claude/skills, ~/.agents/skills), which makes every graphify
+                # invocation print a version warning. The claude platform also
+                # appends a registration block to ~/.claude/CLAUDE.md, which
+                # home-manager owns read-only, so it copies the skill and then
+                # exits non-zero; ignore that.
+                GRAPHIFY=/Users/${user}/.local/bin/graphify
+                "$GRAPHIFY" install --platform claude >/dev/null 2>&1 || true
+                "$GRAPHIFY" install --platform agents >/dev/null 2>&1 || true
               fi
             '';
           };

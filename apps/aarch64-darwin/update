@@ -5,6 +5,38 @@ YELLOW='\033[1;33m'
 RED='\033[1;31m'
 NC='\033[0m'
 
+# The uv-managed PyPI tools are version-pinned in modules/darwin/home-manager.nix
+# (no nixpkgs entry, so `nix flake update` can't see them). Report drift; the bump
+# stays manual because it triggers a slow torch/onnxruntime reinstall.
+PINS=modules/darwin/home-manager.nix
+
+check_pypi_pin() {
+  pkg=$1
+  var=$2
+  pinned=$(grep -oE "$var=[0-9][^ ]*" "$PINS" | head -1 | cut -d= -f2)
+  if [ -z "$pinned" ]; then
+    echo "${RED}$pkg: no $var pin found in $PINS.${NC}"
+    return
+  fi
+  latest=$(curl -sf --max-time 10 "https://pypi.org/pypi/$pkg/json" \
+    | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{console.log(JSON.parse(s).info.version)}catch(e){}})')
+  if [ -z "$latest" ]; then
+    echo "${RED}$pkg: could not read the latest version from PyPI, skipping.${NC}"
+  elif [ "$pinned" = "$latest" ]; then
+    echo "${GREEN}$pkg: $pinned is current.${NC}"
+  else
+    echo "${RED}$pkg: pinned $pinned, latest $latest. Bump $var in $PINS.${NC}"
+  fi
+}
+
+echo "${YELLOW}Checking pinned PyPI tools...${NC}"
+if [ ! -f "$PINS" ] || ! command -v node >/dev/null 2>&1; then
+  echo "${RED}Need node and a cwd of the repo root; skipping pin checks.${NC}"
+else
+  check_pypi_pin headroom-ai HEADROOM_VERSION
+  check_pypi_pin graphifyy GRAPHIFY_VERSION
+fi
+
 echo "${YELLOW}Updating flake inputs...${NC}"
 nix flake update
 
