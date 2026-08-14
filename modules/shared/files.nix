@@ -188,6 +188,12 @@ in
   ".claude/agents/anki-sami-german-vocab-builder.md" = {
     text = builtins.readFile ../shared/config/claude/agents/anki-sami-german-vocab-builder.md;
   };
+  ".claude/agents/code-scout.md" = {
+    text = builtins.readFile ../shared/config/claude/agents/code-scout.md;
+  };
+  ".claude/agents/file-extractor.md" = {
+    text = builtins.readFile ../shared/config/claude/agents/file-extractor.md;
+  };
 
   # Claude Code personal skills
   ".claude/skills/test-gitlab-token/SKILL.md" = {

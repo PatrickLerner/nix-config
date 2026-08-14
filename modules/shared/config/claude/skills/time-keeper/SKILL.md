@@ -1,6 +1,6 @@
 ---
 name: time-keeper
-description: Generate a time-blocked meeting agenda from an Asana OKR project. Reads each Key Result's latest update via the Asana MCP, scores how much discussion it needs, and a deterministic script allocates minutes so the blocks provably sum to the meeting length — reserving a parking-lot buffer for off-agenda topics and a flex buffer for questions, and batching trivial status items. Use when preparing a recurring OKR review (e.g. the leadership meeting) where each Asana task is an agenda item and its description is the latest status update. Trigger phrases: "time keeper", "agenda for the meeting", "time allocation for topics", "prepare OKR meeting", "meeting agenda from Asana", "allocate time per topic".
+description: Generate a time-blocked meeting agenda from an Asana OKR project. Reads each Key Result's latest update via the Asana MCP, scores how much discussion it needs, and a deterministic script allocates minutes so the blocks provably sum to the meeting length — reserving a parking-lot buffer for off-agenda topics and a flex buffer for questions. Every Key Result on the board gets its own agenda line. Use when preparing a recurring OKR review (e.g. the leadership meeting) where each Asana task is an agenda item and its description is the latest status update. Trigger phrases: "time keeper", "agenda for the meeting", "time allocation for topics", "prepare OKR meeting", "meeting agenda from Asana", "allocate time per topic".
 ---
 
 # Time Keeper
@@ -63,7 +63,7 @@ Instaffo OKR updates follow a fixed template. Read the update and weigh it by **
 
 Empty `notes` → weight 1 **and** flag it: "no update provided — confirm if this item is needed".
 
-**Batch the trivial ones.** Each agenda item costs at least `min_per_topic` (5 min). Five weight-1 KRs as separate lines burn 25 min on floors alone. Instead, merge low-weight status items into **one** "quick status round" line (weight 2-3 for the batch). Don't give a 3-minute update its own 5-minute block five times over — that is exactly the over-allocation the last review exposed. **A batch may only merge items that are ADJACENT on the board** (same section, consecutive rows) — merging non-adjacent items would break board order. Never batch across a higher-weight item that sits between them.
+**Never batch, never drop — every KR gets its own line.** One board item = one agenda row, always, even for an empty or trivial update. Weight controls the minutes (a weight-1 item lands on the 5-min floor), never whether the item appears. Merging items into a "quick status round" is not allowed: the owner must see their KR on the agenda, and an item that gets no line gets no airtime. If the floors don't fit the budget, say so and offer a longer meeting or fewer KRs on the board — do not solve it by collapsing rows.
 
 Apply calibration from the last review first (see [Calibration](#calibration)).
 
@@ -85,7 +85,7 @@ JSON
 
 The script returns each block with `min`, `start`, `end`, plus `ok`, `grand_total_min`, `buffer_pct`, and `warnings`. Contract: every block is a multiple of `round_to` and `intro + Σtopics + emergent + flex + wrapup == total_min`. The **Parking Lot (emergent)** and **Flex/Questions** rows are the slack that keeps the meeting from running over; report `buffer_pct` so the user sees how much of the meeting is held in reserve.
 
-- If `ok` is `false` (e.g. floors overflow the budget because there are too many items), relay the warning and help triage: cut items, merge low-weight ones, shorten buffers, or extend the meeting. **Do not** hand-patch the numbers.
+- If `ok` is `false` (e.g. floors overflow the budget because there are too many items), relay the warning and hand the choice back: shorten the buffers, extend the meeting, or take KRs off the board. **Do not** hand-patch the numbers and **do not** merge rows to make it fit.
 - Read `warnings` even when `ok` is `true` — capped topics and non-multiple buffers surface there.
 - **Compression note:** with many items (~10 KRs) the per-topic floor eats most of the discussion budget, so weights barely differentiate and almost everything lands near the floor. When that happens, say so — the real lever is fewer agenda items or a longer meeting, not finer weighting.
 
@@ -118,8 +118,8 @@ Put the confirmed agenda table at the **top** of the file, before notes get take
 
 Before scoring, check the previous meeting's notes file for a `## Time Review` section (produced by the `time-review` skill). Use it three ways:
 
-- **Weights** — an item that ran well over its block gets a higher weight; one that finished early gets cut (and probably batched).
-- **Batching** — items the review shows at only a few minutes each belong in the quick-status round, not on separate lines.
+- **Weights** — an item that ran well over its block gets a higher weight; one that finished early drops to a lower weight, but keeps its own line.
+- **Floors** — items the review shows at only a few minutes each go to weight 1 and land on the 5-min floor. They still get a line; never fold them into a shared row.
 - **Emergent buffer** — set `emergent_pct` from the measured off-agenda share last time (e.g. review found 17% off-agenda → `emergent_pct` ≈ 0.15). Recurring emergent topics that keep reappearing should graduate to a real agenda item.
 
 Note in the rationale when a weight was calibrated from the last review rather than the update alone. This closes the loop: plan → run → review → re-plan.
