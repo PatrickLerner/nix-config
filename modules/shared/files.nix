@@ -237,6 +237,17 @@ in
     text = builtins.readFile ../shared/config/claude/skills/time-review/scripts/gws-fetch-meeting-transcript.sh;
     executable = true;
   };
+  ".claude/skills/handover-to-glm/SKILL.md" = {
+    text = builtins.readFile ../shared/config/claude/skills/handover-to-glm/SKILL.md;
+  };
+  ".claude/skills/handover-to-glm/scripts/glm-handover.sh" = {
+    text = builtins.readFile ../shared/config/claude/skills/handover-to-glm/scripts/glm-handover.sh;
+    executable = true;
+  };
+  ".claude/skills/handover-to-glm/scripts/render-glm-log.mjs" = {
+    text = builtins.readFile ../shared/config/claude/skills/handover-to-glm/scripts/render-glm-log.mjs;
+    executable = true;
+  };
 
   # Claude Code hooks (referenced from ~/.claude/settings.json, which stays mutable)
   ".claude/hooks/validate-gitlab-labels.sh" = {

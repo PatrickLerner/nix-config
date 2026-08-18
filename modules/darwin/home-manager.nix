@@ -451,7 +451,7 @@ in
             # reinstall once the pinned version is present. Bump = one string.
             installHeadroom = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
               UV=${pkgs.uv}/bin/uv
-              HEADROOM_VERSION=0.35.0
+              HEADROOM_VERSION=0.34.0
               if ! "$UV" tool list 2>/dev/null | grep -q "headroom-ai v$HEADROOM_VERSION"; then
                 "$UV" tool install --python 3.13 "headroom-ai[all]==$HEADROOM_VERSION" || true
               fi
