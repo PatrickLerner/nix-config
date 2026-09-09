@@ -468,30 +468,6 @@ in
                 "$HR" mcp install --proxy-url http://127.0.0.1:8787 --force >/dev/null 2>&1 || true
               fi
             '';
-
-            # graphify (code knowledge-graph + per-project MCP server). Same
-            # rationale as headroom: fat PyPI tool, no nixpkgs entry, so install
-            # it as an isolated uv tool. The [all] extra pulls in every LLM
-            # backend (openai/anthropic/google) — semantic extraction needs one;
-            # the gemini backend is what auto-selects from GEMINI_API_KEY. No
-            # daemon: graphify-mcp is per-repo (serves that repo's graph.json),
-            # registered per-project via `claude mcp add graphify -- graphify-mcp`.
-            installGraphify = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-              UV=${pkgs.uv}/bin/uv
-              GRAPHIFY_VERSION=0.9.55
-              if ! "$UV" tool list 2>/dev/null | grep -q "graphifyy v$GRAPHIFY_VERSION"; then
-                "$UV" tool install --python 3.13 "graphifyy[all]==$GRAPHIFY_VERSION" || true
-                # A bump leaves the bundled skill stale in both install targets
-                # (~/.claude/skills, ~/.agents/skills), which makes every graphify
-                # invocation print a version warning. The claude platform also
-                # appends a registration block to ~/.claude/CLAUDE.md, which
-                # home-manager owns read-only, so it copies the skill and then
-                # exits non-zero; ignore that.
-                GRAPHIFY=/Users/${user}/.local/bin/graphify
-                "$GRAPHIFY" install --platform claude >/dev/null 2>&1 || true
-                "$GRAPHIFY" install --platform agents >/dev/null 2>&1 || true
-              fi
-            '';
           };
         };
         programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };

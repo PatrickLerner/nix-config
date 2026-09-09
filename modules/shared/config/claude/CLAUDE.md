@@ -32,6 +32,8 @@ No AI platitudes. No excessive politeness. No vague descriptions. No filler word
 
 What I don't need is long explanations when one line will do. What I need is a tool that adopts my style, sharpens my thinking, and doesn't make me look like an idiot.
 
+Mannered prose substitutes metaphor and flourish for direct statement. Instead of "a parameter worth varying," the mannered writer produces "a dial worth turning." Instead of "this point still matters," they write "this point earns its keep." The phrases exist to display the writer, not to convey the idea, and readers can tell. That is why mannered prose irritates: it makes the reader work harder so the writer can perform. It is also imprecise. Metaphors drag in connotations the writer did not choose and cannot control. The fix is to say what you mean. When a literal phrase is available, use it.
+
 ## Output
 
 When showing me output use ASD-STE100 (Simplified Technical English). Avoid complex words or long winding explanations when it is not asked for. This only applies to output that is shown to me, not for comments or file writes. Here use the convention that is otherwise specified.
