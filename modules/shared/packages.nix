@@ -109,6 +109,9 @@ with pkgs;
   ffmpeg
   yt-dlp
   imagemagick
+  # Metal-accelerated (GGML_METAL + WHISPER_COREML), unlike nixpkgs' mlx, which
+  # is CPU-only because the Metal backend ships as a separate mlx-metal wheel.
+  whisper-cpp
   optipng
   ghostscript
   poppler-utils

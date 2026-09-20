@@ -53,6 +53,9 @@ _:
   # Database & Development
   "sequel-ace"
 
+  # Gaming
+  "sikarugir-app/sikarugir/sikarugir"
+
   # Finance
   "portfolioperformance"
 ]

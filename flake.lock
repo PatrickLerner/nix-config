@@ -244,6 +244,22 @@
         "type": "github"
       }
     },
+    "homebrew-sikarugir-tap": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1789730539,
+        "narHash": "sha256-zg4bqjNQP3j+/QIGXq36UfN7KUxV7KVolaEGx0VdSUg=",
+        "owner": "Sikarugir-App",
+        "repo": "homebrew-sikarugir",
+        "rev": "ee6781a5b2f592cf186352a88dbfb9cab24c138c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Sikarugir-App",
+        "repo": "homebrew-sikarugir",
+        "type": "github"
+      }
+    },
     "instaffo-skills": {
       "flake": false,
       "locked": {
@@ -357,6 +373,7 @@
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
         "homebrew-driangle-tap": "homebrew-driangle-tap",
+        "homebrew-sikarugir-tap": "homebrew-sikarugir-tap",
         "instaffo-skills": "instaffo-skills",
         "karamd": "karamd",
         "nix-homebrew": "nix-homebrew",

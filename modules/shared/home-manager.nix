@@ -110,6 +110,17 @@ in
       transcribe_english = "transcribe --language English --model base";
       transcribe_english_slow = "transcribe --language English --model small";
 
+      # whisper.cpp, Metal-accelerated: ~40x realtime vs openai-whisper's ~1x on
+      # CPU. Takes mp3/wav at any sample rate and writes <input>.txt beside the
+      # input. -mc 0 drops previous-text conditioning; without it a long silence
+      # sends the decoder into a repeat loop that corrupts the rest of the file.
+      # The 1.6 GB model is not in nix, run transcribe_get_model once.
+      transcribe_turbo = "whisper-cli -m $HOME/.local/share/whisper-cpp/ggml-large-v3-turbo.bin -mc 0 -otxt -t 8 -l auto";
+      transcribe_turbo_german = "transcribe_turbo -l de";
+      transcribe_turbo_english = "transcribe_turbo -l en";
+      transcribe_turbo_persian = "transcribe_turbo -l fa";
+      transcribe_get_model = "mkdir -p $HOME/.local/share/whisper-cpp && curl -L --fail -o $HOME/.local/share/whisper-cpp/ggml-large-v3-turbo.bin https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3-turbo.bin";
+
       # Google Workspace CLI (gws) per-account wrappers. gws reads its whole
       # config (client_secret.json, credentials.enc, token_cache.json) from
       # one dir. Point each account at its own dir via GOOGLE_WORKSPACE_CLI_CONFIG_DIR
