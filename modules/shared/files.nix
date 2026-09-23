@@ -219,6 +219,13 @@ in
     text = builtins.readFile ../shared/config/claude/skills/google-workspace-cli/scripts/gws-list-docs-since.sh;
     executable = true;
   };
+  ".claude/skills/meeting-attendance/SKILL.md" = {
+    text = builtins.readFile ../shared/config/claude/skills/meeting-attendance/SKILL.md;
+  };
+  ".claude/skills/meeting-attendance/scripts/parse-meet-log.js" = {
+    text = builtins.readFile ../shared/config/claude/skills/meeting-attendance/scripts/parse-meet-log.js;
+    executable = true;
+  };
   ".claude/skills/time-keeper/SKILL.md" = {
     text = builtins.readFile ../shared/config/claude/skills/time-keeper/SKILL.md;
   };
