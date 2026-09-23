@@ -199,11 +199,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1790140579,
-        "narHash": "sha256-acX7qUqO8yoP/lcv08OzX28EXDbJLr0ywJkVvqNEgsY=",
+        "lastModified": 1790163381,
+        "narHash": "sha256-3d+HJdFt93TDNNZaonEkN641+noG7b3SjEF13QG+Aho=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "87e7ed888a5fccfb402692bc5b3edd9dd84fb44a",
+        "rev": "a60f1ea0e4cb6d58a1a57ad73615fb306041c2d2",
         "type": "github"
       },
       "original": {
@@ -215,11 +215,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1790141280,
-        "narHash": "sha256-malI2YOUzXyotwid9CxinQKMi+Oa47OgIlgp8NestXM=",
+        "lastModified": 1790166112,
+        "narHash": "sha256-+BAmVkSdM1QiThCHgXfZAXKDjQx4qDtB5KZ4StH63fY=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "0d172b3a97e8b472d15fd95f3ae68aa7703d73ae",
+        "rev": "6abfd49c5c844841086390bf2ba621fe0b0780e8",
         "type": "github"
       },
       "original": {
@@ -263,11 +263,11 @@
     "instaffo-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1790066723,
-        "narHash": "sha256-LeTEJHsOWu6SOrjUmPqZwDG1a8KndshnrXpCzwJte34=",
+        "lastModified": 1790162562,
+        "narHash": "sha256-WQvSRng0XmgmDu3fJqdB9FfaLjBBV23uJ1KFC+5g1qU=",
         "ref": "refs/heads/master",
-        "rev": "ee12ad2af68de6c8d7b27d9dda4b0daae34053a9",
-        "revCount": 726,
+        "rev": "eda442d621d6df30c9dc3db2d78d3d3745737ecd",
+        "revCount": 728,
         "type": "git",
         "url": "ssh://git@github.com/InstaffoGmbH/instaffo-skills.git"
       },

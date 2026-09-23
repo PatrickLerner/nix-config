@@ -13,13 +13,20 @@ let
   # installHeadroom activation hook), not a nix store path.
   headroom = "/Users/${user}/.local/bin/headroom";
 
+  # Adaptive JSON compression drops keys without a CCR marker, so they can't be retrieved.
+  protectedTools = builtins.concatStringsSep "," [
+    "mcp__claude_ai_Instaffo_Recruiter_MCP__get_application"
+    "mcp__claude_ai_Instaffo_Recruiter_MCP__get_screening"
+    "mcp__claude_ai_Instaffo_Recruiter_MCP__list_applications"
+  ];
+
   # Login shell so the uv shim finds its python and the bundled CLI tools.
   # Unset the client routing vars from zshenv so the proxy never targets itself.
   wrapper = pkgs.writeScript "headroom-proxy-wrapper" ''
     #!${pkgs.zsh}/bin/zsh -l
     [[ -f "$HOME/.zshenv" ]] && . "$HOME/.zshenv"
     unset ANTHROPIC_BASE_URL OPENAI_BASE_URL
-    exec ${headroom} proxy --port ${port}
+    exec ${headroom} proxy --port ${port} --protect-tool-results ${protectedTools}
   '';
 in
 {
