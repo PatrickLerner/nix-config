@@ -451,7 +451,7 @@ in
             # reinstall once the pinned version is present. Bump = one string.
             installHeadroom = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
               UV=${pkgs.uv}/bin/uv
-              HEADROOM_VERSION=0.38.0
+              HEADROOM_VERSION=0.40.0
               if ! "$UV" tool list 2>/dev/null | grep -q "headroom-ai v$HEADROOM_VERSION"; then
                 "$UV" tool install --python 3.13 "headroom-ai[all]==$HEADROOM_VERSION" || true
               fi
@@ -489,16 +489,11 @@ in
         {
           path = "/Applications/Microsoft Edge.app";
         }
-        # Edge Web App (must be created manually in Edge: ... > Apps > Install)
-        {
-          path = "${config.users.users.${user}.home}/Applications/Edge Apps.localized/Google Gemini.app";
-        }
-        { path = "/Applications/Claude.app"; }
+        { path = "/Applications/Gemini.app"; }
         { path = "/Applications/WhatsApp.app/"; }
         { path = "/Applications/Telegram.app/"; }
         { path = "/Applications/Slack.app/"; }
         { path = "/Applications/Obsidian.app/"; }
-        { path = "/Applications/Anki.app/"; }
         { path = "/Applications/Nix Apps/Alacritty.app"; }
         { path = "/Applications/Nix Apps/YouTube Music.app"; }
         { path = "/Applications/Pocket Casts.app"; }

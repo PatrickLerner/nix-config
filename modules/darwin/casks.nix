@@ -3,6 +3,7 @@ _:
 [
   # Development Tools
   "claude"
+  "google-gemini"
   "docker-desktop"
   "zed"
 

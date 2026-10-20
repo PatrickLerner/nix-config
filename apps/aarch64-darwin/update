@@ -6,8 +6,8 @@ RED='\033[1;31m'
 NC='\033[0m'
 
 # The uv-managed PyPI tools are version-pinned in modules/darwin/home-manager.nix
-# (no nixpkgs entry, so `nix flake update` can't see them). Report drift; the bump
-# stays manual because it triggers a slow torch/onnxruntime reinstall.
+# (no nixpkgs entry, so `nix flake update` can't see them). Bump them to latest here;
+# the build-switch below then reinstalls them.
 PINS=modules/darwin/home-manager.nix
 
 check_pypi_pin() {
@@ -25,11 +25,12 @@ check_pypi_pin() {
   elif [ "$pinned" = "$latest" ]; then
     echo "${GREEN}$pkg: $pinned is current.${NC}"
   else
-    echo "${RED}$pkg: pinned $pinned, latest $latest. Bump $var in $PINS.${NC}"
+    sed -i "" "s/$var=$pinned/$var=$latest/" "$PINS"
+    echo "${GREEN}$pkg: bumped $pinned -> $latest.${NC}"
   fi
 }
 
-echo "${YELLOW}Checking pinned PyPI tools...${NC}"
+echo "${YELLOW}Updating pinned PyPI tools...${NC}"
 if [ ! -f "$PINS" ] || ! command -v node >/dev/null 2>&1; then
   echo "${RED}Need node and a cwd of the repo root; skipping pin checks.${NC}"
 else

@@ -205,6 +205,9 @@ in
   ".claude/skills/mcp-proxy-debugging/SKILL.md" = {
     text = builtins.readFile ../shared/config/claude/skills/mcp-proxy-debugging/SKILL.md;
   };
+  ".claude/skills/file-task/SKILL.md" = {
+    text = builtins.readFile ../shared/config/claude/skills/file-task/SKILL.md;
+  };
   ".claude/skills/family-calendar/SKILL.md" = {
     text = builtins.readFile ../shared/config/claude/skills/family-calendar/SKILL.md;
   };
