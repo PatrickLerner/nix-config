@@ -39,7 +39,6 @@ with pkgs;
   codex
   opencode
   ollama # local LLM runner (Metal-accelerated on Apple Silicon); launch manually with `ollama serve`
-  mcp-proxy
   neovim
   tree-sitter
 

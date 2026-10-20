@@ -202,9 +202,6 @@ in
   ".claude/skills/zeroclaw-cli/SKILL.md" = {
     text = builtins.readFile ../shared/config/claude/skills/zeroclaw-cli/SKILL.md;
   };
-  ".claude/skills/mcp-proxy-debugging/SKILL.md" = {
-    text = builtins.readFile ../shared/config/claude/skills/mcp-proxy-debugging/SKILL.md;
-  };
   ".claude/skills/file-task/SKILL.md" = {
     text = builtins.readFile ../shared/config/claude/skills/file-task/SKILL.md;
   };

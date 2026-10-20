@@ -15,7 +15,6 @@ in
 {
   imports = [
     ./dock
-    ./mcp-proxy.nix
     ./portless-proxy.nix
     ./claude-oauth-gitlab.nix
     ./karamd-web.nix
@@ -165,10 +164,6 @@ in
                   "$CLAUDE_JSON" > "$CLAUDE_JSON.tmp" && mv "$CLAUDE_JSON.tmp" "$CLAUDE_JSON"
               }
 
-              # stdio MCPs fronted by the local mcp-proxy launchd agent.
-              update_server Gitlab              sse  http://127.0.0.1:8765/servers/Gitlab/sse
-
-              # Already hosted remotely, no proxy needed
               update_server Jam                 http https://mcp.jam.dev/mcp
 
               # Buffer: remote HTTP MCP for social/LinkedIn post management. Needs
@@ -197,7 +192,6 @@ in
               OPENCODE="${pkgs.opencode}/bin/opencode"
 
               echo "Configuring OpenCode MCP servers..."
-              $OPENCODE mcp add Gitlab              --url http://127.0.0.1:8765/servers/Gitlab/sse
               $OPENCODE mcp add Jam                 --url https://mcp.jam.dev/mcp
             '';
 
@@ -451,7 +445,7 @@ in
             # reinstall once the pinned version is present. Bump = one string.
             installHeadroom = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
               UV=${pkgs.uv}/bin/uv
-              HEADROOM_VERSION=0.40.0
+              HEADROOM_VERSION=0.41.0
               if ! "$UV" tool list 2>/dev/null | grep -q "headroom-ai v$HEADROOM_VERSION"; then
                 "$UV" tool install --python 3.13 "headroom-ai[all]==$HEADROOM_VERSION" || true
               fi
