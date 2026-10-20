@@ -10,6 +10,12 @@
     };
     nix-homebrew = {
       url = "github:zhaofengli/nix-homebrew";
+      # upstream pins a brew tag that lags homebrew-core; track brew main instead
+      inputs.brew-src.follows = "brew-src";
+    };
+    brew-src = {
+      url = "github:Homebrew/brew";
+      flake = false;
     };
     homebrew-bundle = {
       url = "github:homebrew/homebrew-bundle";
