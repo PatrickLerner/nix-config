@@ -11,6 +11,7 @@ _:
   "firefox"
   "google-chrome"
   "microsoft-edge"
+  "zen"
 
   # Communication & Social
   "discord"

@@ -483,6 +483,7 @@ in
         {
           path = "/Applications/Microsoft Edge.app";
         }
+        { path = "/Applications/Zen.app"; }
         { path = "/Applications/Gemini.app"; }
         { path = "/Applications/WhatsApp.app/"; }
         { path = "/Applications/Telegram.app/"; }

@@ -118,7 +118,7 @@ in
       if [ "$(uname -m)" = "arm64" ]; then
         if [ ! -f /Library/Apple/usr/libexec/oah/libRosettaRuntime ]; then
           echo "Installing Rosetta 2..."
-          /usr/bin/softwareupdate --install-rosetta --agree-to-license
+          /usr/sbin/softwareupdate --install-rosetta --agree-to-license
         fi
       fi
     '';
