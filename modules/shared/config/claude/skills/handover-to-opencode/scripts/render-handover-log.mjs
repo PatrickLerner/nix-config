@@ -13,7 +13,7 @@ for (let i = 2; i < process.argv.length; i += 2) {
 }
 const log = flags.log;
 if (!log) {
-  console.error("render-glm-log: --log is required");
+  console.error("render-handover-log: --log is required");
   process.exit(2);
 }
 
@@ -49,6 +49,7 @@ const body = [];
 let sessionId = null;
 let cost = 0;
 let finalText = "";
+let sawStepFinish = false;
 
 for (const event of events) {
   sessionId ??= event.sessionID ?? null;
@@ -83,6 +84,7 @@ for (const event of events) {
       break;
     }
     case "step_finish": {
+      sawStepFinish = true;
       cost += part.cost ?? 0;
       const t = part.tokens ?? {};
       tokens.input += t.input ?? 0;
@@ -101,7 +103,27 @@ for (const event of events) {
   }
 }
 
+// v2 streams no step_finish; the export carries session totals instead.
+let tokenSource = "stream";
+const sessionPath = join(log, "session.json");
+if (!sawStepFinish && existsSync(sessionPath)) {
+  try {
+    const info = JSON.parse(readFileSync(sessionPath, "utf8")).info ?? {};
+    const t = info.tokens ?? {};
+    cost = info.cost ?? 0;
+    tokens.input = t.input ?? 0;
+    tokens.output = t.output ?? 0;
+    tokens.reasoning = t.reasoning ?? 0;
+    tokens.cache_read = t.cache?.read ?? 0;
+    tokens.cache_write = t.cache?.write ?? 0;
+    tokenSource = "session export (whole session, includes earlier --session turns)";
+  } catch {
+    tokenSource = "unavailable (session.json unreadable)";
+  }
+}
+
 const stderrPath = join(log, "stderr.txt");
+
 const stderr = existsSync(stderrPath) ? readFileSync(stderrPath, "utf8").trim() : "";
 if (stderr) errors.push(...stderr.split("\n").slice(-5));
 
@@ -135,6 +157,7 @@ const meta = {
   duration_s: durationS,
   cost_usd: Number(cost.toFixed(6)),
   tokens,
+  token_source: tokenSource,
   tool_counts: toolCounts,
   files_edited: [...filesTouched],
   diff_files: diffFiles,
@@ -146,7 +169,7 @@ const meta = {
 writeFileSync(join(log, "meta.json"), `${JSON.stringify(meta, null, 2)}\n`);
 
 const header = [
-  `# GLM handover: ${meta.slug}`,
+  `# opencode handover: ${meta.slug}`,
   "",
   `- model: ${meta.model}`,
   `- dir: ${meta.dir}`,
@@ -163,7 +186,7 @@ const header = [
 writeFileSync(join(log, "transcript.md"), `${header.concat(body).join("\n")}\n`);
 
 const summary = [
-  `glm-handover ${
+  `opencode-handover ${
     exitCode === 0 ? "ok" : timedOut ? "TIMED OUT" : `FAILED (exit ${exitCode})`
   } — ${meta.slug}`,
   `log:     ${log}`,
@@ -174,7 +197,7 @@ const summary = [
   untracked.length ? `new:     ${untracked.join(", ")}` : null,
   errors.length ? `errors:\n  ${errors.join("\n  ")}` : null,
   "",
-  finalText ? `GLM says:\n${finalText}` : "GLM produced no final message.",
+  finalText ? `Model says:\n${finalText}` : "The model produced no final message.",
 ]
   .filter((line) => line !== null)
   .join("\n");

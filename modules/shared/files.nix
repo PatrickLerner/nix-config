@@ -244,15 +244,15 @@ in
     text = builtins.readFile ../shared/config/claude/skills/time-review/scripts/gws-fetch-meeting-transcript.sh;
     executable = true;
   };
-  ".claude/skills/handover-to-glm/SKILL.md" = {
-    text = builtins.readFile ../shared/config/claude/skills/handover-to-glm/SKILL.md;
+  ".claude/skills/handover-to-opencode/SKILL.md" = {
+    text = builtins.readFile ../shared/config/claude/skills/handover-to-opencode/SKILL.md;
   };
-  ".claude/skills/handover-to-glm/scripts/glm-handover.sh" = {
-    text = builtins.readFile ../shared/config/claude/skills/handover-to-glm/scripts/glm-handover.sh;
+  ".claude/skills/handover-to-opencode/scripts/opencode-handover.sh" = {
+    text = builtins.readFile ../shared/config/claude/skills/handover-to-opencode/scripts/opencode-handover.sh;
     executable = true;
   };
-  ".claude/skills/handover-to-glm/scripts/render-glm-log.mjs" = {
-    text = builtins.readFile ../shared/config/claude/skills/handover-to-glm/scripts/render-glm-log.mjs;
+  ".claude/skills/handover-to-opencode/scripts/render-handover-log.mjs" = {
+    text = builtins.readFile ../shared/config/claude/skills/handover-to-opencode/scripts/render-handover-log.mjs;
     executable = true;
   };
 
