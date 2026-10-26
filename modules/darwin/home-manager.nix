@@ -480,9 +480,6 @@ in
       entries = [
         { path = "/System/Applications/Mail.app"; }
         { path = "/System/Applications/Calendar.app"; }
-        {
-          path = "/Applications/Microsoft Edge.app";
-        }
         { path = "/Applications/Zen.app"; }
         { path = "/Applications/Gemini.app"; }
         { path = "/Applications/WhatsApp.app/"; }
