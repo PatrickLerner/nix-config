@@ -29,10 +29,6 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    homebrew-driangle-tap = {
-      url = "github:driangle/homebrew-tap";
-      flake = false;
-    };
     homebrew-sikarugir-tap = {
       url = "github:Sikarugir-App/homebrew-sikarugir";
       flake = false;
@@ -70,7 +66,6 @@
       homebrew-bundle,
       homebrew-core,
       homebrew-cask,
-      homebrew-driangle-tap,
       homebrew-sikarugir-tap,
       home-manager,
       nixpkgs,
@@ -145,7 +140,6 @@
                   "homebrew/homebrew-core" = homebrew-core;
                   "homebrew/homebrew-cask" = homebrew-cask;
                   "homebrew/homebrew-bundle" = homebrew-bundle;
-                  "driangle/homebrew-tap" = homebrew-driangle-tap;
                   "sikarugir-app/homebrew-sikarugir" = homebrew-sikarugir-tap;
                 };
                 mutableTaps = false;

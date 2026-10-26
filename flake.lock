@@ -21,11 +21,11 @@
     "brew-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1792934694,
-        "narHash": "sha256-SORd1SK1RiQlAOMH8kiNP5IV3hl/TvnkSnVUerN0ibo=",
+        "lastModified": 1793000687,
+        "narHash": "sha256-8mCor0DDjNhi+0e+FllfqiMABujBl+/RxYW+wgMpcto=",
         "owner": "Homebrew",
         "repo": "brew",
-        "rev": "8d799352d3ff25e726867ce3a8c989461df25ab2",
+        "rev": "c6069d2a943b71b0a90d91fc1ac93cb9c1634dcc",
         "type": "github"
       },
       "original": {
@@ -152,11 +152,11 @@
     "homebrew-cask": {
       "flake": false,
       "locked": {
-        "lastModified": 1792987639,
-        "narHash": "sha256-nGd/rzztnrgBo9Y2+liJy9nDmDe9hZQzryrSBA90BkI=",
+        "lastModified": 1793015736,
+        "narHash": "sha256-zn5XEfbHbLCA/Q25N899XcVy87o2b5//BdRar3nh9Tk=",
         "owner": "homebrew",
         "repo": "homebrew-cask",
-        "rev": "70f02325ff15b873141cc2b0a4b481a87a47a8c7",
+        "rev": "1d6a12fe2c2958927b0eade06dd0f1ca63464ce5",
         "type": "github"
       },
       "original": {
@@ -168,32 +168,16 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1792992410,
-        "narHash": "sha256-at0L+Pzrhg7NV9JwWIeXeGBCC1NnmCYKiz5wbSQ7FeM=",
+        "lastModified": 1793016756,
+        "narHash": "sha256-TrnlGgPUeFV5UqAONvWam5eBLyIH8WENqEVZrpIoj/k=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "30c48fc145a3b575635b37034e28ff257ee60b34",
+        "rev": "8b15a8dddb9bc842d38785c4fd87013ab5a26f8c",
         "type": "github"
       },
       "original": {
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "type": "github"
-      }
-    },
-    "homebrew-driangle-tap": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1790945603,
-        "narHash": "sha256-ZFltRKB/1GZ2KM5SO129Bh9EaBPlOoScav6jFev0/aA=",
-        "owner": "driangle",
-        "repo": "homebrew-tap",
-        "rev": "0e1d7a54a38861d774d1c6bdb64488dccf7293e0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "driangle",
-        "repo": "homebrew-tap",
         "type": "github"
       }
     },
@@ -216,11 +200,11 @@
     "instaffo-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1792981034,
-        "narHash": "sha256-nHjFYeu0NciyQrrWp120wQ6nwkU0h5/yYofl3bmKqQE=",
+        "lastModified": 1793017288,
+        "narHash": "sha256-doBRGVc/ppMrLWtRw9Lv25JOOI8t5uQlDxjHzmNWHoA=",
         "ref": "refs/heads/master",
-        "rev": "08c76494ecfbd17e9ae083f9a647f9d4e3cfa466",
-        "revCount": 796,
+        "rev": "561c5886ad346c810e86119dfbbe5c9711dca859",
+        "revCount": 805,
         "type": "git",
         "url": "ssh://git@github.com/InstaffoGmbH/instaffo-skills.git"
       },
@@ -325,7 +309,6 @@
         "homebrew-bundle": "homebrew-bundle",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
-        "homebrew-driangle-tap": "homebrew-driangle-tap",
         "homebrew-sikarugir-tap": "homebrew-sikarugir-tap",
         "instaffo-skills": "instaffo-skills",
         "karamd": "karamd",

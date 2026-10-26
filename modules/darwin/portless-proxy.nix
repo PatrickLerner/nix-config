@@ -8,7 +8,7 @@ let
 in
 {
   # Root LaunchDaemon fronting loopback dev servers at https://*.localhost on
-  # 443 (karamd-web, headroom, etc). `proxy start` daemonizes and needs sudo
+  # 443 (karamd-web, etc). `proxy start` daemonizes and needs sudo
   # for the privileged port, so it can't be launched from the (no-TTY) user
   # agent and doesn't survive reboot on its own. Run it as a root LaunchDaemon
   # in --foreground (launchd owns the process; KeepAlive restarts it). HOME is

@@ -35,7 +35,6 @@ _:
   "hot"
   "karabiner-elements"
   "keka"
-  "mysides"
   "obsidian"
 
   # Media & Content Creation

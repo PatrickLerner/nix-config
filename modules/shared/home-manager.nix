@@ -164,12 +164,8 @@ in
       export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
       export PATH="/usr/local/sbin:$PATH"
       export PATH="$HOME/.cargo/bin:$PATH"
-      export PATH="$HOME/.local/bin:$PATH"  # uv tool install target (headroom, etc.)
+      export PATH="$HOME/.local/bin:$PATH"  # uv tool install target
       export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
-
-      # Route Claude Code / Anthropic SDK through the local headroom proxy
-      # (launchd: com.patrick.headroom-proxy, KeepAlive on default port 8787).
-      export ANTHROPIC_BASE_URL="http://127.0.0.1:8787"
 
       # pnpm global bin (pnpm install -g)
       export PATH="$HOME/Library/pnpm/bin:$PATH"
@@ -350,11 +346,6 @@ in
         accept-line
         copy-earlier-word
       )
-
-      # Show "now" tasks from the Notes taskmd project on interactive startup.
-      if command -v taskmd >/dev/null 2>&1; then
-        taskmd next --columns id,title --phase now --project Notes 2>/dev/null | tail -n '+5'
-      fi
 
     '';
   };

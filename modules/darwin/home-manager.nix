@@ -18,7 +18,6 @@ in
     ./portless-proxy.nix
     ./claude-oauth-gitlab.nix
     ./karamd-web.nix
-    ./headroom-proxy.nix
   ];
 
   # It me
@@ -38,8 +37,6 @@ in
       "awscli"
       "coreutils"
       "dockutil"
-      "driangle/tap/taskmd"
-      "gemini-cli"
       "gitlab-ci-local"
       "libyaml"
       "ocrmypdf"
@@ -384,83 +381,15 @@ in
               fi
             '';
 
-            # Declaratively set the Finder sidebar Favorites via mysides.
-            # Ensures backing dirs exist, clears the existing favorites, then
-            # re-adds the desired list in order. Google Drive paths are URL-encoded.
-            setFinderSidebar = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            # Clone ~/Notes and create ~/Workbench if missing.
+            ensureHomeDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
               HOME_DIR="/Users/${user}"
-              GD="file:///Users/${user}/Library/CloudStorage/GoogleDrive-ptlerner@gmail.com/My%20Drive"
 
-              # Ensure backing directories exist (always, independent of mysides)
               if [ ! -d "$HOME_DIR/Notes" ]; then
                 GIT_SSH_COMMAND="/usr/bin/ssh -o StrictHostKeyChecking=accept-new" \
                   ${pkgs.git}/bin/git clone git@github.com:PatrickLerner/Notes.git "$HOME_DIR/Notes" || true
               fi
               mkdir -p "$HOME_DIR/Workbench"
-
-              # Favorites require mysides (Homebrew cask). If it isn't installed
-              # yet (e.g. brew bundle runs after this on a first switch), skip the
-              # favorites step; the next rebuild will apply them.
-              MYSIDES="/usr/local/bin/mysides"
-              if [ ! -x "$MYSIDES" ]; then
-                echo "setFinderSidebar: mysides not installed yet, skipping favorites (will apply on next rebuild)"
-                exit 0
-              fi
-
-              # Clear all existing favorites
-              "$MYSIDES" list 2>/dev/null | while IFS= read -r line; do
-                name="''${line%% -> *}"
-                [ -n "$name" ] && "$MYSIDES" remove "$name" >/dev/null 2>&1 || true
-              done
-
-              # Re-add in the desired order
-              "$MYSIDES" add Applications        "file:///Applications/"            >/dev/null 2>&1 || true
-              "$MYSIDES" add Downloads           "file://$HOME_DIR/Downloads/"       >/dev/null 2>&1 || true
-              "$MYSIDES" add Desktop             "file://$HOME_DIR/Desktop/"         >/dev/null 2>&1 || true
-              "$MYSIDES" add "Data Files"        "$GD/Data%20Files/"                 >/dev/null 2>&1 || true
-              "$MYSIDES" add Notes               "file://$HOME_DIR/Notes/"           >/dev/null 2>&1 || true
-              "$MYSIDES" add "Language Learning" "$GD/Language%20Learning/"          >/dev/null 2>&1 || true
-              "$MYSIDES" add Workbench           "file://$HOME_DIR/Workbench/"       >/dev/null 2>&1 || true
-
-              /usr/bin/killall Finder >/dev/null 2>&1 || true
-            '';
-
-            # Ensure ~/Notes is registered as a taskmd project in ~/.taskmd.yaml.
-            # The file is intentionally NOT nix-managed; taskmd patches it in
-            # place, preserving any other registered projects. Guard on the id so
-            # re-registration (which errors) is skipped.
-            registerTaskmdNotes = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-              TASKMD=/opt/homebrew/bin/taskmd
-              if [ -x "$TASKMD" ] && [ -d "/Users/${user}/Notes" ]; then
-                if ! "$TASKMD" projects --format json 2>/dev/null | grep -q '"id": *"Notes"'; then
-                  "$TASKMD" projects register --id Notes --name Notes --path "/Users/${user}/Notes" || true
-                fi
-              fi
-            '';
-
-            # headroom-ai (LLM context optimization layer) is a maturin+ML PyPI
-            # package with no nixpkgs entry and no upstream flake. Nixifying its
-            # torch/onnxruntime/maturin tree by hand isn't worth it, so install
-            # it as an isolated uv tool. Version-pinned; the guard skips the slow
-            # reinstall once the pinned version is present. Bump = one string.
-            installHeadroom = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-              UV=${pkgs.uv}/bin/uv
-              HEADROOM_VERSION=0.41.0
-              if ! "$UV" tool list 2>/dev/null | grep -q "headroom-ai v$HEADROOM_VERSION"; then
-                "$UV" tool install --python 3.13 "headroom-ai[all]==$HEADROOM_VERSION" || true
-              fi
-            '';
-
-            # Wire Claude Code (durable hooks + MCP retrieve tool) to the local
-            # headroom proxy on the default port. Idempotent, so re-running each
-            # activation just re-asserts the same routing. Runs after the tool is
-            # installed. The proxy itself is the com.patrick.headroom-proxy agent.
-            setupHeadroomRouting = lib.hm.dag.entryAfter [ "installHeadroom" ] ''
-              HR=/Users/${user}/.local/bin/headroom
-              if [ -x "$HR" ]; then
-                "$HR" init --port 8787 claude >/dev/null 2>&1 || true
-                "$HR" mcp install --proxy-url http://127.0.0.1:8787 --force >/dev/null 2>&1 || true
-              fi
             '';
           };
         };
