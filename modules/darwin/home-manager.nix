@@ -18,6 +18,7 @@ in
     ./portless-proxy.nix
     ./claude-oauth-gitlab.nix
     ./karamd-web.nix
+    ./crash-monitor.nix
   ];
 
   # It me
@@ -189,7 +190,7 @@ in
               OPENCODE="${pkgs.opencode}/bin/opencode"
 
               echo "Configuring OpenCode MCP servers..."
-              $OPENCODE mcp add Jam                 --url https://mcp.jam.dev/mcp
+              $OPENCODE mcp add Jam                 --url https://mcp.jam.dev/mcp --global
             '';
 
             # Expose selected skills to opencode. opencode discovers skills from
