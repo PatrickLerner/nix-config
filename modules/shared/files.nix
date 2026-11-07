@@ -61,6 +61,11 @@ in
     source = ../shared/config/wallpapers/wallhaven-1qkzd9.jpg;
   };
 
+  # Token file written by setupNixGithubToken; `!include` tolerates it missing.
+  ".config/nix/nix.conf" = {
+    text = "!include /Users/patrick/.config/nix/access-tokens.conf\n";
+  };
+
   # Tmuxinator configuration
   ".config/tmuxinator/instaffo.yml" = {
     text = builtins.readFile ../shared/config/tmuxinator/instaffo.yml;

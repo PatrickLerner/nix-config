@@ -6,7 +6,7 @@
 - Never use em-dashes (–, —) to split sentences. It's AI slop
 - Write like a human, not an AI
 - Never add vowel markers when creating Persian phrases
-- `yt-dlp`: Use `yt-dlp --cookies-from-browser edge` for YouTube downloads
+- `yt-dlp`: Use `yt-dlp --cookies-from-browser "firefox:$HOME/Library/Application Support/zen/Profiles/jf5129cq.Default (release)"` for YouTube downloads (Zen, not Edge)
 - **Google Workspace (Gmail/Drive/Docs/Sheets/Calendar)**: Use the `gws` CLI, ALWAYS via `gws-work` (patrick@instaffo.com) or `gws-personal` (ptlerner@gmail.com). Never invoke bare `gws` — it has no account isolation. The aliases set `GOOGLE_WORKSPACE_CLI_CONFIG_DIR` per account (concurrency-safe). The old google-work/google-private MCP servers are disabled.
 - DO NOT use python if avoidable. Prefer ruby or node
 - Never guess about installed tools, MCP servers, or config. Read the actual files first. Check all possible config locations.

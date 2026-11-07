@@ -38,6 +38,7 @@ with pkgs;
   claude-code
   codex
   opencode
+  pi-coding-agent
   ollama # local LLM runner (Metal-accelerated on Apple Silicon); launch manually with `ollama serve`
   neovim
   tree-sitter
@@ -94,6 +95,9 @@ with pkgs;
   ))
   uv
   rustup
+  cargo-deny
+  cargo-machete
+  shellcheck
 
   # Database & Data Tools
   mysql84

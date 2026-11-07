@@ -183,6 +183,19 @@ in
               fi
             '';
 
+            # Authenticated GitHub API calls for flake fetches (60/h anonymous limit).
+            # Token comes from gh's keyring and stays out of the store.
+            setupNixGithubToken = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+              NIX_DIR="/Users/${user}/.config/nix"
+              TOKEN_FILE="$NIX_DIR/access-tokens.conf"
+              ${pkgs.coreutils}/bin/mkdir -p "$NIX_DIR"
+              if TOKEN=$(${pkgs.gh}/bin/gh auth token 2>/dev/null) && [ -n "$TOKEN" ]; then
+                (umask 077; echo "access-tokens = github.com=$TOKEN" > "$TOKEN_FILE")
+              else
+                echo "setupNixGithubToken: gh auth token failed, keeping existing $TOKEN_FILE"
+              fi
+            '';
+
             # Activation script to configure OpenCode MCP servers.
             # Idempotent: runs 'opencode mcp add' for each server to ensure they are properly
             # registered and configured.
