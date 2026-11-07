@@ -249,6 +249,13 @@ in
     text = builtins.readFile ../shared/config/claude/skills/time-review/scripts/gws-fetch-meeting-transcript.sh;
     executable = true;
   };
+  ".claude/skills/text-to-speech/SKILL.md" = {
+    text = builtins.readFile ../shared/config/claude/skills/text-to-speech/SKILL.md;
+  };
+  ".claude/skills/text-to-speech/scripts/tts.rb" = {
+    text = builtins.readFile ../shared/config/claude/skills/text-to-speech/scripts/tts.rb;
+    executable = true;
+  };
   ".claude/skills/handover-to-opencode/SKILL.md" = {
     text = builtins.readFile ../shared/config/claude/skills/handover-to-opencode/SKILL.md;
   };

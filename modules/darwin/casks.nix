@@ -56,6 +56,7 @@ _:
   "sequel-ace"
 
   # Gaming
+  "gog-galaxy"
   "sikarugir-app/sikarugir/sikarugir"
 
   # Finance
