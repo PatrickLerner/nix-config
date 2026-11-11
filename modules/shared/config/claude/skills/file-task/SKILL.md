@@ -16,7 +16,7 @@ Tasks live in the vault `~/Notes` (config `~/Notes/.taskmd.yaml`, files in
 
 ```bash
 karamd create --vault ~/Notes "Review feature naming enforcement" \
-  --priority medium --phase later --due 2026-11-16 --tag work \
+  --priority medium --tag work \
   --body "$(cat <<'MD'
 # Review feature naming enforcement
 
@@ -33,7 +33,15 @@ MD
 - "Schedule it for X" or "remind me in N weeks" means `--due YYYY-MM-DD`. Compute the
   absolute date from today.
 - Tags: `work` (Instaffo) or `personal`. Add more only when Patrick names them.
-- Phases: `ongoing`, `now`, `next`, `soon`, `later`. Something due weeks out is `later`.
+- Phase follows the due date, the same windows `karamd reschedule` uses (weeks are
+  ISO weeks, Monday to Sunday):
+  - due today or earlier: `now`
+  - due later this week: `next`
+  - due next week: `soon`
+  - due after next week: `later`
+  - no due date: no `--phase`. Patrick sorts it himself.
+- Never pick `now` or `ongoing` on your own, except for a due date of today. Use
+  another phase only when Patrick names it.
 - Priority: `medium` unless Patrick says otherwise.
 - Title: short, starts with a verb, no trailing period.
 - Body: what to check or do, as a checklist, plus the links needed to do it. Write it
