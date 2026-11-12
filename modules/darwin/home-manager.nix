@@ -18,6 +18,7 @@ in
     ./portless-proxy.nix
     ./claude-oauth-gitlab.nix
     ./karamd-web.nix
+    ./clawde-flow.nix
     ./crash-monitor.nix
   ];
 
