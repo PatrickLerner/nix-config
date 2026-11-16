@@ -224,6 +224,9 @@ in
     text = builtins.readFile ../shared/config/claude/skills/google-workspace-cli/scripts/gws-list-docs-since.sh;
     executable = true;
   };
+  ".claude/skills/gcloud-readonly/SKILL.md" = {
+    text = builtins.readFile ../shared/config/claude/skills/gcloud-readonly/SKILL.md;
+  };
   ".claude/skills/meeting-attendance/SKILL.md" = {
     text = builtins.readFile ../shared/config/claude/skills/meeting-attendance/SKILL.md;
   };

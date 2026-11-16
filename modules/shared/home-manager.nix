@@ -128,6 +128,10 @@ in
       gws-work = "GOOGLE_WORKSPACE_CLI_CONFIG_DIR=$HOME/.config/gws-work gws";
       gws-personal = "GOOGLE_WORKSPACE_CLI_CONFIG_DIR=$HOME/.config/gws-personal gws";
 
+      # Read-only BigQuery service account (skill: gcloud-readonly).
+      gcloud-ro = "CLOUDSDK_CONFIG=$HOME/.config/gcloud-claude gcloud";
+      bq-ro = "CLOUDSDK_CONFIG=$HOME/.config/gcloud-claude bq";
+
       # Tmuxinator aliases
       instaffo-start = "tmuxinator start instaffo";
       instaffo-stop = "tmuxinator stop instaffo";

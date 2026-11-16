@@ -125,6 +125,16 @@ in
         group = "staff";
       };
 
+      # Read-only BigQuery service account key (skill: gcloud-readonly).
+      "gcloud-claude-key" = {
+        symlink = true;
+        path = "/Users/${user}/.config/gcloud-claude/key.json";
+        file = "${secrets}/gcloud-claude-key.age";
+        mode = "600";
+        owner = "${user}";
+        group = "staff";
+      };
+
       # Personal bio context read at runtime by the
       # anki-sami-german-vocab-builder agent. Kept out of the public agent
       # prompt so private details about Patrick and Sami stay encrypted.
