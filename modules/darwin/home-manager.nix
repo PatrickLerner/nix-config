@@ -17,7 +17,6 @@ in
     ./dock
     ./portless-proxy.nix
     ./claude-oauth-gitlab.nix
-    ./karamd-web.nix
     ./clawde-flow.nix
     ./crash-monitor.nix
   ];
@@ -116,7 +115,13 @@ in
           enableNixpkgsReleaseCheck = false;
           packages = (pkgs.callPackage ../shared/packages.nix { }) ++ [
             # Google Workspace CLI (github:googleworkspace/cli), not in nixpkgs
-            googleworkspace-cli.packages.${pkgs.stdenv.hostPlatform.system}.gws
+            # Upstream buildInputs read the deprecated stdenv.isLinux/isDarwin; replace them.
+            (googleworkspace-cli.packages.${pkgs.stdenv.hostPlatform.system}.gws.overrideAttrs {
+              buildInputs = [
+                pkgs.libiconv
+                pkgs.apple-sdk
+              ];
+            })
           ];
           file = sharedFiles;
 

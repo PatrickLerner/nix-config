@@ -3,8 +3,9 @@
 let
   dir = "/Library/Logs/crash-monitor";
 
-  # Kernel counters every 10s, top open-file and memory holders every minute.
+  # Kernel counters every minute, top open-file and memory holders every 10 minutes.
   # Debugs the recurring decmpfs ENFILE SIGBUS (launchd panic / loginwindow logout).
+  # Docker Desktop's VM held up to 243k fds against kern.maxvnodes 263168 (2026-11-05).
   sampler = pkgs.writeScript "crash-monitor" ''
     #!/bin/bash
     mkdir -p ${dir}
@@ -21,7 +22,7 @@ let
       "pressure=$(s kern.memorystatus_vm_pressure_level) free_pages=$(s vm.page_free_count)" \
       "compressor=$(s vm.compressor_bytes_used) swap=$swap" >> "$f"
 
-    if [ $(( $(date +%s) / 10 % 6 )) -eq 0 ]; then
+    if [ $(( $(date +%s) / 60 % 10 )) -eq 0 ]; then
       {
         echo "$(date '+%F %T') top_fds:"
         /usr/sbin/lsof -n -P -Fpcf 2>/dev/null | awk '
@@ -46,7 +47,7 @@ in
         "-c"
         "/bin/wait4path '${sampler}' && exec '${sampler}'"
       ];
-      StartInterval = 10;
+      StartInterval = 60;
       # 022, so the logs stay readable without sudo.
       Umask = 18;
       RunAtLoad = true;

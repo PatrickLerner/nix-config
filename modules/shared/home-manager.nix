@@ -163,7 +163,7 @@ in
 
     envExtra = ''
       # PATH lives in zshenv so non-interactive shells (scripts, launchd-spawned
-      # services like karamd-web) inherit it too, not just interactive zsh.
+      # services) inherit it too, not just interactive zsh.
       export PATH="$HOME/.bin:$PATH:/usr/local/bin"
       export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
       export PATH="/usr/local/sbin:$PATH"

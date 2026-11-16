@@ -102,8 +102,9 @@ in
     with pkgs;
     [
       agenix.packages."${pkgs.stdenv.hostPlatform.system}".default
-      # Prebuilt release binary, no local compile.
-      karamd.packages."${pkgs.stdenv.hostPlatform.system}".karamd-web
+      # Prebuilt release binary and menu bar app, no local compile.
+      karamd.packages."${pkgs.stdenv.hostPlatform.system}".karamd-bin
+      karamd.packages."${pkgs.stdenv.hostPlatform.system}".karamd-bar
     ]
     ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
 
