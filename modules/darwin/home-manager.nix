@@ -360,33 +360,35 @@ in
               done
             '';
 
-            # Register the Instaffo plugin marketplace and enable the team
-            # plugins for the user. Idempotent: skips the marketplace add when
-            # already known, and skips each plugin when already enabled in
-            # ~/.claude.json. Never breaks activation (all steps `|| true`).
+            # Register the Instaffo plugin marketplace, install the team plugins
+            # (user scope) and keep them current. Installed state comes from
+            # ~/.claude/plugins/installed_plugins.json. Never breaks activation
+            # (all steps `|| true`).
             setupClaudePlugins = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
               JQ="${pkgs.jq}/bin/jq"
               CLAUDE="${pkgs.claude-code}/bin/claude"
               KNOWN="/Users/${user}/.claude/plugins/known_marketplaces.json"
-              CLAUDE_JSON="/Users/${user}/.claude.json"
+              INSTALLED="/Users/${user}/.claude/plugins/installed_plugins.json"
               MARKET="instaffo-skills"
               SOURCE="git@github.com:InstaffoGmbH/instaffo-skills.git"
               export GIT_SSH_COMMAND="/usr/bin/ssh -o StrictHostKeyChecking=accept-new"
 
-              # Add the marketplace if not already registered.
               if [ ! -f "$KNOWN" ] || ! $JQ -e --arg m "$MARKET" '.[$m]' "$KNOWN" >/dev/null 2>&1; then
                 echo "setupClaudePlugins: adding marketplace $MARKET"
                 "$CLAUDE" plugin marketplace add "$SOURCE" || true
+              else
+                "$CLAUDE" plugin marketplace update "$MARKET" >/dev/null 2>&1 || true
               fi
 
-              # Enable each team plugin (user scope) if not already enabled.
               for plugin in instaffo-dev instaffo-pm instaffo-amex instaffo-leadership instaffo-shared; do
                 ref="$plugin@$MARKET"
-                if [ -f "$CLAUDE_JSON" ] && $JQ -e --arg p "$ref" '.enabledPlugins[$p] == true' "$CLAUDE_JSON" >/dev/null 2>&1; then
-                  continue
+                if [ -f "$INSTALLED" ] && $JQ -e --arg p "$ref" \
+                  '.plugins[$p] // [] | any(.scope == "user")' "$INSTALLED" >/dev/null 2>&1; then
+                  "$CLAUDE" plugin update "$ref" >/dev/null 2>&1 || echo "setupClaudePlugins: update failed for $ref"
+                else
+                  echo "setupClaudePlugins: installing $ref"
+                  "$CLAUDE" plugin install --scope user "$ref" || true
                 fi
-                echo "setupClaudePlugins: installing $ref"
-                "$CLAUDE" plugin install --scope user "$ref" || true
               done
             '';
 
