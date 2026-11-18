@@ -201,6 +201,13 @@ in
   };
 
   # Claude Code personal skills
+  ".claude/skills/jev-api/SKILL.md" = {
+    text = builtins.readFile ../shared/config/claude/skills/jev-api/SKILL.md;
+  };
+  ".claude/skills/jev-api/scripts/jev.rb" = {
+    text = builtins.readFile ../shared/config/claude/skills/jev-api/scripts/jev.rb;
+    executable = true;
+  };
   ".claude/skills/test-gitlab-token/SKILL.md" = {
     text = builtins.readFile ../shared/config/claude/skills/test-gitlab-token/SKILL.md;
   };
