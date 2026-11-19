@@ -132,6 +132,9 @@ in
       gcloud-ro = "CLOUDSDK_CONFIG=$HOME/.config/gcloud-claude gcloud";
       bq-ro = "CLOUDSDK_CONFIG=$HOME/.config/gcloud-claude bq";
 
+      # Local Jeff decision model (skill: jeff-local).
+      jeff-local = "$HOME/.claude/skills/jeff-local/scripts/jeff.rb";
+
       # Tmuxinator aliases
       instaffo-start = "tmuxinator start instaffo";
       instaffo-stop = "tmuxinator stop instaffo";

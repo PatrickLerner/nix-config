@@ -1,6 +1,6 @@
 ---
 name: jev-api
-description: Call Jev, TypeSafe's scoring model (api.typesafe.ai), to score any JSON state against rubric questions. Use when asked to score, rate, rank or classify profiles, jobs or texts with Jev or TypeSafe, or to test a rubric against it. "Jeff" or "Jev" in an Instaffo context means this model, not a person. In the app repo, production code calls it through `lib/jev_api.rb`; this skill is for raw, ad-hoc requests outside the app.
+description: Call Jev, TypeSafe's scoring model (api.typesafe.ai), to score any JSON state against rubric questions. Use when asked to score, rate, rank or classify profiles, jobs or texts with Jev or TypeSafe, or to test a rubric against it. "Jev" (often transcribed as "Jeff") in an Instaffo context means this model, not a person. Not the local open-source Firelex Jeff model: that is jeff-local. In the app repo, production code calls it through `lib/jev_api.rb`; this skill is for raw, ad-hoc requests outside the app.
 ---
 
 # Jev API (TypeSafe)
@@ -20,7 +20,10 @@ Jev answers questions about a JSON `state`. A `score` question returns the expec
 
 ```json
 {
-  "state": { "role": { "title": "Head of Sales" }, "candidate_profile": { "work": [] } },
+  "state": {
+    "role": { "title": "Head of Sales" },
+    "candidate_profile": { "work": [] }
+  },
   "questions": {
     "leadership": {
       "type": "score",

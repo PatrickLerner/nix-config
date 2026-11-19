@@ -208,6 +208,13 @@ in
     text = builtins.readFile ../shared/config/claude/skills/jev-api/scripts/jev.rb;
     executable = true;
   };
+  ".claude/skills/jeff-local/SKILL.md" = {
+    text = builtins.readFile ../shared/config/claude/skills/jeff-local/SKILL.md;
+  };
+  ".claude/skills/jeff-local/scripts/jeff.rb" = {
+    text = builtins.readFile ../shared/config/claude/skills/jeff-local/scripts/jeff.rb;
+    executable = true;
+  };
   ".claude/skills/test-gitlab-token/SKILL.md" = {
     text = builtins.readFile ../shared/config/claude/skills/test-gitlab-token/SKILL.md;
   };
