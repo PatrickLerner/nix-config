@@ -7,6 +7,7 @@ with pkgs;
   coreutils
   killall
   moreutils
+  nmap
   openssh
   speedtest-cli
   sqlite
