@@ -86,12 +86,6 @@ in
     text = builtins.readFile ../shared/config/gitconfig;
   };
 
-  # Karabiner configuration
-  ".config/karabiner/karabiner.json" = {
-    text = builtins.readFile ../shared/config/karabiner/karabiner.json;
-    force = true;
-  };
-
   # Alacritty configuration
   ".config/alacritty/alacritty.toml" = {
     text = builtins.readFile ../shared/config/alacritty.toml;

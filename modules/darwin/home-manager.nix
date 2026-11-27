@@ -403,6 +403,16 @@ in
               fi
             '';
 
+            # Karabiner must write its config, so seed a writable copy once instead of a store symlink.
+            seedKarabinerConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+              KARABINER="/Users/${user}/.config/karabiner/karabiner.json"
+              mkdir -p "$(dirname "$KARABINER")"
+              [ -L "$KARABINER" ] && rm "$KARABINER"
+              if [ ! -e "$KARABINER" ]; then
+                install -m 644 ${../shared/config/karabiner/karabiner.json} "$KARABINER"
+              fi
+            '';
+
             # Clone ~/Notes and create ~/Workbench if missing.
             ensureHomeDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
               HOME_DIR="/Users/${user}"
