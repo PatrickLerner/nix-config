@@ -135,6 +135,16 @@ in
         group = "staff";
       };
 
+      # TG_API_ID, TG_API_HASH and TG_SESSION for the read-only tg-search CLI.
+      "tg-search-env" = {
+        symlink = true;
+        path = "/Users/${user}/.config/tg-search/.env";
+        file = "${secrets}/tg-search-env.age";
+        mode = "600";
+        owner = "${user}";
+        group = "staff";
+      };
+
       # Personal bio context read at runtime by the
       # anki-sami-german-vocab-builder agent. Kept out of the public agent
       # prompt so private details about Patrick and Sami stay encrypted.

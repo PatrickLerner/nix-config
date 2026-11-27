@@ -314,17 +314,18 @@
         "karamd": "karamd",
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": "nixpkgs_3",
-        "secrets": "secrets"
+        "secrets": "secrets",
+        "tg-search": "tg-search"
       }
     },
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1794989377,
-        "narHash": "sha256-j9Sbge6df9g9xPeGapJQpp1C+x9kMMdusM8ph/My1pg=",
+        "lastModified": 1795816365,
+        "narHash": "sha256-drY6ToCBcDKe9n/1T+F5bkoIEmcx8Nzy7KQ4EQ0dkQI=",
         "ref": "refs/heads/main",
-        "rev": "d4c4dfaedb93aebe69e9b7704baa81b8b3ca20e6",
-        "revCount": 40,
+        "rev": "598061b16c41fba0ae2f5d3bd6354e0048ba57b9",
+        "revCount": 41,
         "type": "git",
         "url": "ssh://git@github.com/PatrickLerner/nix-secrets.git"
       },
@@ -361,6 +362,26 @@
         "owner": "nix-systems",
         "repo": "default",
         "type": "github"
+      }
+    },
+    "tg-search": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1795816329,
+        "narHash": "sha256-2659fuiVWDiAR2lFA++UKd1TZX4Ck3UsKDLb1dHFoYc=",
+        "ref": "refs/heads/main",
+        "rev": "99353f5ac5e50b6fca1610c54446fcd2a1d76623",
+        "revCount": 1,
+        "type": "git",
+        "url": "ssh://git@github.com/PatrickLerner/tg-search.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/PatrickLerner/tg-search.git"
       }
     }
   },

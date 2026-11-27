@@ -2,6 +2,7 @@
   agenix,
   claude-code-nix,
   karamd,
+  tg-search,
   pkgs,
   ...
 }:
@@ -105,6 +106,7 @@ in
       # Prebuilt release binary and menu bar app, no local compile.
       karamd.packages."${pkgs.stdenv.hostPlatform.system}".karamd-bin
       karamd.packages."${pkgs.stdenv.hostPlatform.system}".karamd-bar
+      tg-search.packages."${pkgs.stdenv.hostPlatform.system}".default
     ]
     ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
 

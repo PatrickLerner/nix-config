@@ -45,6 +45,11 @@
       url = "github:PatrickLerner/karamd";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Private repo; `nix flake update tg-search` picks up new commits.
+    tg-search = {
+      url = "git+ssh://git@github.com/PatrickLerner/tg-search.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # Instaffo skill marketplace (private GitHub repo, not a flake) — consumed as
     # a plain source tree so home-manager can symlink selected skills into
     # opencode's skills dir. Pulled from GitHub; `nix flake update instaffo-skills`
